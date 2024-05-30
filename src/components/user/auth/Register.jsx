@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import { FaFacebook } from 'react-icons/fa';
 
+import { useRegisterMutation } from '../../../store/services/users';
+
 const Register = () => {
   const [formValues, setFormValues] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
   });
+
+  const [register, { isLoading }] = useRegisterMutation();
 
   const handleInputChange = (event) => {
     setFormValues((prevState) => ({
@@ -20,7 +24,8 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formValues);
+    const { username, email, password } = formValues;
+    register({ username, email, password });
   };
 
   return (
@@ -33,15 +38,15 @@ const Register = () => {
           </p>
           <form onSubmit={handleSubmit}>
             <div className='flex flex-col w-full gap-1 mb-3'>
-              <label htmlFor='name'>Username</label>
+              <label htmlFor='username'>Username</label>
               <input
                 onChange={handleInputChange}
-                value={formValues.name}
+                value={formValues.username}
                 className='px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md'
                 type='text'
-                name='name'
+                name='username'
                 placeholder='Username'
-                id='name'
+                id='username'
                 required={true}
               />
             </div>
@@ -86,13 +91,16 @@ const Register = () => {
               </label>
             </div>
 
-            <button className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
+            <button
+              disabled={isLoading}
+              className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
+            >
               Register
             </button>
 
             <div className='flex items-center mb-3 gap-3 justify-center'>
               <p>Already have an account?</p>
-              <Link className='font-bold' to='/login'>
+              <Link className='font-bold' to='/auth/login'>
                 Login
               </Link>
             </div>

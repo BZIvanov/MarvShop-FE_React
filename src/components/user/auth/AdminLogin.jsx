@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+
+import { useLoginMutation } from '../../../store/services/users';
+import { PropagateLoader } from 'react-spinners';
 
 const AdminLogin = () => {
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
+
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -16,8 +22,14 @@ const AdminLogin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formValues);
+    login(formValues);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Successfull login');
+    }
+  }, [isSuccess]);
 
   return (
     <div className='min-w-screen min-h-screen bg-[#cdcae9] flex justify-center items-center'>
@@ -62,8 +74,24 @@ const AdminLogin = () => {
               />
             </div>
 
-            <button className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
-              Login
+            <button
+              disabled={isLoading}
+              className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
+            >
+              {isLoading ? (
+                <PropagateLoader
+                  color='#fff'
+                  cssOverride={{
+                    display: 'flex',
+                    margin: '0 auto',
+                    height: '24px',
+                    justifyContent: 'center',
+                    alignItem: 'center',
+                  }}
+                />
+              ) : (
+                'Login'
+              )}
             </button>
           </form>
         </div>
