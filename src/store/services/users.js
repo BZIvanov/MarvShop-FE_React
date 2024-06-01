@@ -9,7 +9,7 @@ export const usersApi = api.injectEndpoints({
             url: '/users/register',
             method: 'POST',
             body: data,
-            credentials: 'include',
+            credentials: 'include', // this is needed for the cookies to be set and sent to the backend
           };
         },
       }),
@@ -23,8 +23,18 @@ export const usersApi = api.injectEndpoints({
           };
         },
       }),
+      getCurrentUser: build.query({
+        query: () => {
+          return {
+            url: '/users/current-user',
+            method: 'GET',
+            credentials: 'include',
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useRegisterMutation, useLoginMutation } = usersApi;
+export const { useRegisterMutation, useLoginMutation, useGetCurrentUserQuery } =
+  usersApi;

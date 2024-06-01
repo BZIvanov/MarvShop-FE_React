@@ -21,7 +21,13 @@ export const userSlice = createSlice({
       .addMatcher(usersApi.endpoints.login.matchFulfilled, (state, action) => {
         console.log(action);
         state.user = action.payload.user;
-      });
+      })
+      .addMatcher(
+        usersApi.endpoints.getCurrentUser.matchFulfilled,
+        (state, action) => {
+          state.user = action.payload.user;
+        }
+      );
   },
 });
 

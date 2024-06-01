@@ -7,3 +7,10 @@ export const Login = lazy(() => import('../components/user/auth/Login'));
 export const AdminLogin = lazy(() =>
   import('../components/user/auth/AdminLogin')
 );
+
+export const AdminDashboard = lazy(() =>
+  import('../components/admin/AdminDashboard')
+);
+export const AdminOrders = lazy(() =>
+  import('../components/admin/AdminOrders')
+);
