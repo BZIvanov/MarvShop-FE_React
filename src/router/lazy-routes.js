@@ -14,3 +14,24 @@ export const AdminDashboard = lazy(() =>
 export const AdminOrders = lazy(() =>
   import('../components/admin/AdminOrders')
 );
+export const AdminCategory = lazy(() =>
+  import('../components/admin/AdminCategory')
+);
+export const AdminSellers = lazy(() =>
+  import('../components/admin/AdminSellers')
+);
+export const AdminPaymentRequest = lazy(() =>
+  import('../components/admin/AdminPaymentRequest')
+);
+export const AdminDeactiveSellers = lazy(() =>
+  import('../components/admin/AdminDeactiveSellers')
+);
+export const AdminSellerRequest = lazy(() =>
+  import('../components/admin/AdminSellerRequest')
+);
+export const AdminSellerDetails = lazy(() =>
+  import('../components/admin/AdminSellerDetails')
+);
+export const AdminChatSeller = lazy(() =>
+  import('../components/admin/AdminChatSeller')
+);

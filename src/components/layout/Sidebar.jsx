@@ -49,7 +49,7 @@ const adminLinks = [
   {
     title: 'Live Chat',
     icon: <IoIosChatbubbles />,
-    path: '/admin/chat-seller',
+    path: '/admin/chat-sellers',
   },
 ];
 

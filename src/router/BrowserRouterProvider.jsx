@@ -16,6 +16,13 @@ import {
   AdminLogin,
   AdminDashboard,
   AdminOrders,
+  AdminCategory,
+  AdminSellers,
+  AdminPaymentRequest,
+  AdminDeactiveSellers,
+  AdminSellerRequest,
+  AdminSellerDetails,
+  AdminChatSeller,
 } from './lazy-routes';
 import MainLayout from '../components/layout/MainLayout';
 
@@ -48,6 +55,34 @@ const router = createBrowserRouter([
               {
                 path: 'orders',
                 element: <AdminOrders />,
+              },
+              {
+                path: 'category',
+                element: <AdminCategory />,
+              },
+              {
+                path: 'sellers',
+                element: <AdminSellers />,
+              },
+              {
+                path: 'sellers/:sellerId',
+                element: <AdminSellerDetails />,
+              },
+              {
+                path: 'payment-request',
+                element: <AdminPaymentRequest />,
+              },
+              {
+                path: 'deactive-sellers',
+                element: <AdminDeactiveSellers />,
+              },
+              {
+                path: 'sellers-request',
+                element: <AdminSellerRequest />,
+              },
+              {
+                path: 'chat-sellers',
+                element: <AdminChatSeller />,
               },
             ],
           },
