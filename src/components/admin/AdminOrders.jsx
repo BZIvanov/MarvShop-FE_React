@@ -53,7 +53,7 @@ const AdminOrders = () => {
                 <div className='py-3 w-[18%] font-medium'>Pending</div>
                 <div className='py-3 w-[18%] font-medium'>Pending</div>
                 <div className='py-3 w-[18%] font-medium'>
-                  <Link>View</Link>
+                  <Link to={`/admin/orders/3`}>View</Link>
                 </div>
                 <div
                   onClick={() => setShow((prevState) => !prevState)}
@@ -98,7 +98,7 @@ const AdminOrders = () => {
                 <div className='py-3 w-[18%] font-medium'>Pending</div>
                 <div className='py-3 w-[18%] font-medium'>Pending</div>
                 <div className='py-3 w-[18%] font-medium'>
-                  <Link>View</Link>
+                  <Link to={`/admin/orders/3`}>View</Link>
                 </div>
                 <div
                   onClick={() => setShow((prevState) => !prevState)}

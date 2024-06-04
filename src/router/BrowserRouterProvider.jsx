@@ -16,13 +16,23 @@ import {
   AdminLogin,
   AdminDashboard,
   AdminOrders,
+  AdminOrderDetails,
   AdminCategory,
   AdminSellers,
+  AdminSellerDetails,
   AdminPaymentRequest,
   AdminDeactiveSellers,
   AdminSellerRequest,
-  AdminSellerDetails,
   AdminChatSeller,
+  SellerDashboard,
+  SellerAddProduct,
+  SellerProducts,
+  SellerDiscountProducts,
+  SellerOrders,
+  SellerPayments,
+  SellerToAdmin,
+  SellerToCustomer,
+  SellerProfile,
 } from './lazy-routes';
 import MainLayout from '../components/layout/MainLayout';
 
@@ -57,6 +67,10 @@ const router = createBrowserRouter([
                 element: <AdminOrders />,
               },
               {
+                path: 'orders/:orderId',
+                element: <AdminOrderDetails />,
+              },
+              {
                 path: 'category',
                 element: <AdminCategory />,
               },
@@ -83,6 +97,60 @@ const router = createBrowserRouter([
               {
                 path: 'chat-sellers',
                 element: <AdminChatSeller />,
+              },
+            ],
+          },
+          {
+            path: 'seller',
+            element: (
+              <ProtectedRoute
+                authRedirectTo='/auth/login'
+                roleRedirectTo='/'
+                roles={['seller']}
+              >
+                <Outlet />
+              </ProtectedRoute>
+            ),
+            children: [
+              {
+                path: 'dashboard',
+                element: <SellerDashboard />,
+              },
+              {
+                path: 'add-product',
+                element: <SellerAddProduct />,
+              },
+              {
+                path: 'products',
+                element: <SellerProducts />,
+              },
+              {
+                path: 'discount-products',
+                element: <SellerDiscountProducts />,
+              },
+              {
+                path: 'orders',
+                element: <SellerOrders />,
+              },
+              {
+                path: 'payments',
+                element: <SellerPayments />,
+              },
+              {
+                path: 'chat-support',
+                element: <SellerToAdmin />,
+              },
+              {
+                path: 'chat-customer',
+                element: <SellerToCustomer />,
+              },
+              {
+                path: 'chat-customer/:customerId',
+                element: <SellerToCustomer />,
+              },
+              {
+                path: 'profile',
+                element: <SellerProfile />,
               },
             ],
           },

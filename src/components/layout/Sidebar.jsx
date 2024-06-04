@@ -59,6 +59,46 @@ const sellerLinks = [
     icon: <AiOutlineDashboard />,
     path: '/seller/dashboard',
   },
+  {
+    title: 'Add Product',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/add-product',
+  },
+  {
+    title: 'All Products',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/products',
+  },
+  {
+    title: 'Discount Product',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/discount-products',
+  },
+  {
+    title: 'Orders',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/orders',
+  },
+  {
+    title: 'Payments',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/payments',
+  },
+  {
+    title: 'Chat-Customer',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/chat-customer',
+  },
+  {
+    title: 'Chat-Support',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/chat-support',
+  },
+  {
+    title: 'Profile',
+    icon: <AiOutlineDashboard />,
+    path: '/seller/profile',
+  },
 ];
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
