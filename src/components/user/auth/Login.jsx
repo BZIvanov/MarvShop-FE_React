@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PropagateLoader } from 'react-spinners';
 import { FaGoogle } from 'react-icons/fa';
 import { FaFacebook } from 'react-icons/fa';
 
+import { useLoginMutation } from '../../../store/services/users';
+
 const Login = () => {
+  const [login, { isLoading }] = useLoginMutation();
+
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -19,7 +24,8 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formValues);
+    const { email, password } = formValues;
+    login({ email, password });
   };
 
   return (
@@ -60,8 +66,24 @@ const Login = () => {
               />
             </div>
 
-            <button className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
-              Login
+            <button
+              disabled={isLoading}
+              className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
+            >
+              {isLoading ? (
+                <PropagateLoader
+                  color='#fff'
+                  cssOverride={{
+                    display: 'flex',
+                    margin: '0 auto',
+                    height: '24px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                />
+              ) : (
+                'Login'
+              )}
             </button>
 
             <div className='flex items-center mb-3 gap-3 justify-center'>

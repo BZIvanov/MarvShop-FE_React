@@ -45,6 +45,9 @@ export const SellerDashboard = lazy(() =>
 export const SellerAddProduct = lazy(() =>
   import('../components/seller/SellerAddProduct')
 );
+export const SellerEditProduct = lazy(() =>
+  import('../components/seller/SellerEditProduct')
+);
 export const SellerProducts = lazy(() =>
   import('../components/seller/SellerProducts')
 );
@@ -53,6 +56,9 @@ export const SellerDiscountProducts = lazy(() =>
 );
 export const SellerOrders = lazy(() =>
   import('../components/seller/SellerOrders')
+);
+export const SellerOrderDetails = lazy(() =>
+  import('../components/seller/SellerOrderDetails')
 );
 export const SellerPayments = lazy(() =>
   import('../components/seller/SellerPayments')

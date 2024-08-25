@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { PropagateLoader } from 'react-spinners';
 
 import { useLoginMutation } from '../../../store/services/users';
-import { PropagateLoader } from 'react-spinners';
 
 const AdminLogin = () => {
   const [login, { isLoading, isSuccess }] = useLoginMutation();
@@ -86,7 +86,7 @@ const AdminLogin = () => {
                     margin: '0 auto',
                     height: '24px',
                     justifyContent: 'center',
-                    alignItem: 'center',
+                    alignItems: 'center',
                   }}
                 />
               ) : (

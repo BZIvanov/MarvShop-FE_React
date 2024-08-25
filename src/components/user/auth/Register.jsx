@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PropagateLoader } from 'react-spinners';
 import { FaGoogle } from 'react-icons/fa';
 import { FaFacebook } from 'react-icons/fa';
 
@@ -95,7 +96,20 @@ const Register = () => {
               disabled={isLoading}
               className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
             >
-              Register
+              {isLoading ? (
+                <PropagateLoader
+                  color='#fff'
+                  cssOverride={{
+                    display: 'flex',
+                    margin: '0 auto',
+                    height: '24px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                />
+              ) : (
+                'Register'
+              )}
             </button>
 
             <div className='flex items-center mb-3 gap-3 justify-center'>
