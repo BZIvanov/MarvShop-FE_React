@@ -6,8 +6,10 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import ErrorBoundary from './ErrorBoundary';
 import App from '../App';
+import MainLayout from '../components/layout/MainLayout';
+import ErrorBoundary from './ErrorBoundary';
+import NotFound from './NotFound';
 import NonUserRoute from './auth/NonUserRoute';
 import ProtectedRoute from './auth/ProtectedRoute';
 import {
@@ -36,7 +38,6 @@ import {
   SellerToCustomer,
   SellerProfile,
 } from './lazy-routes';
-import MainLayout from '../components/layout/MainLayout';
 
 const router = createBrowserRouter([
   {
@@ -193,6 +194,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 

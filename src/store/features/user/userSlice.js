@@ -19,7 +19,6 @@ export const userSlice = createSlice({
         }
       )
       .addMatcher(usersApi.endpoints.login.matchFulfilled, (state, action) => {
-        console.log(action);
         state.user = action.payload.user;
       })
       .addMatcher(

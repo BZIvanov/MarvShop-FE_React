@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AiOutlineDashboard, AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiCategory, BiLogOutCircle } from 'react-icons/bi';
 import { FaUserTimes, FaUsers } from 'react-icons/fa';
@@ -102,8 +102,6 @@ const sellerLinks = [
 ];
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
-  const { pathname } = useLocation();
-
   const user = useSelector(selectUser);
   const isAdmin = user?.role === 'admin';
 
@@ -135,17 +133,19 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           <ul>
             {links.map((link) => (
               <li key={link.path}>
-                <Link
+                <NavLink
                   to={link.path}
-                  className={`${
-                    pathname === link.path
-                      ? 'bg-blue-600 shadow-indigo-500/50 text-white duration-500'
-                      : 'text-[#030811] font-bold duration-200 '
-                  } px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1`}
+                  className={({ isActive }) =>
+                    `${
+                      isActive
+                        ? 'bg-blue-600 shadow-indigo-500/50 text-white duration-500'
+                        : 'text-[#030811] font-bold duration-200 '
+                    } px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1`
+                  }
                 >
                   <span>{link.icon}</span>
                   <span>{link.title}</span>
-                </Link>
+                </NavLink>
               </li>
             ))}
             <li>
