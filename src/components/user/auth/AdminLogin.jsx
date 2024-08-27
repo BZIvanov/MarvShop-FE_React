@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 import { PropagateLoader } from 'react-spinners';
 
 import { useLoginMutation } from '../../../store/services/users';
 
+// TODO: maybe remove this component and route and use just Login?
 const AdminLogin = () => {
-  const [login, { isLoading, isSuccess }] = useLoginMutation();
-
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
   });
+
+  const [login, { isLoading }] = useLoginMutation();
 
   const handleInputChange = (event) => {
     setFormValues((prevState) => ({
@@ -24,12 +24,6 @@ const AdminLogin = () => {
 
     login(formValues);
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success('Successfull login');
-    }
-  }, [isSuccess]);
 
   return (
     <div className='min-w-screen min-h-screen bg-[#cdcae9] flex justify-center items-center'>
