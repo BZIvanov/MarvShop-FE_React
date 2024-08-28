@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import App from '../App';
-import MainLayout from '../components/layout/MainLayout';
+import DashboardLayout from '../components/layout/DashboardLayout';
 import ErrorBoundary from './ErrorBoundary';
 import NotFound from './NotFound';
 import NonUserRoute from './auth/NonUserRoute';
@@ -46,124 +46,122 @@ const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
     children: [
       {
-        path: '',
-        element: <MainLayout />,
+        path: 'admin',
+        element: (
+          <ProtectedRoute
+            authRedirectTo='/auth/login'
+            roleRedirectTo='/'
+            roles={['admin']}
+          >
+            <DashboardLayout />
+          </ProtectedRoute>
+        ),
         children: [
           {
-            path: 'admin',
-            element: (
-              <ProtectedRoute
-                authRedirectTo='/auth/login'
-                roleRedirectTo='/'
-                roles={['admin']}
-              >
-                <Outlet />
-              </ProtectedRoute>
-            ),
-            children: [
-              {
-                path: 'dashboard',
-                element: <AdminDashboard />,
-              },
-              {
-                path: 'orders',
-                element: <AdminOrders />,
-              },
-              {
-                path: 'orders/:orderId',
-                element: <AdminOrderDetails />,
-              },
-              {
-                path: 'category',
-                element: <AdminCategory />,
-              },
-              {
-                path: 'sellers',
-                element: <AdminSellers />,
-              },
-              {
-                path: 'sellers/:sellerId',
-                element: <AdminSellerDetails />,
-              },
-              {
-                path: 'payment-request',
-                element: <AdminPaymentRequest />,
-              },
-              {
-                path: 'deactive-sellers',
-                element: <AdminDeactiveSellers />,
-              },
-              {
-                path: 'sellers-request',
-                element: <AdminSellerRequest />,
-              },
-              {
-                path: 'chat-sellers',
-                element: <AdminChatSeller />,
-              },
-            ],
+            path: '',
+            element: <Navigate to='dashboard' replace={true} />, // Default redirect to /admin/dashboard
           },
           {
-            path: 'seller',
-            element: (
-              <ProtectedRoute
-                authRedirectTo='/auth/login'
-                roleRedirectTo='/'
-                roles={['seller']}
-              >
-                <Outlet />
-              </ProtectedRoute>
-            ),
-            children: [
-              {
-                path: 'dashboard',
-                element: <SellerDashboard />,
-              },
-              {
-                path: 'add-product',
-                element: <SellerAddProduct />,
-              },
-              {
-                path: 'edit-product/:productId',
-                element: <SellerEditProduct />,
-              },
-              {
-                path: 'products',
-                element: <SellerProducts />,
-              },
-              {
-                path: 'discount-products',
-                element: <SellerDiscountProducts />,
-              },
-              {
-                path: 'orders',
-                element: <SellerOrders />,
-              },
-              {
-                path: 'orders/:orderId',
-                element: <SellerOrderDetails />,
-              },
-              {
-                path: 'payments',
-                element: <SellerPayments />,
-              },
-              {
-                path: 'chat-support',
-                element: <SellerToAdmin />,
-              },
-              {
-                path: 'chat-customer',
-                element: <SellerToCustomer />,
-              },
-              {
-                path: 'chat-customer/:customerId',
-                element: <SellerToCustomer />,
-              },
-              {
-                path: 'profile',
-                element: <SellerProfile />,
-              },
-            ],
+            path: 'dashboard',
+            element: <AdminDashboard />,
+          },
+          {
+            path: 'orders',
+            element: <AdminOrders />,
+          },
+          {
+            path: 'orders/:orderId',
+            element: <AdminOrderDetails />,
+          },
+          {
+            path: 'category',
+            element: <AdminCategory />,
+          },
+          {
+            path: 'sellers',
+            element: <AdminSellers />,
+          },
+          {
+            path: 'sellers/:sellerId',
+            element: <AdminSellerDetails />,
+          },
+          {
+            path: 'payment-request',
+            element: <AdminPaymentRequest />,
+          },
+          {
+            path: 'deactive-sellers',
+            element: <AdminDeactiveSellers />,
+          },
+          {
+            path: 'sellers-request',
+            element: <AdminSellerRequest />,
+          },
+          {
+            path: 'chat-sellers',
+            element: <AdminChatSeller />,
+          },
+        ],
+      },
+      {
+        path: 'seller',
+        element: (
+          <ProtectedRoute
+            authRedirectTo='/auth/login'
+            roleRedirectTo='/'
+            roles={['seller']}
+          >
+            <DashboardLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: 'dashboard',
+            element: <SellerDashboard />,
+          },
+          {
+            path: 'add-product',
+            element: <SellerAddProduct />,
+          },
+          {
+            path: 'edit-product/:productId',
+            element: <SellerEditProduct />,
+          },
+          {
+            path: 'products',
+            element: <SellerProducts />,
+          },
+          {
+            path: 'discount-products',
+            element: <SellerDiscountProducts />,
+          },
+          {
+            path: 'orders',
+            element: <SellerOrders />,
+          },
+          {
+            path: 'orders/:orderId',
+            element: <SellerOrderDetails />,
+          },
+          {
+            path: 'payments',
+            element: <SellerPayments />,
+          },
+          {
+            path: 'chat-support',
+            element: <SellerToAdmin />,
+          },
+          {
+            path: 'chat-customer',
+            element: <SellerToCustomer />,
+          },
+          {
+            path: 'chat-customer/:customerId',
+            element: <SellerToCustomer />,
+          },
+          {
+            path: 'profile',
+            element: <SellerProfile />,
           },
         ],
       },

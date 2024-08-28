@@ -139,7 +139,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                     `${
                       isActive
                         ? 'bg-blue-600 shadow-indigo-500/50 text-white duration-500'
-                        : 'text-[#030811] font-bold duration-200 '
+                        : 'text-[#030811] font-bold duration-200'
                     } px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1`
                   }
                 >
