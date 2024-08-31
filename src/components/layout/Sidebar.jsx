@@ -70,7 +70,7 @@ const sellerLinks = [
     path: '/seller/products',
   },
   {
-    title: 'Discount Product',
+    title: 'Discount Products',
     icon: <AiOutlineDashboard />,
     path: '/seller/discount-products',
   },

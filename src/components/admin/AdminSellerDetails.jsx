@@ -6,7 +6,11 @@ const AdminSellerDetails = () => {
         <div className='w-full flex flex-wrap text-[#d0d2d6]'>
           <div className='w-3/12 flex justify-center items-center py-3'>
             <div>
-              <img className='w-full h-[230px]' src='/images/logo.png' alt='' />
+              <img
+                className='w-full h-[230px]'
+                src='/images/logo.png'
+                alt='Seller avatar'
+              />
             </div>
           </div>
 
@@ -49,10 +53,10 @@ const AdminSellerDetails = () => {
               <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-[#9e97e9] rounded-md'>
                 <div className='flex gap-2 font-bold text-[#000000]'>
                   <span>Shop Name : </span>
-                  <span>Easy Shop </span>
+                  <span>Marv Shop</span>
                 </div>
                 <div className='flex gap-2 font-bold text-[#000000]'>
-                  <span>Divission : </span>
+                  <span>Division : </span>
                   <span>Sofia</span>
                 </div>
 

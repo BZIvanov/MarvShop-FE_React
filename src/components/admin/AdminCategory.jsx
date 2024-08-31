@@ -20,7 +20,7 @@ const AdminCategory = () => {
           onClick={() => setShow(true)}
           className='bg-red-500 shadow-lg hover:shadow-red-500/40 px-4 py-2 cursor-pointer text-white rounded-sm text-sm'
         >
-          Add
+          Create
         </button>
       </div>
 
@@ -78,7 +78,7 @@ const AdminCategory = () => {
                         <img
                           className='w-[45px] h-[45px]'
                           src={`/images/logo.png`}
-                          alt=''
+                          alt='Product preview'
                         />
                       </td>
                       <td
@@ -106,6 +106,7 @@ const AdminCategory = () => {
                 </tbody>
               </table>
             </div>
+
             <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
               <Pagination
                 pageNumber={currentPage}
@@ -121,15 +122,18 @@ const AdminCategory = () => {
         <div
           className={`w-[320px] lg:w-5/12 translate-x-100 lg:relative lg:right-0 fixed ${
             show ? 'right-0' : '-right-[340px]'
-          } z-[9999] top-0 transition-all duration-500 `}
+          } z-[9999] top-0 transition-all duration-500`}
         >
           <div className='w-full pl-5'>
             <div className='bg-[#6a5fdf] h-screen lg:h-auto px-3 py-2 lg:rounded-md text-[#d0d2d6]'>
               <div className='flex justify-between items-center mb-4'>
                 <h1 className='text-[#d0d2d6] font-semibold text-xl mb-4 w-full text-center '>
-                  Add Category
+                  New Category
                 </h1>
-                <div onClick={() => setShow(false)} className='block lg:hidden'>
+                <div
+                  onClick={() => setShow(false)}
+                  className='block lg:hidden cursor-pointer'
+                >
                   <IoMdCloseCircle />
                 </div>
               </div>
@@ -137,7 +141,7 @@ const AdminCategory = () => {
                 <div className='flex flex-col w-full gap-1 mb-3'>
                   <label htmlFor='categoryName'>Category Name</label>
                   <input
-                    className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#d0d2d6]'
+                    className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#000000]'
                     type='text'
                     id='categoryName'
                     name='categoryName'
@@ -162,7 +166,7 @@ const AdminCategory = () => {
                   />
                   <div>
                     <button className='bg-red-500 w-full hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'>
-                      Add Category
+                      Create
                     </button>
                   </div>
                 </div>

@@ -72,12 +72,15 @@ const SellerAddProduct = () => {
   const imageHandle = (e) => {
     const files = e.target.files;
     const length = files.length;
+
     if (length > 0) {
       setImages((prevState) => [...prevState, ...files]);
+
       let imageUrl = [];
       for (let i = 0; i < length; i++) {
         imageUrl.push({ url: URL.createObjectURL(files[i]) });
       }
+
       setImageShow((prevState) => [...prevState, ...imageUrl]);
     }
   };
@@ -106,12 +109,14 @@ const SellerAddProduct = () => {
     <div className='px-2 lg:px-7 pt-5'>
       <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
         <div className='flex justify-between items-center pb-4'>
-          <h1 className='text-[#d0d2d6] text-xl font-semibold'>Add Product</h1>
+          <h1 className='text-[#d0d2d6] text-xl font-semibold'>
+            Create Product
+          </h1>
           <Link
             to='/seller/products'
             className='bg-blue-500 hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-sm px-7 py-2 my-2'
           >
-            All Product
+            All Products
           </Link>
         </div>
         <div>
@@ -160,7 +165,7 @@ const SellerAddProduct = () => {
                 <div
                   className={`absolute top-[101%] bg-[#475569] w-full transition-all ${
                     cateShow ? 'scale-100' : 'scale-0'
-                  } `}
+                  }`}
                 >
                   <div className='w-full px-4 py-2 fixed'>
                     <input
@@ -248,7 +253,7 @@ const SellerAddProduct = () => {
                 placeholder='Description'
                 cols='10'
                 rows='4'
-              ></textarea>
+              />
             </div>
 
             <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4'>

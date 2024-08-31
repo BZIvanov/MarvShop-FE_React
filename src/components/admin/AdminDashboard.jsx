@@ -157,7 +157,7 @@ const AdminDashboard = () => {
           <div className='w-full bg-[#6a5fdf] p-4 rounded-md text-[#d0d2d6]'>
             <div className='flex justify-between items-center'>
               <h2 className='font-semibold text-lg text-[#d0d2d6] pb-3'>
-                Recent Seller Message
+                Recent Seller Messages
               </h2>
               <Link className='font-semibold text-sm text-[#d0d2d6]'>
                 View All

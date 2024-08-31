@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { MdCurrencyExchange, MdProductionQuantityLimits } from 'react-icons/md';
+import { MdCurrencyExchange } from 'react-icons/md';
 import { FixedSizeList as List } from 'react-window';
 
 function handleOnWheel({ deltaY }) {

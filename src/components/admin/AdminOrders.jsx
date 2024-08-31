@@ -32,7 +32,7 @@ const AdminOrders = () => {
         <div className='relative mt-5 overflow-x-auto'>
           <div className='w-full text-sm text-left'>
             <div className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
-              <div className=' flex justify-between items-center'>
+              <div className='flex justify-between items-center'>
                 <div className='py-3 w-[25%] font-bold'>Order id</div>
                 <div className='py-3 w-[13%] font-bold'>Price</div>
                 <div className='py-3 w-[18%] font-bold'>Payment Status</div>
@@ -57,7 +57,7 @@ const AdminOrders = () => {
                 </div>
                 <div
                   onClick={() => setShow((prevState) => !prevState)}
-                  className='py-3 w-[8%] font-medium'
+                  className='py-3 w-[8%] font-medium cursor-pointer'
                 >
                   <LuArrowDownSquare />
                 </div>

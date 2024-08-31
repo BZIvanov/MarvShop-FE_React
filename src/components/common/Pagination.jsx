@@ -24,18 +24,18 @@ const Pagination = ({
     startPage = 1;
   }
 
-  const createBtn = () => {
+  const createBtns = () => {
     const btns = [];
     for (let i = startPage; i < endPage; i++) {
       btns.push(
         <li
           key={i}
           onClick={() => setPageNumber(i)}
-          className={` ${
+          className={`${
             pageNumber === i
               ? 'bg-indigo-300 shadow-lg shadow-indigo-300/50 text-white'
               : 'bg-slate-600 hover:bg-indigo-400 shadow-lg hover:shadow-indigo-500/50 hover:text-white text-[#d0d2d6]'
-          } w-[33px] h-[33px] rounded-full flex justify-center items-center cursor-pointer `}
+          } w-[33px] h-[33px] rounded-full flex justify-center items-center cursor-pointer`}
         >
           {i}
         </li>
@@ -54,7 +54,7 @@ const Pagination = ({
           <MdOutlineKeyboardDoubleArrowLeft />
         </li>
       )}
-      {createBtn()}
+      {createBtns()}
       {pageNumber < totalPage && (
         <li
           onClick={() => setPageNumber((prevState) => prevState + 1)}

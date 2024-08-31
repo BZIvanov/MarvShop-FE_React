@@ -90,12 +90,12 @@ const SellerProfile = () => {
               {!userInfo ? (
                 <form>
                   <div className='flex flex-col w-full gap-1 mb-2'>
-                    <label htmlFor='Shop'>Shop Name</label>
+                    <label htmlFor='shop'>Shop Name</label>
                     <input
                       className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
                       type='text'
                       name='shopName'
-                      id='Shop'
+                      id='shop'
                       placeholder='Shop Name'
                     />
                   </div>

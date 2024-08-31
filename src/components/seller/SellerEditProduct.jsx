@@ -98,7 +98,7 @@ const SellerEditProduct = () => {
             to='/seller/products'
             className='bg-blue-500 hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-sm px-7 py-2 my-2'
           >
-            All Product
+            All Products
           </Link>
         </div>
         <div>

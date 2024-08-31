@@ -14,7 +14,7 @@ const AdminChatSeller = () => {
           <div
             className={`w-[280px] h-full absolute z-10 ${
               show ? '-left-[16px]' : '-left-[336px]'
-            } md:left-0 md:relative transition-all `}
+            } md:left-0 md:relative transition-all`}
           >
             <div className='w-full h-[calc(100vh-177px)] bg-[#9e97e9] md:bg-transparent overflow-y-auto'>
               <div className='flex text-xl justify-between items-center p-4 md:p-0 md:px-3 md:pb-3 text-white'>
@@ -27,14 +27,12 @@ const AdminChatSeller = () => {
                 </span>
               </div>
 
-              <div
-                className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-md cursor-pointer bg-[#8288ed] `}
-              >
+              <div className='h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-md cursor-pointer bg-[#8288ed]'>
                 <div className='relative'>
                   <img
                     className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full'
                     src='/images/logo.png'
-                    alt=''
+                    alt='User avatar'
                   />
                   <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
                 </div>
@@ -101,7 +99,7 @@ const AdminChatSeller = () => {
                 </div>
               )}
               <div
-                onClick={() => setShow(!show)}
+                onClick={() => setShow((prevState) => !prevState)}
                 className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'
               >
                 <span>
@@ -118,7 +116,7 @@ const AdminChatSeller = () => {
                       <img
                         className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
                         src='/images/logo.png'
-                        alt=''
+                        alt='User avatar'
                       />
                     </div>
                     <div className='flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm'>
@@ -136,7 +134,7 @@ const AdminChatSeller = () => {
                       <img
                         className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
                         src='/images/logo.png'
-                        alt=''
+                        alt='User avatar'
                       />
                     </div>
                   </div>
