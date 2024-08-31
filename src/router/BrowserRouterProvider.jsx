@@ -12,6 +12,7 @@ import ErrorBoundary from './ErrorBoundary';
 import NotFound from './NotFound';
 import NonUserRoute from './auth/NonUserRoute';
 import ProtectedRoute from './auth/ProtectedRoute';
+import SellerStatus from './auth/SellerStatus';
 import {
   Register,
   Login,
@@ -121,11 +122,26 @@ const router = createBrowserRouter([
           },
           {
             path: 'add-product',
-            element: <SellerAddProduct />,
+            // redirect the seller to chat support in case his seller account is not active
+            element: (
+              <SellerStatus
+                statusRedirectTo='/seller/chat-support'
+                statuses={['active']}
+              >
+                <SellerAddProduct />
+              </SellerStatus>
+            ),
           },
           {
             path: 'edit-product/:productId',
-            element: <SellerEditProduct />,
+            element: (
+              <SellerStatus
+                statusRedirectTo='/seller/chat-support'
+                statuses={['active']}
+              >
+                <SellerEditProduct />
+              </SellerStatus>
+            ),
           },
           {
             path: 'products',

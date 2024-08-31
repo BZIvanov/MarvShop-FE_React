@@ -6,6 +6,7 @@ import {
 
 import { api } from './services/api';
 import user from './features/user/userSlice';
+import seller from './features/seller/sellerSlice';
 import notification from './features/notification/notificationSlice';
 import { asyncErrorNotification } from './middlewares/asyncErrorNotification';
 
@@ -14,6 +15,7 @@ export const createStore = (options = {}) => {
     reducer: {
       [api.reducerPath]: api.reducer,
       user,
+      seller,
       notification,
     },
     middleware: (getDefaultMiddleware) =>

@@ -6,6 +6,13 @@ import { FaUserTimes, FaUsers } from 'react-icons/fa';
 import { MdPayment } from 'react-icons/md';
 import { FaCodePullRequest } from 'react-icons/fa6';
 import { IoIosChatbubbles } from 'react-icons/io';
+import { IoMdAdd } from 'react-icons/io';
+import { MdViewList } from 'react-icons/md';
+import { TbBasketDiscount } from 'react-icons/tb';
+import { BsCartCheck } from 'react-icons/bs';
+import { IoChatbubbles } from 'react-icons/io5';
+import { BsFillChatQuoteFill } from 'react-icons/bs';
+import { CgProfile } from 'react-icons/cg';
 
 import { useSelector } from '../../store/store';
 import { selectUser } from '../../store/features/user/userSlice';
@@ -61,42 +68,42 @@ const sellerLinks = [
   },
   {
     title: 'Add Product',
-    icon: <AiOutlineDashboard />,
+    icon: <IoMdAdd />,
     path: '/seller/add-product',
   },
   {
     title: 'All Products',
-    icon: <AiOutlineDashboard />,
+    icon: <MdViewList />,
     path: '/seller/products',
   },
   {
     title: 'Discount Products',
-    icon: <AiOutlineDashboard />,
+    icon: <TbBasketDiscount />,
     path: '/seller/discount-products',
   },
   {
     title: 'Orders',
-    icon: <AiOutlineDashboard />,
+    icon: <BsCartCheck />,
     path: '/seller/orders',
   },
   {
     title: 'Payments',
-    icon: <AiOutlineDashboard />,
+    icon: <MdPayment />,
     path: '/seller/payments',
   },
   {
     title: 'Chat-Customer',
-    icon: <AiOutlineDashboard />,
+    icon: <IoChatbubbles />,
     path: '/seller/chat-customer',
   },
   {
     title: 'Chat-Support',
-    icon: <AiOutlineDashboard />,
+    icon: <BsFillChatQuoteFill />,
     path: '/seller/chat-support',
   },
   {
     title: 'Profile',
-    icon: <AiOutlineDashboard />,
+    icon: <CgProfile />,
     path: '/seller/profile',
   },
 ];
