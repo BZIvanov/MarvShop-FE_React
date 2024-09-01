@@ -1,23 +1,87 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { FaImage } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
+import {
+  useGetCategoriesQuery,
+  useCreateCategoryMutation,
+} from '../../store/services/categories';
 import Pagination from '../common/Pagination';
+import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 
 const AdminCategory = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
   const [perPage, setPerPage] = useState(5);
-  const [show, setShow] = useState(false);
+
+  const [showSmallScreenCategoryForm, setShowSmallScreenCategoryForm] =
+    useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [formValues, setFormValues] = useState({
+    categoryName: '',
+    categoryImage: '',
+  });
+
+  const { data } = useGetCategoriesQuery();
+  const categories = data?.categories || [];
+  console.log(categories);
+
+  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+
+  const handleCategoryNameChange = (event) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleCategoryImageChange = (event) => {
+    const files = event.target.files;
+
+    if (files.length > 0) {
+      setImagePreview(URL.createObjectURL(files[0]));
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        categoryImage: files[0],
+      }));
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  const handleCategorySubmit = async (event) => {
+    event.preventDefault();
+
+    // we could directly upload the image to cloudinary and only send the image url to the backend, but this is how we did it in this demo
+    const formData = new FormData();
+    formData.append('categoryName', formValues.categoryName);
+    formData.append('categoryImage', formValues.categoryImage);
+
+    const result = await createCategory(formData);
+
+    if (!('error' in result)) {
+      setFormValues({
+        categoryName: '',
+        categoryImage: '',
+      });
+      setImagePreview(null);
+    }
+  };
 
   return (
     <div className='px-2 lg:px-7 pt-5'>
       <div className='flex lg:hidden justify-between items-center mb-5 p-4 bg-[#6a5fdf] rounded-md'>
         <h1 className='text-[#d0d2d6] font-semibold text-lg'>Category</h1>
         <button
-          onClick={() => setShow(true)}
+          onClick={() => setShowSmallScreenCategoryForm(true)}
           className='bg-red-500 shadow-lg hover:shadow-red-500/40 px-4 py-2 cursor-pointer text-white rounded-sm text-sm'
         >
           Create
@@ -121,7 +185,7 @@ const AdminCategory = () => {
 
         <div
           className={`w-[320px] lg:w-5/12 translate-x-100 lg:relative lg:right-0 fixed ${
-            show ? 'right-0' : '-right-[340px]'
+            showSmallScreenCategoryForm ? 'right-0' : '-right-[340px]'
           } z-[9999] top-0 transition-all duration-500`}
         >
           <div className='w-full pl-5'>
@@ -131,42 +195,58 @@ const AdminCategory = () => {
                   New Category
                 </h1>
                 <div
-                  onClick={() => setShow(false)}
+                  onClick={() => setShowSmallScreenCategoryForm(false)}
                   className='block lg:hidden cursor-pointer'
                 >
                   <IoMdCloseCircle />
                 </div>
               </div>
-              <form>
+              <form onSubmit={handleCategorySubmit}>
                 <div className='flex flex-col w-full gap-1 mb-3'>
-                  <label htmlFor='categoryName'>Category Name</label>
+                  <label htmlFor='category-name'>Category Name</label>
                   <input
-                    className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#000000]'
-                    type='text'
-                    id='categoryName'
                     name='categoryName'
+                    value={formValues.categoryName}
+                    onChange={handleCategoryNameChange}
+                    type='text'
+                    id='category-name'
+                    className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff] border border-slate-700 rounded-md text-[#000000]'
                     placeholder='Category Name'
                   />
                 </div>
                 <div>
                   <label
                     className='flex justify-center items-center flex-col h-[238px] cursor-pointer border border-dashed hover:border-red-500 w-full border-[#d0d2d6]'
-                    htmlFor='image'
+                    htmlFor='category-image'
                   >
-                    <span>
-                      <FaImage />
-                    </span>
-                    <span>Select Image</span>
+                    {imagePreview ? (
+                      <img
+                        className='w-full h-full'
+                        src={imagePreview}
+                        alt='Selected category preview'
+                      />
+                    ) : (
+                      <>
+                        <span>
+                          <FaImage />
+                        </span>
+                        <span>Select Image</span>
+                      </>
+                    )}
                   </label>
                   <input
-                    className='hidden'
+                    name='categoryImage'
+                    onChange={handleCategoryImageChange}
                     type='file'
-                    name='image'
-                    id='image'
+                    id='category-image'
+                    className='hidden'
                   />
                   <div>
-                    <button className='bg-red-500 w-full hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'>
-                      Create
+                    <button
+                      disabled={isLoading}
+                      className='bg-red-800 w-full hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'
+                    >
+                      {isLoading ? <ButtonLoadingIndicator /> : 'Create'}
                     </button>
                   </div>
                 </div>

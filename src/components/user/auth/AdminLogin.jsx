@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { PropagateLoader } from 'react-spinners';
 
 import { useLoginMutation } from '../../../store/services/users';
+import ButtonLoadingIndicator from '../../common/feedback/ButtonLoadingIndicator';
 
 // TODO: maybe remove this component and route and use just Login?
 const AdminLogin = () => {
@@ -72,20 +72,7 @@ const AdminLogin = () => {
               disabled={isLoading}
               className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
             >
-              {isLoading ? (
-                <PropagateLoader
-                  color='#fff'
-                  cssOverride={{
-                    display: 'flex',
-                    margin: '0 auto',
-                    height: '24px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                />
-              ) : (
-                'Login'
-              )}
+              {isLoading ? <ButtonLoadingIndicator /> : 'Login'}
             </button>
           </form>
         </div>
