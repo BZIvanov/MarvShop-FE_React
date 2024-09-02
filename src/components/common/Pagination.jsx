@@ -12,21 +12,23 @@ const Pagination = ({
   showItem,
 }) => {
   let totalPage = Math.ceil(totalItem / perPage);
-  let startPage = pageNumber;
 
-  let dif = totalPage - pageNumber;
-  if (dif <= showItem) {
-    startPage = totalPage - showItem;
-  }
-  let endPage = startPage < 0 ? showItem : showItem + startPage;
+  let startPage = pageNumber - Math.floor(showItem / 2);
+  let endPage = pageNumber + Math.floor(showItem / 2);
 
-  if (startPage <= 0) {
+  if (startPage < 1) {
     startPage = 1;
+    endPage = Math.min(showItem, totalPage);
+  }
+
+  if (endPage > totalPage) {
+    endPage = totalPage;
+    startPage = Math.max(1, totalPage - showItem + 1);
   }
 
   const createBtns = () => {
     const btns = [];
-    for (let i = startPage; i < endPage; i++) {
+    for (let i = startPage; i <= endPage; i++) {
       btns.push(
         <li
           key={i}

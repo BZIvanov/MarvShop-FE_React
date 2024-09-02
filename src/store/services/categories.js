@@ -4,10 +4,11 @@ export const categoriesApi = api.injectEndpoints({
   endpoints: (build) => {
     return {
       getCategories: build.query({
-        query: () => {
+        query: (params = {}) => {
           return {
             url: '/categories',
             method: 'GET',
+            params,
           };
         },
         providesTags: (result) => {
@@ -16,7 +17,7 @@ export const categoriesApi = api.injectEndpoints({
               type: 'Categories',
               id: _id,
             })),
-            { type: 'Categories', id: 'LIST' },
+            { type: 'Categories', id: 'PARTIAL-LIST' },
           ];
         },
       }),
@@ -30,7 +31,7 @@ export const categoriesApi = api.injectEndpoints({
           };
         },
         invalidatesTags: () => {
-          return [{ type: 'Categories', id: 'LIST' }];
+          return [{ type: 'Categories', id: 'PARTIAL-LIST' }];
         },
       }),
     };
