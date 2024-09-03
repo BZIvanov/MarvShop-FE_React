@@ -1,52 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { IoMdImages } from 'react-icons/io';
 import { IoMdCloseCircle } from 'react-icons/io';
 
+import { useCreateProductMutation } from '../../store/services/products';
+import { useGetCategoriesQuery } from '../../store/services/categories';
+
 const SellerAddProduct = () => {
-  const categories = [
-    {
-      id: 1,
-      name: 'Sports',
-    },
-    {
-      id: 2,
-      name: 'Tshirt',
-    },
-    {
-      id: 3,
-      name: 'Mobile',
-    },
-    {
-      id: 4,
-      name: 'Computer',
-    },
-    {
-      id: 5,
-      name: 'Watch',
-    },
-    {
-      id: 6,
-      name: 'Pant',
-    },
-  ];
+  const { data, isSuccess } = useGetCategoriesQuery();
+
+  const categories = useMemo(() => data?.categories || [], [data]);
 
   const [formValues, setFormValues] = useState({
     name: '',
-    description: '',
-    discount: '',
-    price: '',
     brand: '',
     stock: '',
+    price: '',
+    discount: '',
+    description: '',
   });
 
-  const [cateShow, setCateShow] = useState(false);
-  const [category, setCategory] = useState('');
-  const [allCategory, setAllCategory] = useState(categories);
-  const [searchValue, setSearchValue] = useState('');
+  const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
+  const [searchCategoryValue, setSearchCategoryValue] = useState('');
+  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [images, setImages] = useState([]);
-  const [imageShow, setImageShow] = useState([]);
+  const [imagesPreviews, setImagesPreviews] = useState([]);
+
+  const [createProduct] = useCreateProductMutation();
+
+  useEffect(() => {
+    // set filtered categories initially to the returned from the back-end
+    if (isSuccess) {
+      setFilteredCategories(data?.categories);
+    }
+  }, [isSuccess, data?.categories]);
 
   const handleInputChange = (event) => {
     setFormValues((prevState) => ({
@@ -57,52 +46,86 @@ const SellerAddProduct = () => {
 
   const categorySearch = (e) => {
     const value = e.target.value;
-    setSearchValue(value);
+    setSearchCategoryValue(value);
 
     if (value) {
-      const filteredCategories = allCategory.filter(
-        (c) => c.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+      const filtered = categories.filter(
+        (category) =>
+          category.name.toLowerCase().indexOf(value.toLowerCase()) > -1
       );
-      setAllCategory(filteredCategories);
+      setFilteredCategories(filtered);
     } else {
-      setAllCategory(categories);
+      setFilteredCategories(categories);
     }
   };
 
-  const imageHandle = (e) => {
-    const files = e.target.files;
-    const length = files.length;
+  const handleImageChange = (event) => {
+    const files = event.target.files;
+    const filesLength = files.length;
 
-    if (length > 0) {
+    if (filesLength > 0) {
       setImages((prevState) => [...prevState, ...files]);
 
-      let imageUrl = [];
-      for (let i = 0; i < length; i++) {
-        imageUrl.push({ url: URL.createObjectURL(files[i]) });
+      const imageUrls = [];
+      for (let i = 0; i < filesLength; i++) {
+        imageUrls.push(URL.createObjectURL(files[i]));
       }
 
-      setImageShow((prevState) => [...prevState, ...imageUrl]);
+      setImagesPreviews((prevState) => [...prevState, ...imageUrls]);
     }
   };
 
-  const changeImage = (img, index) => {
-    if (img) {
-      const tempUrl = [...imageShow];
+  useEffect(() => {
+    return () => {
+      imagesPreviews.forEach((imagePreview) =>
+        URL.revokeObjectURL(imagePreview)
+      );
+    };
+  }, [imagesPreviews]);
+
+  const replaceImage = (image, idx) => {
+    if (image) {
       const tempImages = [...images];
+      const tempImagesPreviews = [...imagesPreviews];
 
-      tempImages[index] = img;
-      tempUrl[index] = { url: URL.createObjectURL(img) };
-      setImageShow([...tempUrl]);
-      setImages([...tempImages]);
+      tempImages[idx] = image;
+      URL.revokeObjectURL(tempImagesPreviews[idx]);
+      tempImagesPreviews[idx] = URL.createObjectURL(image);
+
+      setImages(tempImages);
+      setImagesPreviews(tempImagesPreviews);
     }
   };
 
-  const removeImage = (i) => {
-    const filterImage = images.filter((img, index) => index !== i);
-    const filterImageUrl = imageShow.filter((img, index) => index !== i);
+  const removeImage = (idx) => {
+    const previousImages = [...images.slice(0, idx), ...images.slice(idx + 1)];
+    const previousImagesPreviews = [
+      ...imagesPreviews.slice(0, idx),
+      ...imagesPreviews.slice(idx + 1),
+    ];
 
-    setImages(filterImage);
-    setImageShow(filterImageUrl);
+    URL.revokeObjectURL(imagesPreviews[idx]);
+
+    setImages(previousImages);
+    setImagesPreviews(previousImagesPreviews);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', formValues.name);
+    formData.append('brand', formValues.brand);
+    formData.append('category', selectedCategory._id);
+    formData.append('stock', formValues.stock);
+    formData.append('price', formValues.price);
+    formData.append('discount', formValues.discount);
+    formData.append('description', formValues.description);
+    for (let i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+
+    createProduct(formData);
   };
 
   return (
@@ -120,7 +143,7 @@ const SellerAddProduct = () => {
           </Link>
         </div>
         <div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
               <div className='flex flex-col w-full gap-1'>
                 <label htmlFor='name'>Product Name</label>
@@ -154,22 +177,23 @@ const SellerAddProduct = () => {
                 <label htmlFor='category'>Category</label>
                 <input
                   readOnly={true}
-                  onClick={() => setCateShow((prevState) => !prevState)}
+                  onClick={() =>
+                    setIsCategoryExpanded((prevState) => !prevState)
+                  }
                   className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  onChange={handleInputChange}
-                  value={category}
+                  value={selectedCategory?.name || ''}
                   type='text'
                   id='category'
-                  placeholder='--select category--'
+                  placeholder='Select category'
                 />
                 <div
                   className={`absolute top-[101%] bg-[#475569] w-full transition-all ${
-                    cateShow ? 'scale-100' : 'scale-0'
+                    isCategoryExpanded ? 'scale-100' : 'scale-0'
                   }`}
                 >
                   <div className='w-full px-4 py-2 fixed'>
                     <input
-                      value={searchValue}
+                      value={searchCategoryValue}
                       onChange={categorySearch}
                       className='px-3 py-1 w-full focus:border-indigo-500 outline-none bg-transparent border border-slate-700 rounded-md text-[#d0d2d6] overflow-hidden'
                       type='text'
@@ -177,21 +201,22 @@ const SellerAddProduct = () => {
                     />
                   </div>
                   <div className='pt-14'></div>
-                  <div className='flex justify-start items-start flex-col h-[200px] overflow-x-scrool'>
-                    {allCategory.map((c, i) => (
+                  <div className='flex justify-start items-start flex-col overflow-x-scrool'>
+                    {filteredCategories.map((category) => (
                       <span
-                        key={i}
+                        key={category._id}
                         className={`px-4 py-2 hover:bg-indigo-500 hover:text-white hover:shadow-lg w-full cursor-pointer ${
-                          category === c.name && 'bg-indigo-500'
+                          selectedCategory?.name === category.name &&
+                          'bg-indigo-500'
                         }`}
                         onClick={() => {
-                          setCateShow(false);
-                          setCategory(c.name);
-                          setSearchValue('');
-                          setAllCategory(categories);
+                          setIsCategoryExpanded(false);
+                          setSelectedCategory(category);
+                          setSearchCategoryValue('');
+                          setFilteredCategories(categories);
                         }}
                       >
-                        {c.name}
+                        {category.name}
                       </span>
                     ))}
                   </div>
@@ -257,23 +282,23 @@ const SellerAddProduct = () => {
             </div>
 
             <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4'>
-              {imageShow.map((img, i) => (
-                <div key={i} className='h-[180px] relative'>
-                  <label htmlFor={i}>
+              {imagesPreviews.map((imagePreview, idx) => (
+                <div key={idx} className='h-[180px] relative'>
+                  <label htmlFor={idx}>
                     <img
                       className='w-full h-full rounded-sm'
-                      src={img.url}
-                      alt=''
+                      src={imagePreview}
+                      alt='Product preview'
                     />
                   </label>
                   <input
-                    onChange={(e) => changeImage(e.target.files[0], i)}
+                    onChange={(e) => replaceImage(e.target.files[0], idx)}
                     type='file'
-                    id={i}
+                    id={idx}
                     className='hidden'
                   />
                   <span
-                    onClick={() => removeImage(i)}
+                    onClick={() => removeImage(idx)}
                     className='p-2 z-10 cursor-pointer bg-slate-700 hover:shadow-lg hover:shadow-slate-400/50 text-white absolute top-1 right-1 rounded-full'
                   >
                     <IoMdCloseCircle />
@@ -290,17 +315,18 @@ const SellerAddProduct = () => {
                 <span>Select Image</span>
               </label>
               <input
-                className='hidden'
-                onChange={imageHandle}
+                name='image'
+                onChange={handleImageChange}
                 multiple={true}
                 type='file'
                 id='image'
+                className='hidden'
               />
             </div>
 
             <div className='flex'>
               <button className='bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'>
-                Add Product
+                Create
               </button>
             </div>
           </form>
