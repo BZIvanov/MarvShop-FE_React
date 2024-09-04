@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { IoMdImages } from 'react-icons/io';
 import { IoMdCloseCircle } from 'react-icons/io';
 
+import { useDispatch } from '../../store/store';
 import { useCreateProductMutation } from '../../store/services/products';
 import { useGetCategoriesQuery } from '../../store/services/categories';
+import { showNotification } from '../../store/features/notification/notificationSlice';
+import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 
 const SellerAddProduct = () => {
+  const dispatch = useDispatch();
+
   const { data, isSuccess } = useGetCategoriesQuery();
 
   const categories = useMemo(() => data?.categories || [], [data]);
@@ -28,7 +33,7 @@ const SellerAddProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesPreviews, setImagesPreviews] = useState([]);
 
-  const [createProduct] = useCreateProductMutation();
+  const [createProduct, { isLoading }] = useCreateProductMutation();
 
   useEffect(() => {
     // set filtered categories initially to the returned from the back-end
@@ -110,8 +115,10 @@ const SellerAddProduct = () => {
     setImagesPreviews(previousImagesPreviews);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // TODO: check for valid form
 
     const formData = new FormData();
     formData.append('name', formValues.name);
@@ -125,7 +132,28 @@ const SellerAddProduct = () => {
       formData.append('images', images[i]);
     }
 
-    createProduct(formData);
+    const result = await createProduct(formData);
+
+    if (!('error' in result)) {
+      setFormValues({
+        name: '',
+        brand: '',
+        stock: '',
+        price: '',
+        discount: '',
+        description: '',
+      });
+      setSelectedCategory(null);
+      setImages([]);
+      setImagesPreviews([]);
+
+      dispatch(
+        showNotification({
+          type: 'success',
+          message: `Product created successfully`,
+        })
+      );
+    }
   };
 
   return (
@@ -325,8 +353,11 @@ const SellerAddProduct = () => {
             </div>
 
             <div className='flex'>
-              <button className='bg-red-500  hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'>
-                Create
+              <button
+                disabled={isLoading}
+                className='bg-red-500 w-[280px] hover:shadow-red-500/40 hover:shadow-lg text-white rounded-md px-7 py-2 my-3'
+              >
+                {isLoading ? <ButtonLoadingIndicator /> : 'Create'}
               </button>
             </div>
           </form>

@@ -26,7 +26,7 @@ const Register = () => {
     event.preventDefault();
 
     const { username, email, password } = formValues;
-    register({ username, email, password });
+    register({ username, email, password, role: 'seller' });
   };
 
   return (
