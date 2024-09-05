@@ -31,7 +31,6 @@ const SellerAddProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [images, setImages] = useState([]);
-  const [imagesPreviews, setImagesPreviews] = useState([]);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
@@ -49,8 +48,8 @@ const SellerAddProduct = () => {
     }));
   };
 
-  const categorySearch = (e) => {
-    const value = e.target.value;
+  const categorySearch = (event) => {
+    const value = event.target.value;
     setSearchCategoryValue(value);
 
     if (value) {
@@ -64,55 +63,50 @@ const SellerAddProduct = () => {
     }
   };
 
-  const handleImageChange = (event) => {
+  const handleNewImageChange = (event) => {
     const files = event.target.files;
     const filesLength = files.length;
 
     if (filesLength > 0) {
-      setImages((prevState) => [...prevState, ...files]);
-
-      const imageUrls = [];
+      const newImages = [];
       for (let i = 0; i < filesLength; i++) {
-        imageUrls.push(URL.createObjectURL(files[i]));
+        newImages.push({
+          file: files[i],
+          imageUrl: URL.createObjectURL(files[i]),
+        });
       }
 
-      setImagesPreviews((prevState) => [...prevState, ...imageUrls]);
+      setImages((prevState) => [...prevState, ...newImages]);
     }
   };
 
   useEffect(() => {
+    const stateImages = images;
+
     return () => {
-      imagesPreviews.forEach((imagePreview) =>
-        URL.revokeObjectURL(imagePreview)
-      );
+      stateImages.forEach((image) => URL.revokeObjectURL(image.imageUrl));
     };
-  }, [imagesPreviews]);
+  }, [images]);
 
-  const replaceImage = (image, idx) => {
-    if (image) {
-      const tempImages = [...images];
-      const tempImagesPreviews = [...imagesPreviews];
+  const replaceImage = (newImage, idx) => {
+    const tempImages = [...images];
 
-      tempImages[idx] = image;
-      URL.revokeObjectURL(tempImagesPreviews[idx]);
-      tempImagesPreviews[idx] = URL.createObjectURL(image);
+    URL.revokeObjectURL(tempImages[idx].imageUrl);
 
-      setImages(tempImages);
-      setImagesPreviews(tempImagesPreviews);
-    }
+    tempImages[idx] = {
+      file: newImage,
+      imageUrl: URL.createObjectURL(newImage),
+    };
+
+    setImages(tempImages);
   };
 
   const removeImage = (idx) => {
-    const previousImages = [...images.slice(0, idx), ...images.slice(idx + 1)];
-    const previousImagesPreviews = [
-      ...imagesPreviews.slice(0, idx),
-      ...imagesPreviews.slice(idx + 1),
-    ];
+    URL.revokeObjectURL(images[idx].imageUrl);
 
-    URL.revokeObjectURL(imagesPreviews[idx]);
+    const imagesToKeep = [...images.slice(0, idx), ...images.slice(idx + 1)];
 
-    setImages(previousImages);
-    setImagesPreviews(previousImagesPreviews);
+    setImages(imagesToKeep);
   };
 
   const handleSubmit = async (event) => {
@@ -129,7 +123,7 @@ const SellerAddProduct = () => {
     formData.append('discount', formValues.discount);
     formData.append('description', formValues.description);
     for (let i = 0; i < images.length; i++) {
-      formData.append('images', images[i]);
+      formData.append('images', images[i].file);
     }
 
     const result = await createProduct(formData);
@@ -145,7 +139,6 @@ const SellerAddProduct = () => {
       });
       setSelectedCategory(null);
       setImages([]);
-      setImagesPreviews([]);
 
       dispatch(
         showNotification({
@@ -310,17 +303,19 @@ const SellerAddProduct = () => {
             </div>
 
             <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4'>
-              {imagesPreviews.map((imagePreview, idx) => (
+              {images.map((image, idx) => (
                 <div key={idx} className='h-[180px] relative'>
                   <label htmlFor={idx}>
                     <img
                       className='w-full h-full rounded-sm'
-                      src={imagePreview}
+                      src={image.imageUrl}
                       alt='Product preview'
                     />
                   </label>
                   <input
-                    onChange={(e) => replaceImage(e.target.files[0], idx)}
+                    onChange={(event) =>
+                      replaceImage(event.target.files[0], idx)
+                    }
                     type='file'
                     id={idx}
                     className='hidden'
@@ -333,6 +328,7 @@ const SellerAddProduct = () => {
                   </span>
                 </div>
               ))}
+
               <label
                 className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full text-[#d0d2d6]'
                 htmlFor='image'
@@ -344,7 +340,7 @@ const SellerAddProduct = () => {
               </label>
               <input
                 name='image'
-                onChange={handleImageChange}
+                onChange={handleNewImageChange}
                 multiple={true}
                 type='file'
                 id='image'

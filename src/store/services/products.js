@@ -21,6 +21,15 @@ export const productsApi = api.injectEndpoints({
           ];
         },
       }),
+      getProduct: build.query({
+        query: (id) => ({
+          url: `/products/${id}`,
+          method: 'GET',
+        }),
+        providesTags: (_result, _error, payload) => {
+          return [{ type: 'Products', id: payload }];
+        },
+      }),
       createProduct: build.mutation({
         query: (data) => {
           return {
@@ -34,8 +43,28 @@ export const productsApi = api.injectEndpoints({
           return [{ type: 'Products', id: 'PARTIAL-LIST' }];
         },
       }),
+      updateProduct: build.mutation({
+        query: (data) => {
+          const { id, ...body } = data;
+
+          return {
+            url: `/products/${id}`,
+            method: 'PATCH',
+            body,
+            credentials: 'include',
+          };
+        },
+        invalidatesTags: (_result, _error, payload) => {
+          return [{ type: 'Products', id: payload.id }];
+        },
+      }),
     };
   },
 });
 
-export const { useGetProductsQuery, useCreateProductMutation } = productsApi;
+export const {
+  useGetProductsQuery,
+  useGetProductQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} = productsApi;
