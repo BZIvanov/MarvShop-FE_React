@@ -11,9 +11,26 @@ export const sellersApi = api.injectEndpoints({
             credentials: 'include',
           };
         },
+        providesTags: () => {
+          return [{ type: 'Seller' }];
+        },
+      }),
+      updateShopInfo: build.mutation({
+        query: (data) => {
+          return {
+            url: '/sellers/update-shop-info',
+            method: 'PATCH',
+            body: data,
+            credentials: 'include',
+          };
+        },
+        invalidatesTags: () => {
+          return [{ type: 'Seller' }];
+        },
       }),
     };
   },
 });
 
-export const { useGetCurrentSellerQuery } = sellersApi;
+export const { useGetCurrentSellerQuery, useUpdateShopInfoMutation } =
+  sellersApi;

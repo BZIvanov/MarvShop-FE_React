@@ -16,6 +16,7 @@ import { CgProfile } from 'react-icons/cg';
 
 import { useSelector } from '../../store/store';
 import { selectUser } from '../../store/features/user/userSlice';
+import { useLogoutMutation } from '../../store/services/users';
 
 const adminLinks = [
   {
@@ -112,6 +113,8 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const user = useSelector(selectUser);
   const isAdmin = user?.role === 'admin';
 
+  const [logout] = useLogoutMutation();
+
   const links = isAdmin ? adminLinks : sellerLinks;
 
   return (
@@ -156,7 +159,10 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
               </li>
             ))}
             <li>
-              <button className='text-[#030811] font-bold duration-200 px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1'>
+              <button
+                onClick={() => logout()}
+                className='text-[#030811] font-bold duration-200 px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1'
+              >
                 <span>
                   <BiLogOutCircle />
                 </span>

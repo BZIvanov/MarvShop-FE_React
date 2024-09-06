@@ -24,6 +24,9 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.initialLoadingCompleted = true;
       })
+      .addMatcher(usersApi.endpoints.logout.matchFulfilled, (state) => {
+        state.user = null;
+      })
       .addMatcher(
         usersApi.endpoints.getCurrentUser.matchFulfilled,
         (state, action) => {

@@ -176,17 +176,6 @@ const SellerEditProduct = () => {
     const result = await updateProduct({ id: productId, formData });
 
     if (!('error' in result)) {
-      setFormValues({
-        name: '',
-        brand: '',
-        stock: '',
-        price: '',
-        discount: '',
-        description: '',
-      });
-      setSelectedCategory(null);
-      setImages([]);
-
       dispatch(
         showNotification({
           type: 'success',

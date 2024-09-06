@@ -23,6 +23,15 @@ export const usersApi = api.injectEndpoints({
           };
         },
       }),
+      logout: build.mutation({
+        query: () => {
+          return {
+            url: '/users/logout',
+            method: 'POST',
+            credentials: 'include',
+          };
+        },
+      }),
       getCurrentUser: build.query({
         query: () => {
           return {
@@ -31,10 +40,31 @@ export const usersApi = api.injectEndpoints({
             credentials: 'include',
           };
         },
+        providesTags: () => {
+          return [{ type: 'User' }];
+        },
+      }),
+      updateAvatar: build.mutation({
+        query: (data) => {
+          return {
+            url: '/users/update-avatar',
+            method: 'PATCH',
+            body: data,
+            credentials: 'include',
+          };
+        },
+        invalidatesTags: () => {
+          return [{ type: 'User' }];
+        },
       }),
     };
   },
 });
 
-export const { useRegisterMutation, useLoginMutation, useGetCurrentUserQuery } =
-  usersApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useGetCurrentUserQuery,
+  useUpdateAvatarMutation,
+} = usersApi;

@@ -1,12 +1,60 @@
+import { useState } from 'react';
 import { FadeLoader } from 'react-spinners';
 import { FaImages } from 'react-icons/fa6';
 import { FaRegEdit } from 'react-icons/fa';
 
+import { useSelector } from '../../store/store';
+import { selectUser } from '../../store/features/user/userSlice';
+import { selectSeller } from '../../store/features/seller/sellerSlice';
+import { useUpdateAvatarMutation } from '../../store/services/users';
+import { useUpdateShopInfoMutation } from '../../store/services/sellers';
+import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
+
 const SellerProfile = () => {
-  const image = true;
-  const loader = true;
-  const status = 'active';
-  const userInfo = true;
+  const user = useSelector(selectUser);
+  const seller = useSelector(selectSeller);
+
+  const [shopFormValues, setShopFormValues] = useState({
+    shopName: '',
+    country: '',
+    city: '',
+    street: '',
+  });
+
+  const [updateAvatar, { isLoading: isUpdateAvatarLoading }] =
+    useUpdateAvatarMutation();
+  const [updateShopInfo, { isLoading: isUpdateShopInfoLoading }] =
+    useUpdateShopInfoMutation();
+
+  const handleAvatarChange = (event) => {
+    if (isUpdateAvatarLoading) {
+      return;
+    }
+
+    const file = event.target.files[0];
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    updateAvatar(formData);
+  };
+
+  const handleShopFormValueChange = (event) => {
+    setShopFormValues((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleShopInfoSubmit = (event) => {
+    event.preventDefault();
+
+    updateShopInfo(shopFormValues);
+  };
+
+  const handleUserInfoSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <div className='px-2 lg:px-7 py-5'>
@@ -14,13 +62,13 @@ const SellerProfile = () => {
         <div className='w-full md:w-6/12'>
           <div className='w-full p-4 bg-[#6a5fdf] rounded-md text-[#d0d2d6]'>
             <div className='flex justify-center items-center py-3'>
-              {image ? (
+              {user?.avatar ? (
                 <label
-                  htmlFor='img'
+                  htmlFor='avatar'
                   className='h-[150px] w-[200px] relative p-3 cursor-pointer overflow-hidden'
                 >
-                  <img src='/images/logo.png' alt='' />
-                  {!loader && (
+                  <img src={user.avatar.imageUrl} alt='User avatar' />
+                  {isUpdateAvatarLoading && (
                     <div className='bg-slate-600 absolute left-0 top-0 w-full h-full opacity-70 flex justify-center items-center z-20'>
                       <span>
                         <FadeLoader />
@@ -31,13 +79,13 @@ const SellerProfile = () => {
               ) : (
                 <label
                   className='flex justify-center items-center flex-col h-[150px] w-[200px] cursor-pointer border border-dashed hover:border-red-500 border-[#d0d2d6] relative'
-                  htmlFor='img'
+                  htmlFor='avatar'
                 >
                   <span>
                     <FaImages />
                   </span>
                   <span>Select Image</span>
-                  {loader && (
+                  {isUpdateAvatarLoading && (
                     <div className='bg-slate-600 absolute left-0 top-0 w-full h-full opacity-70 flex justify-center items-center z-20'>
                       <span>
                         <FadeLoader />
@@ -46,7 +94,13 @@ const SellerProfile = () => {
                   )}
                 </label>
               )}
-              <input type='file' className='hidden' id='img' />
+              <input
+                type='file'
+                onChange={handleAvatarChange}
+                disabled={isUpdateAvatarLoading}
+                className='hidden'
+                id='avatar'
+              />
             </div>
 
             <div className='px-0 md:px-5 py-2'>
@@ -55,31 +109,31 @@ const SellerProfile = () => {
                   <FaRegEdit />
                 </span>
                 <div className='flex gap-2'>
-                  <span>Name : </span>
-                  <span>Biser Ivanov</span>
+                  <span>Username: </span>
+                  <span>{user?.username}</span>
                 </div>
                 <div className='flex gap-2'>
-                  <span>Email : </span>
-                  <span>biser@gmail.com</span>
+                  <span>Email: </span>
+                  <span>{user?.email}</span>
                 </div>
                 <div className='flex gap-2'>
-                  <span>Role : </span>
-                  <span>Seller</span>
+                  <span>Role: </span>
+                  <span>{user?.role}</span>
                 </div>
                 <div className='flex gap-2'>
-                  <span>Status : </span>
-                  <span>Active</span>
+                  <span>Status: </span>
+                  <span>{seller?.status}</span>
                 </div>
                 <div className='flex gap-2'>
-                  <span>Payment Account : </span>
+                  <span>Payment Account: </span>
                   <p>
-                    {status === 'active' ? (
+                    {seller?.payment === 'active' ? (
                       <span className='bg-green-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>
-                        Pending
+                        {seller?.payment}
                       </span>
                     ) : (
-                      <span className='bg-blue-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>
-                        Click Active
+                      <span className='bg-red-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>
+                        Click to activate
                       </span>
                     )}
                   </p>
@@ -87,78 +141,93 @@ const SellerProfile = () => {
               </div>
             </div>
             <div className='px-0 md:px-5 py-2'>
-              {!userInfo ? (
-                <form>
-                  <div className='flex flex-col w-full gap-1 mb-2'>
-                    <label htmlFor='shop'>Shop Name</label>
-                    <input
-                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                      type='text'
-                      name='shopName'
-                      id='shop'
-                      placeholder='Shop Name'
-                    />
-                  </div>
-
-                  <div className='flex flex-col w-full gap-1 mb-2'>
-                    <label htmlFor='division'>Division Name</label>
-                    <input
-                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                      type='text'
-                      name='division'
-                      id='division'
-                      placeholder='Division Name'
-                    />
-                  </div>
-
-                  <div className='flex flex-col w-full gap-1 mb-2'>
-                    <label htmlFor='district'>District Name</label>
-                    <input
-                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                      type='text'
-                      name='district'
-                      id='district'
-                      placeholder='District Name'
-                    />
-                  </div>
-
-                  <div className='flex flex-col w-full gap-1 mb-2'>
-                    <label htmlFor='subdis'>Sub District Name</label>
-                    <input
-                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                      type='text'
-                      name='subdis'
-                      id='subdis'
-                      placeholder='Sub District Name'
-                    />
-                  </div>
-
-                  <button className='bg-red-500 hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'>
-                    Save Changes
-                  </button>
-                </form>
-              ) : (
+              {seller?.shopInfo?.shopName ? (
                 <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative'>
                   <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'>
                     <FaRegEdit />
                   </span>
                   <div className='flex gap-2'>
-                    <span>Shop Name : </span>
-                    <span>Marv Shop</span>
+                    <span>Shop Name: </span>
+                    <span>{seller.shopInfo.shopName}</span>
                   </div>
                   <div className='flex gap-2'>
-                    <span>Divission : </span>
-                    <span>Sofia</span>
+                    <span>Country: </span>
+                    <span>{seller.shopInfo.country}</span>
                   </div>
                   <div className='flex gap-2'>
-                    <span>District : </span>
-                    <span>Sofia</span>
+                    <span>City: </span>
+                    <span>{seller.shopInfo.city}</span>
                   </div>
                   <div className='flex gap-2'>
-                    <span>Sub District : </span>
-                    <span>Sofia</span>
+                    <span>Street: </span>
+                    <span>{seller.shopInfo.street}</span>
                   </div>
                 </div>
+              ) : (
+                <form onSubmit={handleShopInfoSubmit}>
+                  <div className='flex flex-col w-full gap-1 mb-2'>
+                    <label htmlFor='shop-name'>Shop Name</label>
+                    <input
+                      name='shopName'
+                      value={shopFormValues.shopName}
+                      onChange={handleShopFormValueChange}
+                      type='text'
+                      id='shop-name'
+                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+                      placeholder='Shop Name'
+                    />
+                  </div>
+
+                  <div className='flex flex-col w-full gap-1 mb-2'>
+                    <label htmlFor='country'>Country</label>
+                    <input
+                      name='country'
+                      value={shopFormValues.country}
+                      onChange={handleShopFormValueChange}
+                      type='text'
+                      id='country'
+                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+                      placeholder='Country'
+                    />
+                  </div>
+
+                  <div className='flex flex-col w-full gap-1 mb-2'>
+                    <label htmlFor='district'>City</label>
+                    <input
+                      name='city'
+                      value={shopFormValues.city}
+                      onChange={handleShopFormValueChange}
+                      type='text'
+                      id='city'
+                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+                      placeholder='City'
+                    />
+                  </div>
+
+                  <div className='flex flex-col w-full gap-1 mb-2'>
+                    <label htmlFor='subdis'>Street</label>
+                    <input
+                      name='street'
+                      value={shopFormValues.street}
+                      onChange={handleShopFormValueChange}
+                      type='text'
+                      id='street'
+                      className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+                      placeholder='Street'
+                    />
+                  </div>
+
+                  <button
+                    disabled={isUpdateShopInfoLoading}
+                    className='bg-red-500 w-[200px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
+                  >
+                    {isUpdateShopInfoLoading ? (
+                      <ButtonLoadingIndicator />
+                    ) : (
+                      'Save Changes'
+                    )}
+                  </button>
+                </form>
               )}
             </div>
           </div>
@@ -170,36 +239,36 @@ const SellerProfile = () => {
               <h1 className='text-[#d0d2d6] text-lg mb-3 font-semibold'>
                 Change Password
               </h1>
-              <form>
+              <form onSubmit={handleUserInfoSubmit}>
                 <div className='flex flex-col w-full gap-1 mb-2'>
                   <label htmlFor='email'>Email</label>
                   <input
-                    className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                    type='email'
                     name='email'
+                    type='email'
                     id='email'
+                    className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
                     placeholder='Email'
                   />
                 </div>
 
                 <div className='flex flex-col w-full gap-1 mb-2'>
-                  <label htmlFor='oldPassword'>Old Password</label>
+                  <label htmlFor='old-password'>Old Password</label>
                   <input
-                    className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                    type='password'
                     name='oldPassword'
-                    id='oldPassword'
+                    type='password'
+                    id='old-password'
+                    className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
                     placeholder='Old Password'
                   />
                 </div>
 
                 <div className='flex flex-col w-full gap-1 mb-2'>
-                  <label htmlFor='newPassword'>New Password</label>
+                  <label htmlFor='new-password'>New Password</label>
                   <input
-                    className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                    type='password'
                     name='newPassword'
-                    id='newPassword'
+                    type='password'
+                    id='new-password'
+                    className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
                     placeholder='New Password'
                   />
                 </div>
