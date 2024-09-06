@@ -3,26 +3,32 @@ import { Link, useParams } from 'react-router-dom';
 import { IoMdImages } from 'react-icons/io';
 import { IoMdCloseCircle } from 'react-icons/io';
 
-import { useGetProductQuery } from '../../store/services/products';
+import { useDispatch } from '../../store/store';
+import {
+  useGetProductQuery,
+  useUpdateProductMutation,
+} from '../../store/services/products';
 import { useGetCategoriesQuery } from '../../store/services/categories';
+import { showNotification } from '../../store/features/notification/notificationSlice';
+import { useIsAnyApiRequestPending } from '../../hooks/useIsAnyApiRequestPending';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 
 const SellerEditProduct = () => {
+  const dispatch = useDispatch();
+
   const { productId } = useParams();
 
-  const {
-    data: categoriesData,
-    isLoading: isCategoryLoading,
-    isSuccess: isCategoriesSuccess,
-  } = useGetCategoriesQuery();
+  const isLoading = useIsAnyApiRequestPending();
 
-  const {
-    data: productData,
-    isLoading: isProductLoading,
-    isSuccess: isProductsSuccess,
-  } = useGetProductQuery(productId, {
-    skip: !productId,
-  });
+  const [updateProduct] = useUpdateProductMutation();
+
+  const { data: categoriesData, isSuccess: isCategoriesSuccess } =
+    useGetCategoriesQuery();
+
+  const { data: productData, isSuccess: isProductsSuccess } =
+    useGetProductQuery(productId, {
+      skip: !productId,
+    });
 
   const categories = useMemo(
     () => categoriesData?.categories || [],
@@ -150,6 +156,44 @@ const SellerEditProduct = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', formValues.name);
+    formData.append('brand', formValues.brand);
+    formData.append('category', selectedCategory._id);
+    formData.append('stock', formValues.stock);
+    formData.append('price', formValues.price);
+    formData.append('discount', formValues.discount);
+    formData.append('description', formValues.description);
+    for (let i = 0; i < images.length; i++) {
+      if (images[i].file) {
+        formData.append('newImages', images[i].file);
+      } else {
+        formData.append('existingImages', JSON.stringify(images[i]));
+      }
+    }
+
+    const result = await updateProduct({ id: productId, formData });
+
+    if (!('error' in result)) {
+      setFormValues({
+        name: '',
+        brand: '',
+        stock: '',
+        price: '',
+        discount: '',
+        description: '',
+      });
+      setSelectedCategory(null);
+      setImages([]);
+
+      dispatch(
+        showNotification({
+          type: 'success',
+          message: 'Product updated successfully',
+        })
+      );
+    }
   };
 
   return (
@@ -308,7 +352,7 @@ const SellerEditProduct = () => {
               {images.map((image, idx) => {
                 return (
                   <div key={idx} className='h-[180px] relative'>
-                    <label htmlFor={idx}>
+                    <label htmlFor={idx} className='cursor-grab'>
                       <img
                         className='w-full h-full rounded-sm'
                         src={image.imageUrl}
@@ -354,14 +398,10 @@ const SellerEditProduct = () => {
 
             <div className='flex'>
               <button
-                disabled={isCategoryLoading || isProductLoading}
+                disabled={isLoading}
                 className='bg-red-500 w-[280px] hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'
               >
-                {isCategoryLoading || isProductLoading ? (
-                  <ButtonLoadingIndicator />
-                ) : (
-                  'Edit'
-                )}
+                {isLoading ? <ButtonLoadingIndicator /> : 'Edit'}
               </button>
             </div>
           </form>

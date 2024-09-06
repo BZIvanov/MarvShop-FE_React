@@ -305,7 +305,7 @@ const SellerAddProduct = () => {
             <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4'>
               {images.map((image, idx) => (
                 <div key={idx} className='h-[180px] relative'>
-                  <label htmlFor={idx}>
+                  <label htmlFor={idx} className='cursor-grab'>
                     <img
                       className='w-full h-full rounded-sm'
                       src={image.imageUrl}

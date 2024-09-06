@@ -45,12 +45,12 @@ export const productsApi = api.injectEndpoints({
       }),
       updateProduct: build.mutation({
         query: (data) => {
-          const { id, ...body } = data;
+          const { id, formData } = data;
 
           return {
             url: `/products/${id}`,
             method: 'PATCH',
-            body,
+            body: formData,
             credentials: 'include',
           };
         },
