@@ -39,6 +39,7 @@ import {
   SellerToCustomer,
   SellerProfile,
 } from './lazy-routes';
+import Home from '../components/shop/Home';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
     element: <App />, // render the App component on the root route
     errorElement: <ErrorBoundary />,
     children: [
+      {
+        path: '',
+        element: <Home />,
+      },
       {
         path: 'admin',
         element: (

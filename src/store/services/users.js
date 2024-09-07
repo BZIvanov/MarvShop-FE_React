@@ -57,6 +57,23 @@ export const usersApi = api.injectEndpoints({
           return [{ type: 'User' }];
         },
       }),
+      getSellers: build.query({
+        query: (params = {}) => {
+          return {
+            url: '/users/sellers',
+            method: 'GET',
+            credentials: 'include',
+            params,
+          };
+        },
+      }),
+      getSeller: build.query({
+        query: (id) => ({
+          url: `/users/sellers/${id}`,
+          method: 'GET',
+          credentials: 'include',
+        }),
+      }),
     };
   },
 });
@@ -67,4 +84,6 @@ export const {
   useLogoutMutation,
   useGetCurrentUserQuery,
   useUpdateAvatarMutation,
+  useGetSellersQuery,
+  useGetSellerQuery,
 } = usersApi;

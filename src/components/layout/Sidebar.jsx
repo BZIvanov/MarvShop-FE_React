@@ -50,7 +50,7 @@ const adminLinks = [
     path: '/admin/deactive-sellers',
   },
   {
-    title: 'Seller Request',
+    title: 'Sellers Requests',
     icon: <FaCodePullRequest />,
     path: '/admin/sellers-request',
   },
