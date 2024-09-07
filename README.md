@@ -17,3 +17,4 @@ In the terminal run `npm run dev` to start the server in development mode.
 - `react-icons` - Icons library
 - `react-spinners` - Loading indicators library
 - `react-window` - Data rendering library
+- `react-multi-carousel` - Carousel images library
