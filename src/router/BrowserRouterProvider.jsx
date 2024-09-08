@@ -40,6 +40,7 @@ import {
   SellerProfile,
 } from './lazy-routes';
 import Home from '../components/shop/Home';
+import Shop from '../components/shop/Shop';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Home />,
+      },
+      {
+        path: 'shop',
+        element: <Shop />,
       },
       {
         path: 'admin',
