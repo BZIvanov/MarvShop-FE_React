@@ -20,3 +20,4 @@ In the terminal run `npm run dev` to start the server in development mode.
 - `react-multi-carousel` - Carousel images library
 - `swiper` - Swiping carousel library
 - `react-range` - Range values filtering library
+- `@smastrom/react-rating` - Star rating field

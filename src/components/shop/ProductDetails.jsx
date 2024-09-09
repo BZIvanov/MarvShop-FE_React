@@ -102,7 +102,7 @@ const ProductDetails = () => {
       </section>
 
       <section>
-        <div className='w-[90%] md:w-[85%] lg:w-[90%] h-full mx-auto'>
+        <div className='w-[90%] md:w-[85%] lg:w-[90%] h-full mx-auto mb-3'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
             <div>
               <div className='p-5 border'>
