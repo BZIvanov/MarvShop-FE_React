@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaGoogle } from 'react-icons/fa';
-import { FaFacebook } from 'react-icons/fa';
+import { FaFacebookF } from 'react-icons/fa6';
+import { FaGoogle } from 'react-icons/fa6';
 
 import { useLoginMutation } from '../../../store/services/users';
 import ButtonLoadingIndicator from '../../common/feedback/ButtonLoadingIndicator';
+import Header from '../../shop/Header';
+import Footer from '../../shop/Footer';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({
@@ -29,81 +31,95 @@ const Login = () => {
   };
 
   return (
-    <div className='min-w-screen min-h-screen bg-[#cdcae9] flex justify-center items-center'>
-      <div className='w-[350px] text-[#ffffff] p-2'>
-        <div className='bg-[#6f68d1] p-4 rounded-md'>
-          <h2 className='text-xl mb-3 font-bold'>Welcome to Marv Shop</h2>
-          <p className='text-sm mb-3 font-medium'>
-            Please login with your account
-          </p>
+    <div>
+      <Header />
+      <div className='bg-slate-200 mt-4'>
+        <div className='w-full justify-center items-center p-10'>
+          <div className='grid grid-cols-1 md:grid-cols-2 w-[95%] xl:w-[60%] mx-auto bg-white rounded-md'>
+            <div className='w-full px-8 py-8'>
+              <h2 className='text-center w-full text-xl text-slate-600 font-bold mb-3'>
+                Login with your account
+              </h2>
 
-          <form onSubmit={handleSubmit}>
-            <div className='flex flex-col w-full gap-1 mb-3'>
-              <label htmlFor='email'>Email</label>
-              <input
-                onChange={handleInputChange}
-                value={formValues.email}
-                className='px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md'
-                type='email'
-                name='email'
-                placeholder='Email'
-                id='email'
-                required={true}
+              <div>
+                <form onSubmit={handleSubmit} className='text-slate-600'>
+                  <div className='flex flex-col gap-1 mb-2'>
+                    <label htmlFor='email'>Email</label>
+                    <input
+                      name='email'
+                      value={formValues.email}
+                      onChange={handleInputChange}
+                      type='email'
+                      id='email'
+                      className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
+                      placeholder='Email'
+                      required={true}
+                    />
+                  </div>
+
+                  <div className='flex flex-col gap-1 mb-2'>
+                    <label htmlFor='password'>Password</label>
+                    <input
+                      name='password'
+                      value={formValues.password}
+                      onChange={handleInputChange}
+                      type='password'
+                      id='password'
+                      className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
+                      placeholder='Password'
+                      required={true}
+                    />
+                  </div>
+
+                  <button
+                    disabled={isLoading}
+                    className='px-8 w-full py-2 bg-[#059473] shadow-lg hover:shadow-green-500/40 text-white rounded-md'
+                  >
+                    {isLoading ? <ButtonLoadingIndicator /> : 'Login'}
+                  </button>
+                </form>
+
+                <div className='flex items-center justify-center text-center gap-2 text-slate-600 pt-1 mt-3'>
+                  <p>Don&apos;t have an account?</p>
+                  <Link className='text-blue-500' to='/auth/register'>
+                    Register
+                  </Link>
+                </div>
+
+                <div className='flex justify-center items-center py-2'>
+                  <div className='h-[1px] bg-slate-300 w-[95%]'></div>
+                  <span className='px-3 text-slate-600'>Or</span>
+                  <div className='h-[1px] bg-slate-300 w-[95%]'></div>
+                </div>
+
+                <button className='px-8 w-full py-2 bg-indigo-500 shadow hover:shadow-indigo-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3'>
+                  <span>
+                    <FaFacebookF />
+                  </span>
+                  <span>Login With Facebook</span>
+                </button>
+
+                <button className='px-8 w-full py-2 bg-red-500 shadow hover:shadow-red-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3'>
+                  <span>
+                    <FaGoogle />
+                  </span>
+                  <span>Login With Google</span>
+                </button>
+              </div>
+            </div>
+
+            <div className='w-full h-full py-4 pr-4 hidden md:block'>
+              <img
+                className='w-full h-full'
+                src='/images/auth.png'
+                alt='Auth image'
               />
             </div>
-
-            <div className='flex flex-col w-full gap-1 mb-3'>
-              <label htmlFor='password'>Password</label>
-              <input
-                onChange={handleInputChange}
-                value={formValues.password}
-                className='px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md'
-                type='password'
-                name='password'
-                placeholder='Password'
-                id='password'
-                required={true}
-              />
-            </div>
-
-            <button
-              disabled={isLoading}
-              className='bg-slate-800 w-full hover:shadow-blue-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
-            >
-              {isLoading ? <ButtonLoadingIndicator /> : 'Login'}
-            </button>
-
-            <div className='flex items-center mb-3 gap-3 justify-center'>
-              <p>Don&apos;t have an account?</p>
-              <Link className='font-bold' to='/auth/register'>
-                Register
-              </Link>
-            </div>
-
-            <div className='w-full flex justify-center items-center mb-3'>
-              <div className='w-[45%] bg-slate-700 h-[1px]' />
-              <div className='w-[10%] flex justify-center items-center'>
-                <span className='pb-1'>Or</span>
-              </div>
-              <div className='w-[45%] bg-slate-700 h-[1px] ' />
-            </div>
-
-            <div className='flex justify-center items-center gap-3'>
-              <div className='w-[135px] h-[35px] flex rounded-md bg-orange-700 shadow-lg hover:shadow-orange-700/50 justify-center cursor-pointer items-center overflow-hidden'>
-                <span>
-                  <FaGoogle />
-                </span>
-              </div>
-
-              <div className='w-[135px] h-[35px] flex rounded-md bg-blue-700 shadow-lg hover:shadow-blue-700/50 justify-center cursor-pointer items-center overflow-hidden'>
-                <span>
-                  <FaFacebook />
-                </span>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
