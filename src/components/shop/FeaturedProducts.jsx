@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaEye, FaRegHeart } from 'react-icons/fa';
 import { RiShoppingCartLine } from 'react-icons/ri';
 
@@ -35,7 +36,9 @@ const FeaturedProducts = () => {
                   <FaRegHeart />
                 </li>
                 <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-                  <FaEye />
+                  <Link to='/products/some-slug'>
+                    <FaEye />
+                  </Link>
                 </li>
                 <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
                   <RiShoppingCartLine />

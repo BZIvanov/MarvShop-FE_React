@@ -41,6 +41,9 @@ import {
 } from './lazy-routes';
 import Home from '../components/shop/Home';
 import Shop from '../components/shop/Shop';
+import Cart from '../components/cart/Cart';
+import Shipping from '../components/cart/Shipping';
+import ProductDetails from '../components/shop/ProductDetails';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +58,18 @@ const router = createBrowserRouter([
       {
         path: 'shop',
         element: <Shop />,
+      },
+      {
+        path: 'cart',
+        element: <Cart />,
+      },
+      {
+        path: 'shipping',
+        element: <Shipping />,
+      },
+      {
+        path: 'products/:slug',
+        element: <ProductDetails />,
       },
       {
         path: 'admin',
