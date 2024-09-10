@@ -1,15 +1,15 @@
-import Header from './Header';
-import Banner from './Banner';
+import Header from '../common/Header';
+import Footer from '../common/Footer';
+import MainBanner from './MainBanner';
 import CategoriesBanner from './CategoriesBanner';
 import FeaturedProducts from './FeaturedProducts';
-import RecommendedProducts from './RecommendedProducts';
-import Footer from './Footer';
+import RecommendedProducts from '../product/RecommendedProducts';
 
 const Home = () => {
   return (
     <div className='w-full'>
       <Header />
-      <Banner />
+      <MainBanner />
       <CategoriesBanner />
       <FeaturedProducts />
 

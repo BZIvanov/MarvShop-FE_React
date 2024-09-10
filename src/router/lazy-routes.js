@@ -4,9 +4,6 @@ import { lazy } from 'react';
 
 export const Register = lazy(() => import('../components/user/auth/Register'));
 export const Login = lazy(() => import('../components/user/auth/Login'));
-export const AdminLogin = lazy(() =>
-  import('../components/user/auth/AdminLogin')
-);
 
 export const AdminDashboard = lazy(() =>
   import('../components/admin/AdminDashboard')

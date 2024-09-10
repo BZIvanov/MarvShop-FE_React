@@ -4,6 +4,7 @@ import {
   MdOutlineKeyboardDoubleArrowRight,
 } from 'react-icons/md';
 
+// TODO: merge with Pagination component in common folder
 const Pagination = ({
   pageNumber,
   setPageNumber,

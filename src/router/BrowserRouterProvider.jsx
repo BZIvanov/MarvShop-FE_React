@@ -16,7 +16,6 @@ import SellerStatus from './auth/SellerStatus';
 import {
   Register,
   Login,
-  AdminLogin,
   AdminDashboard,
   AdminOrders,
   AdminOrderDetails,
@@ -39,11 +38,11 @@ import {
   SellerToCustomer,
   SellerProfile,
 } from './lazy-routes';
-import Home from '../components/shop/Home';
+import Home from '../components/home/Home';
 import Shop from '../components/shop/Shop';
 import Cart from '../components/cart/Cart';
 import Shipping from '../components/cart/Shipping';
-import ProductDetails from '../components/shop/ProductDetails';
+import ProductDetails from '../components/product/ProductDetails';
 
 const router = createBrowserRouter([
   {

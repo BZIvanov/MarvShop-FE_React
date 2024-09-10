@@ -24,11 +24,7 @@ const Header = () => {
 
   const user = useSelector(selectUser);
 
-  const { data } = useGetCategoriesQuery({
-    page: 1,
-    perPage: 20,
-    searchText,
-  });
+  const { data } = useGetCategoriesQuery({ searchText });
 
   const wishlistCount = 3;
 
@@ -405,6 +401,11 @@ const Header = () => {
                         key={category._id}
                         className='flex justify-start items-center gap-2 px-[24px] py-[6px]'
                       >
+                        <img
+                          src={category.imageUrl}
+                          className='w-[30px] h-[30px] rounded-full overflow-hidden'
+                          alt='Category preview'
+                        />
                         <Link className='text-sm block'>{category.name}</Link>
                       </li>
                     );

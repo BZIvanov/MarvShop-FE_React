@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Rating, RoundedStar } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 
-import MyRating from './Rating';
+import MyRating from '../common/Rating';
 import RatingTemp from './RatingTemp';
 import Pagination from './Pagination';
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { FaEye, FaRegHeart } from 'react-icons/fa';
 import { RiShoppingCartLine } from 'react-icons/ri';
 
-import Rating from './Rating';
+import Rating from '../common/Rating';
 
 const ProductsList = ({ productsDisplayType }) => {
   return (

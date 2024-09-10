@@ -21,7 +21,7 @@ const responsive = {
   },
 };
 
-const Banner = () => {
+const MainBanner = () => {
   return (
     <div className='w-full mt-6'>
       <div className='w-[90%] lg:w-[85%] mx-auto'>
@@ -49,4 +49,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default MainBanner;

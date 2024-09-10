@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import Header from '../shop/Header';
-import Footer from '../shop/Footer';
+import Header from '../common/Header';
+import Footer from '../common/Footer';
 
 const Cart = () => {
   const navigate = useNavigate();

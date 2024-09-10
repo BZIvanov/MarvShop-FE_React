@@ -8,11 +8,11 @@ import { BsFillGridFill } from 'react-icons/bs';
 import { FaThList } from 'react-icons/fa';
 
 import { useGetCategoriesQuery } from '../../store/services/categories';
-import Header from './Header';
-import Footer from './Footer';
-import RecommendedProducts from './RecommendedProducts';
-import ProductsList from './ProductsList';
-import Pagination from './Pagination';
+import Header from '../common/Header';
+import Footer from '../common/Footer';
+import RecommendedProducts from '../product/RecommendedProducts';
+import ProductsList from '../product/ProductsList';
+import Pagination from '../product/Pagination';
 
 const Shop = () => {
   const [page, setPage] = useState(1);
