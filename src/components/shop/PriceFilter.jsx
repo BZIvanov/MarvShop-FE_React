@@ -1,18 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Range } from 'react-range';
 
-import { useDispatch, useSelector } from '../../store/store';
-import {
-  changeFilter,
-  selectPriceFilter,
-} from '../../store/features/productsFilters/productsFiltersSlice';
+import { useDispatch } from '../../store/store';
+import { changeFilter } from '../../store/features/productsFilters/productsFiltersSlice';
+import { useGetProductsPriceRangeQuery } from '../../store/services/products';
+import { currencyFormatter } from '../../utils/formatting';
+
+const STEP = 10;
 
 const PriceFilter = () => {
   const dispatch = useDispatch();
 
-  const price = useSelector(selectPriceFilter);
+  const { data, isSuccess } = useGetProductsPriceRangeQuery();
 
-  const [localPrice, setLocalPrice] = useState(price);
+  const [rangeValues, setRangeValues] = useState([0, STEP]);
+  const [localPrice, setLocalPrice] = useState([0, STEP]);
+
+  useEffect(() => {
+    // once the min and max price was returned from the backend, use it as initial values overriding the initial values from the reducer
+    if (isSuccess) {
+      const lowestPrice = data.lowestPrice;
+      const highestPricePrice = data.highestPrice;
+
+      const roundedTo10Min = Math.floor(lowestPrice / STEP) * STEP;
+      const roundedTo10Max = Math.ceil(highestPricePrice / STEP) * STEP;
+      const minMaxValues = [roundedTo10Min, roundedTo10Max];
+
+      setRangeValues(minMaxValues);
+      setLocalPrice(minMaxValues);
+      dispatch(changeFilter({ price: minMaxValues }));
+    }
+  }, [dispatch, isSuccess, data]);
 
   return (
     <div className='py-2 flex flex-col gap-5'>
@@ -20,9 +38,9 @@ const PriceFilter = () => {
 
       <div className='pl-2'>
         <Range
-          step={5}
-          min={0}
-          max={5000}
+          step={STEP}
+          min={rangeValues[0]}
+          max={rangeValues[1]}
           values={localPrice}
           onChange={(values) => setLocalPrice(values)}
           onFinalChange={(values) => dispatch(changeFilter({ price: values }))}
@@ -50,7 +68,8 @@ const PriceFilter = () => {
       </div>
       <div>
         <span className='text-slate-800 font-bold text-lg'>
-          ${Math.floor(localPrice[0])} - ${Math.floor(localPrice[1])}
+          {currencyFormatter(localPrice[0], { fractionDigits: 0 })} -{' '}
+          {currencyFormatter(localPrice[1], { fractionDigits: 0 })}
         </span>
       </div>
     </div>

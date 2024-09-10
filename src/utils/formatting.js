@@ -1,14 +1,22 @@
-export const currencyFormatter = (price, locale = 'en-US') => {
+export const currencyFormatter = (
+  value,
+  { fractionDigits = 2, locale = 'en-US' } = {}
+) => {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'USD',
-  }).format(price);
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  }).format(value);
 };
 
-export const percentFormatter = (value, locale = 'en-US') => {
+export const percentFormatter = (
+  value,
+  { fractionDigits = 0, locale = 'en-US' } = {}
+) => {
   return new Intl.NumberFormat(locale, {
     style: 'percent',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
   }).format(value);
 };

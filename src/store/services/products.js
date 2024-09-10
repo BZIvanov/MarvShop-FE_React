@@ -58,6 +58,12 @@ export const productsApi = api.injectEndpoints({
           return [{ type: 'Products', id: payload.id }];
         },
       }),
+      getProductsPriceRange: build.query({
+        query: () => ({
+          url: '/products/price-range',
+          method: 'GET',
+        }),
+      }),
     };
   },
 });
@@ -67,4 +73,5 @@ export const {
   useGetProductQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useGetProductsPriceRangeQuery,
 } = productsApi;
