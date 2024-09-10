@@ -46,7 +46,7 @@ const FeaturedProducts = () => {
                   <FaRegHeart />
                 </li>
                 <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-                  <Link to='/products/some-slug'>
+                  <Link to={`/products/${product.slug}`}>
                     <FaEye />
                   </Link>
                 </li>

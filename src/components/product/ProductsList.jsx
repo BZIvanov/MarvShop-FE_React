@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FaEye, FaRegHeart } from 'react-icons/fa';
 import { RiShoppingCartLine } from 'react-icons/ri';
 
 import Rating from '../common/Rating';
+import { currencyFormatter } from '../../utils/formatting';
 
-const ProductsList = ({ productsDisplayType }) => {
+const ProductsList = ({ productsDisplayType, products }) => {
   return (
     <div
       className={`w-full grid ${
@@ -13,9 +15,9 @@ const ProductsList = ({ productsDisplayType }) => {
           : 'grid-cols-1 xl:grid-cols-2'
       } gap-3`}
     >
-      {[1, 2, 3, 4, 5, 6].map((p, i) => (
+      {products.map((product) => (
         <div
-          key={i}
+          key={product._id}
           className={`flex transition-all duration-1000 hover:shadow-md hover:-translate-y-3 ${
             productsDisplayType === 'grid'
               ? 'flex-col justify-start items-start'
@@ -31,7 +33,7 @@ const ProductsList = ({ productsDisplayType }) => {
           >
             <img
               className='h-[170px] sm:h-[210px] md:h-[270px] rounded-md w-full object-cover'
-              src={`/images/logo.png`}
+              src={product.images[0].imageUrl}
               alt='Product preview'
             />
 
@@ -40,7 +42,9 @@ const ProductsList = ({ productsDisplayType }) => {
                 <FaRegHeart />
               </li>
               <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-                <FaEye />
+                <Link to={`/products/${product.slug}`}>
+                  <FaEye />
+                </Link>
               </li>
               <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
                 <RiShoppingCartLine />
@@ -49,11 +53,13 @@ const ProductsList = ({ productsDisplayType }) => {
           </div>
 
           <div className='flex justify-start items-start flex-col gap-1'>
-            <h2 className='font-bold'>Product Name</h2>
+            <h2 className='font-bold'>{product.name}</h2>
             <div className='flex justify-start items-center gap-3'>
-              <span className='text-md font-semibold'>$454</span>
+              <span className='text-md font-semibold'>
+                {currencyFormatter(product.price)}
+              </span>
               <div className='flex'>
-                <Rating rating={4.5} />
+                <Rating rating={product.rating} />
               </div>
             </div>
           </div>
@@ -65,6 +71,7 @@ const ProductsList = ({ productsDisplayType }) => {
 
 ProductsList.propTypes = {
   productsDisplayType: PropTypes.string,
+  products: PropTypes.array,
 };
 
 export default ProductsList;

@@ -8,6 +8,7 @@ import { api } from './services/api';
 import user from './features/user/userSlice';
 import seller from './features/seller/sellerSlice';
 import notification from './features/notification/notificationSlice';
+import productsFilters from './features/productsFilters/productsFiltersSlice';
 import { asyncErrorNotification } from './middlewares/asyncErrorNotification';
 
 export const createStore = (options = {}) => {
@@ -17,6 +18,7 @@ export const createStore = (options = {}) => {
       user,
       seller,
       notification,
+      productsFilters,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware, asyncErrorNotification),

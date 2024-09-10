@@ -1,56 +1,57 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Range } from 'react-range';
-import { IoIosArrowForward } from 'react-icons/io';
 import { AiFillStar } from 'react-icons/ai';
 import { CiStar } from 'react-icons/ci';
 import { BsFillGridFill } from 'react-icons/bs';
 import { FaThList } from 'react-icons/fa';
 
+import { useSelector } from '../../store/store';
 import { useGetCategoriesQuery } from '../../store/services/categories';
+import { useGetProductsQuery } from '../../store/services/products';
+import { selectFilters } from '../../store/features/productsFilters/productsFiltersSlice';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
+import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
 import RecommendedProducts from '../product/RecommendedProducts';
 import ProductsList from '../product/ProductsList';
 import Pagination from '../product/Pagination';
+import PriceFilter from './PriceFilter';
 
 const Shop = () => {
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
+  const [perPage, setPerPage] = useState(12);
 
-  const [filter, setFilter] = useState(false);
-  const [filterRange, setFilterRange] = useState({ values: [50, 1500] });
-  const [rating, setRating] = useState('');
+  const [isFilterSectionExpanded, setIsFilterSectionExpanded] = useState(false);
   const [productsDisplayType, setProductsDisplayType] = useState('grid');
 
-  const { data } = useGetCategoriesQuery();
+  const [rating, setRating] = useState('');
+
+  const { price } = useSelector(selectFilters);
+
+  const { data: categoriesData } = useGetCategoriesQuery();
+  const categories = categoriesData?.categories || [];
+
+  const { data: productsData } = useGetProductsQuery({
+    page,
+    perPage,
+    price: price.join(','),
+  });
+  const products = productsData?.products || [];
 
   return (
     <div>
       <Header />
 
-      <section className='bg-[url("/images/shop-banner.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
-        <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
-          <div className='w-[85%] sm:w-[90%] md:w-[80%] lg:w-[90%] h-full mx-auto'>
-            <div className='flex flex-col justify-center gap-1 items-center h-full w-full text-white'>
-              <h2 className='text-3xl font-bold'>Shop Page</h2>
-              <div className='flex justify-center items-center gap-2 text-2xl w-full'>
-                <Link to='/'>Home</Link>
-                <span className='pt-1'>
-                  <IoIosArrowForward />
-                </span>
-                <span>Shop</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BreadcrumbsBanner pageName='Shop' />
 
       <section className='py-16'>
         <div className='w-[90%] md:w-[85%] lg:w-[80%] h-full mx-auto'>
-          <div className={`md:hidden ${filter ? 'mb-6' : 'mb-0'}`}>
+          <div
+            className={`md:hidden ${isFilterSectionExpanded ? 'mb-6' : 'mb-0'}`}
+          >
             <button
-              onClick={() => setFilter((prevState) => !prevState)}
+              onClick={() =>
+                setIsFilterSectionExpanded((prevState) => !prevState)
+              }
               className='text-center w-full py-2 px-3 bg-indigo-500 text-white'
             >
               Filter Products
@@ -60,7 +61,7 @@ const Shop = () => {
           <div className='w-full flex flex-wrap'>
             <div
               className={`w-full md:w-3/12 pr-8 ${
-                filter
+                isFilterSectionExpanded
                   ? 'h-auto overflow-auto mb-0'
                   : 'h-0 overflow-hidden mb-6 md:h-auto md:overflow-auto md:mb-0'
               }`}
@@ -70,7 +71,7 @@ const Shop = () => {
                   Categories
                 </h2>
                 <div className='flex flex-col'>
-                  {data?.categories.map((category) => {
+                  {categories.map((category) => {
                     return (
                       <div
                         key={category._id}
@@ -88,41 +89,8 @@ const Shop = () => {
                   })}
                 </div>
               </div>
-              <div className='py-2 flex flex-col gap-5'>
-                <h2 className='text-3xl font-bold mb-3 text-slate-600'>
-                  Price
-                </h2>
 
-                <div className='pl-2'>
-                  <Range
-                    step={5}
-                    min={50}
-                    max={1500}
-                    values={filterRange.values}
-                    onChange={(values) => setFilterRange({ values })}
-                    renderTrack={({ props, children }) => (
-                      <div
-                        {...props}
-                        className='w-full h-[6px] bg-slate-200 rounded-full cursor-pointer'
-                      >
-                        {children}
-                      </div>
-                    )}
-                    renderThumb={({ props }) => (
-                      <div
-                        {...props}
-                        className='w-[15px] h-[15px] bg-[#059473] rounded-full'
-                      />
-                    )}
-                  />
-                </div>
-                <div>
-                  <span className='text-slate-800 font-bold text-lg'>
-                    ${Math.floor(filterRange.values[0])} - $
-                    {Math.floor(filterRange.values[1])}
-                  </span>
-                </div>
-              </div>
+              <PriceFilter />
 
               <div className='py-3 flex flex-col gap-4'>
                 <h2 className='text-3xl font-bold mb-3 text-slate-600'>
@@ -255,7 +223,10 @@ const Shop = () => {
               </div>
 
               <div className='hidden lg:flex py-5 flex-col gap-4'>
-                <RecommendedProducts title='Latest Product' />
+                <RecommendedProducts
+                  title='Latest Products'
+                  sortColumn='createdAt'
+                />
               </div>
             </div>
 
@@ -263,7 +234,7 @@ const Shop = () => {
               <div className='pl-0 md:pl-8'>
                 <div className='py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border'>
                   <h2 className='text-lg font-medium text-slate-600'>
-                    14 Products
+                    {products.length} Products
                   </h2>
                   <div className='flex justify-center items-center gap-3'>
                     <select
@@ -296,18 +267,23 @@ const Shop = () => {
                 </div>
 
                 <div className='pb-8'>
-                  <ProductsList productsDisplayType={productsDisplayType} />
-                </div>
-
-                <div>
-                  <Pagination
-                    pageNumber={page}
-                    setPageNumber={setPage}
-                    totalItem={10}
-                    perPage={perPage}
-                    showItem={Math.floor(10 / 3)}
+                  <ProductsList
+                    productsDisplayType={productsDisplayType}
+                    products={products}
                   />
                 </div>
+
+                {productsData?.totalCount > perPage && (
+                  <div>
+                    <Pagination
+                      pageNumber={page}
+                      setPageNumber={setPage}
+                      totalItem={productsData.totalCount}
+                      perPage={perPage}
+                      showItem={3}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

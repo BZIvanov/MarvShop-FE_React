@@ -19,21 +19,21 @@ const Home = () => {
           <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'>
             <div className='overflow-hidden'>
               <RecommendedProducts
-                title='Latest Product'
+                title='Latest Products'
                 sortColumn='createdAt'
               />
             </div>
 
             <div className='overflow-hidden'>
               <RecommendedProducts
-                title='Top Rated Product'
+                title='Top Rated Products'
                 sortColumn='rating'
               />
             </div>
 
             <div className='overflow-hidden'>
               <RecommendedProducts
-                title='Discount Product'
+                title='Discounted Products'
                 sortColumn='discount'
               />
             </div>
