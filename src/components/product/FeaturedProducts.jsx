@@ -2,9 +2,17 @@ import { Link } from 'react-router-dom';
 import { FaEye, FaRegHeart } from 'react-icons/fa';
 import { RiShoppingCartLine } from 'react-icons/ri';
 
+import { useGetProductsQuery } from '../../store/services/products';
 import Rating from '../common/Rating';
+import { currencyFormatter, percentFormatter } from '../../utils/formatting';
 
 const FeaturedProducts = () => {
+  // it will be the latest products, maybe the query should be updated
+  const { data } = useGetProductsQuery({
+    page: 1,
+    perPage: 12,
+  });
+
   return (
     <div className='w-[85%] flex flex-wrap mx-auto py-[45px]'>
       <div className='w-full'>
@@ -15,19 +23,21 @@ const FeaturedProducts = () => {
       </div>
 
       <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-        {[1, 2, 3, 4, 5, 6].map((p, i) => (
+        {data?.products.map((product) => (
           <div
-            key={i}
+            key={product._id}
             className='border group transition-all duration-500 hover:shadow-md hover:-mt-3'
           >
             <div className='relative overflow-hidden'>
-              <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>
-                8%
-              </div>
+              {product.discount > 0 ? (
+                <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>
+                  {percentFormatter(product.discount)}
+                </div>
+              ) : null}
 
               <img
                 className='w-full h-[240px]'
-                src={`/images/logo.png`}
+                src={product.images[0].imageUrl}
                 alt='Product image'
               />
 
@@ -47,11 +57,13 @@ const FeaturedProducts = () => {
             </div>
 
             <div className='py-3 text-slate-600 px-2'>
-              <h2 className='font-bold'>Product Name</h2>
+              <h2 className='font-bold'>{product.name}</h2>
               <div className='flex justify-start items-center gap-3'>
-                <span className='text-md font-semibold'>$455</span>
+                <span className='text-md font-semibold'>
+                  {currencyFormatter(product.price)}
+                </span>
                 <div className='flex'>
-                  <Rating rating={4.5} />
+                  <Rating rating={product.rating} />
                 </div>
               </div>
             </div>
