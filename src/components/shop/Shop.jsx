@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BsFillGridFill } from 'react-icons/bs';
 import { FaThList } from 'react-icons/fa';
 
@@ -24,17 +24,32 @@ const Shop = () => {
   const [isFilterSectionExpanded, setIsFilterSectionExpanded] = useState(false);
   const [productsDisplayType, setProductsDisplayType] = useState('grid');
 
-  const { categories, price, rating } = useSelector(selectFilters);
+  const { text, categories, price, rating } = useSelector(selectFilters);
 
-  const { data: productsData } = useGetProductsQuery({
-    sortColumn: priceSortOrder !== '0' ? 'price' : 'createdAt',
-    order: priceSortOrder !== '0' ? priceSortOrder : '-1',
-    page,
-    perPage,
-    categories: categories.join(','),
-    price: price.join(','),
-    rating: rating || '',
-  });
+  const params = useMemo(() => {
+    return {
+      sortColumn: priceSortOrder !== '0' ? 'price' : 'createdAt',
+      order: priceSortOrder !== '0' ? priceSortOrder : '-1',
+      page,
+      perPage,
+      searchText: text,
+      categories: categories.join(','),
+      price: price.join(','),
+      rating: rating || '',
+    };
+  }, [priceSortOrder, page, text, categories, price, rating]);
+
+  const [queryParams, setQueryParams] = useState(params);
+
+  useEffect(() => {
+    const throttle = setTimeout(() => {
+      setQueryParams(params);
+    }, 500);
+
+    return () => clearTimeout(throttle);
+  }, [params]);
+
+  const { data: productsData } = useGetProductsQuery(queryParams);
   const products = productsData?.products || [];
   const totalCount = productsData?.totalCount || 0;
 

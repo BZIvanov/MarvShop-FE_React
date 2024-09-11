@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { MdEmail } from 'react-icons/md';
 import { IoMdPhonePortrait } from 'react-icons/io';
 import { FaFacebookF, FaList, FaLock, FaUser } from 'react-icons/fa';
@@ -12,19 +12,27 @@ import { FaCartShopping } from 'react-icons/fa6';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { useSelector } from '../../store/store';
+import { useDispatch, useSelector } from '../../store/store';
 import { selectUser } from '../../store/features/user/userSlice';
 import { useGetCategoriesQuery } from '../../store/services/categories';
+import {
+  changeFilter,
+  selectTextFilter,
+} from '../../store/features/productsFilters/productsFiltersSlice';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [showSidebar, setShowSidebar] = useState(false);
-  const [categoryShow, setCategoryShow] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
 
   const user = useSelector(selectUser);
 
-  const { data } = useGetCategoriesQuery({ searchText });
+  const selectedText = useSelector(selectTextFilter);
+
+  const { data } = useGetCategoriesQuery();
+  const categories = data?.categories || [];
 
   const wishlistCount = 3;
 
@@ -69,9 +77,7 @@ const Header = () => {
                     src='/images/flag.png'
                     alt='Language selection'
                   />
-                  <span>
-                    <IoMdArrowDropdown />
-                  </span>
+                  <IoMdArrowDropdown />
                   <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
                     <li>English</li>
                     <li>Bulgarian</li>
@@ -79,22 +85,18 @@ const Header = () => {
                 </div>
                 {user ? (
                   <Link
-                    className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                     to={`/${user.role}/dashboard`}
+                    className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   >
-                    <span>
-                      <FaUser />
-                    </span>
+                    <FaUser />
                     <span>{user.username}</span>
                   </Link>
                 ) : (
                   <Link
-                    className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                     to='/auth/login'
+                    className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   >
-                    <span>
-                      <FaLock />
-                    </span>
+                    <FaLock />
                     <span>Login</span>
                   </Link>
                 )}
@@ -376,7 +378,7 @@ const Header = () => {
           <div className='w-full lg:w-3/12'>
             <div className='bg-white relative'>
               <div
-                onClick={() => setCategoryShow((prevState) => !prevState)}
+                onClick={() => setIsCategoryExpanded((prevState) => !prevState)}
                 className='h-[50px] bg-[#059473] text-white flex justify-between lg:justify-center px-6 lg:px-0 items-center gap-3 font-bold text-md cursor-pointer'
               >
                 <div className='flex justify-center items-center gap-3'>
@@ -391,22 +393,29 @@ const Header = () => {
               </div>
               <div
                 className={`${
-                  categoryShow ? 'h-0' : 'h-[400px]'
+                  isCategoryExpanded ? 'h-[400px]' : 'h-0'
                 } overflow-hidden transition-all relative duration-500 lg:absolute z-[99999] bg-[#dbf3ed] w-full border-x`}
               >
                 <ul className='py-2 text-slate-600 font-medium'>
-                  {data?.categories.map((category) => {
+                  {categories.map((category) => {
                     return (
                       <li
                         key={category._id}
-                        className='flex justify-start items-center gap-2 px-[24px] py-[6px]'
+                        onClick={() => {
+                          dispatch(
+                            changeFilter({ categories: [category._id] })
+                          );
+                          setIsCategoryExpanded(false);
+                          navigate('/shop');
+                        }}
+                        className='flex justify-start items-center gap-2 px-[24px] py-[6px] cursor-pointer'
                       >
                         <img
                           src={category.imageUrl}
                           className='w-[30px] h-[30px] rounded-full overflow-hidden'
                           alt='Category preview'
                         />
-                        <Link className='text-sm block'>{category.name}</Link>
+                        <span className='text-sm block'>{category.name}</span>
                       </li>
                     );
                   })}
@@ -418,17 +427,29 @@ const Header = () => {
           <div className='w-full lg:w-9/12 pl-0 lg:pl-8'>
             <div className='flex flex-wrap w-full justify-between items-center gap-6 lg:gap-0'>
               <div className='w-full lg:w-9/12'>
-                <div className='flex border h-[50px] items-center relative gap-6'>
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    navigate('/shop');
+                  }}
+                  className='flex border h-[50px] items-center relative gap-6'
+                >
                   <div className='relative after:absolute after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px]'>
                     <select
-                      name='category'
-                      onChange={(event) =>
-                        setSelectedCategory(event.target.value)
-                      }
+                      // TODO: this should be multivalue select with provided values, because we can select more than one categories
+                      onChange={(event) => {
+                        const selectedCategory = event.target.value
+                          ? [event.target.value]
+                          : [];
+                        dispatch(
+                          changeFilter({ categories: selectedCategory })
+                        );
+                        navigate('/shop');
+                      }}
                       className='w-[154px] text-slate-600 font-semibold bg-transparent px-2 h-full outline-0 border-none'
                     >
                       <option value=''>Select Category</option>
-                      {data?.categories.map((category) => (
+                      {categories.map((category) => (
                         <option key={category._id} value={category._id}>
                           {category.name}
                         </option>
@@ -436,8 +457,11 @@ const Header = () => {
                     </select>
                   </div>
                   <input
-                    name=''
-                    onChange={(event) => setSearchText(event.target.value)}
+                    name='text'
+                    value={selectedText}
+                    onChange={(event) => {
+                      dispatch(changeFilter({ text: event.target.value }));
+                    }}
                     type='text'
                     className='w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full'
                     placeholder='Search'
@@ -445,7 +469,7 @@ const Header = () => {
                   <button className='bg-[#059473] right-0 absolute px-6 h-full font-semibold uppercase text-white'>
                     Search
                   </button>
-                </div>
+                </form>
               </div>
 
               <div className='hidden lg:block w-full lg:w-3/12 pl-0 lg:pl-2'>

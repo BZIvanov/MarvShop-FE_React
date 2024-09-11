@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
+import { useDispatch } from '../../store/store';
 import { useGetCategoriesQuery } from '../../store/services/categories';
+import { changeFilter } from '../../store/features/productsFilters/productsFiltersSlice';
 
 const CategoriesBanner = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { data } = useGetCategoriesQuery();
 
   const responsive = {
@@ -57,7 +62,14 @@ const CategoriesBanner = () => {
         transitionDuration={500}
       >
         {categories.map((category) => (
-          <Link key={category._id} className='h-[185px] border block' to='/'>
+          <div
+            key={category._id}
+            onClick={() => {
+              dispatch(changeFilter({ categories: [category._id] }));
+              navigate('/shop');
+            }}
+            className='h-[185px] border block cursor-pointer'
+          >
             <div className='w-full h-full relative p-3'>
               <img src={category.imageUrl} alt='Category banner' />
               <div className='absolute bottom-6 w-full mx-auto font-bold left-0 flex justify-center items-center'>
@@ -66,7 +78,7 @@ const CategoriesBanner = () => {
                 </span>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </Carousel>
     </div>
