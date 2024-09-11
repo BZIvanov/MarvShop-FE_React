@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { AiFillStar } from 'react-icons/ai';
-import { CiStar } from 'react-icons/ci';
 import { BsFillGridFill } from 'react-icons/bs';
 import { FaThList } from 'react-icons/fa';
 
 import { useSelector } from '../../store/store';
-import { useGetCategoriesQuery } from '../../store/services/categories';
 import { useGetProductsQuery } from '../../store/services/products';
 import { selectFilters } from '../../store/features/productsFilters/productsFiltersSlice';
 import Header from '../common/Header';
@@ -14,28 +11,32 @@ import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
 import RecommendedProducts from '../product/RecommendedProducts';
 import ProductsList from '../product/ProductsList';
 import Pagination from '../product/Pagination';
+import CategoryFilter from './CategoryFilter';
 import PriceFilter from './PriceFilter';
+import RatingFilter from './RatingFilter';
+
+const perPage = 12;
 
 const Shop = () => {
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(12);
+  const [priceSortOrder, setPriceSortOrder] = useState('0');
 
   const [isFilterSectionExpanded, setIsFilterSectionExpanded] = useState(false);
   const [productsDisplayType, setProductsDisplayType] = useState('grid');
 
-  const [rating, setRating] = useState('');
-
-  const { price } = useSelector(selectFilters);
-
-  const { data: categoriesData } = useGetCategoriesQuery();
-  const categories = categoriesData?.categories || [];
+  const { categories, price, rating } = useSelector(selectFilters);
 
   const { data: productsData } = useGetProductsQuery({
+    sortColumn: priceSortOrder !== '0' ? 'price' : 'createdAt',
+    order: priceSortOrder !== '0' ? priceSortOrder : '-1',
     page,
     perPage,
+    categories: categories.join(','),
     price: price.join(','),
+    rating: rating || '',
   });
   const products = productsData?.products || [];
+  const totalCount = productsData?.totalCount || 0;
 
   return (
     <div>
@@ -66,161 +67,9 @@ const Shop = () => {
                   : 'h-0 overflow-hidden mb-6 md:h-auto md:overflow-auto md:mb-0'
               }`}
             >
-              <div className='py-2 flex flex-col gap-5'>
-                <h2 className='text-3xl font-bold mb-3 text-slate-600'>
-                  Categories
-                </h2>
-                <div className='flex flex-col'>
-                  {categories.map((category) => {
-                    return (
-                      <div
-                        key={category._id}
-                        className='flex justify-start items-center gap-2 py-1'
-                      >
-                        <input type='checkbox' id={category._id} />
-                        <label
-                          htmlFor={category._id}
-                          className='text-slate-600 block cursor-pointer'
-                        >
-                          {category.name}
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
+              <CategoryFilter />
               <PriceFilter />
-
-              <div className='py-3 flex flex-col gap-4'>
-                <h2 className='text-3xl font-bold mb-3 text-slate-600'>
-                  Rating
-                </h2>
-                <div className='flex flex-col gap-3'>
-                  <div
-                    onClick={() => setRating(5)}
-                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer'
-                  >
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-
-                  <div
-                    onClick={() => setRating(4)}
-                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer'
-                  >
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                  </div>
-
-                  <div
-                    onClick={() => setRating(3)}
-                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer'
-                  >
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                  </div>
-
-                  <div
-                    onClick={() => setRating(2)}
-                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer'
-                  >
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                  </div>
-
-                  <div
-                    onClick={() => setRating(1)}
-                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer'
-                  >
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                  </div>
-
-                  <div className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer'>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                    <span>
-                      <CiStar />
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <RatingFilter />
 
               <div className='hidden lg:flex py-5 flex-col gap-4'>
                 <RecommendedProducts
@@ -234,16 +83,18 @@ const Shop = () => {
               <div className='pl-0 md:pl-8'>
                 <div className='py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border'>
                   <h2 className='text-lg font-medium text-slate-600'>
-                    {products.length} Products
+                    ({totalCount}) Products
                   </h2>
                   <div className='flex justify-center items-center gap-3'>
                     <select
-                      name='priceSort'
+                      onChange={(event) =>
+                        setPriceSortOrder(event.target.value)
+                      }
                       className='p-1 border outline-0 text-slate-600 font-semibold'
                     >
-                      <option value=''>Sort By</option>
-                      <option value='low-to-high'>Low to High Price</option>
-                      <option value='high-to-low'>High to Low Price</option>
+                      <option value='0'>Sort By</option>
+                      <option value='1'>Low to High Price</option>
+                      <option value='-1'>High to Low Price</option>
                     </select>
                     <div className='hidden lg:flex justify-center items-start gap-4'>
                       <div
@@ -273,7 +124,7 @@ const Shop = () => {
                   />
                 </div>
 
-                {productsData?.totalCount > perPage && (
+                {totalCount > perPage && (
                   <div>
                     <Pagination
                       pageNumber={page}

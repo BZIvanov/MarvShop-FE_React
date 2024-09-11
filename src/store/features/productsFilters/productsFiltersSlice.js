@@ -4,6 +4,7 @@ const initialState = {
   text: '',
   price: [0, 0],
   categories: [],
+  rating: null,
 };
 
 const productsFiltersSlice = createSlice({
@@ -25,3 +26,4 @@ export const selectTextFilter = (state) => state.productsFilters.text;
 export const selectPriceFilter = (state) => state.productsFilters.price;
 export const selectCategoriesFilter = (state) =>
   state.productsFilters.categories;
+export const selectRatingFilter = (state) => state.productsFilters.rating;
