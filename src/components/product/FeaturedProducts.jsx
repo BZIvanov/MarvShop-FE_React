@@ -1,5 +1,5 @@
 import { useGetProductsQuery } from '../../store/services/products';
-import ProductCard from './ProductCard';
+import FeaturedProductCard from './cards/FeaturedProductCard';
 
 const FeaturedProducts = () => {
   // it will be the latest products, maybe the query should be updated
@@ -19,7 +19,7 @@ const FeaturedProducts = () => {
 
       <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
         {data?.products.map((product) => {
-          return <ProductCard key={product._id} product={product} />;
+          return <FeaturedProductCard key={product._id} product={product} />;
         })}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { MdEmail } from 'react-icons/md';
 import { IoMdPhonePortrait } from 'react-icons/io';
@@ -19,6 +19,7 @@ import {
   changeFilter,
   selectTextFilter,
 } from '../../store/features/productsFilters/productsFiltersSlice';
+import { selectCart } from '../../store/features/cart/cartSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const Header = () => {
   const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
 
   const user = useSelector(selectUser);
+
+  const cart = useSelector(selectCart);
+  const cartItemsCount = useMemo(() => Object.keys(cart).length, [cart]);
 
   const selectedText = useSelector(selectTextFilter);
 
@@ -127,66 +131,28 @@ const Header = () => {
             <div className='lg:w-9/12'>
               <div className='flex justify-center lg:justify-between items-center flex-wrap pl-8'>
                 <ul className='hidden lg:flex justify-start items-start gap-8 text-sm font-bold uppercase'>
-                  <li>
-                    <NavLink
-                      to='/'
-                      className={({ isActive }) =>
-                        `p-2 block ${
-                          isActive ? 'text-[#059473]' : 'text-slate-600'
-                        }`
-                      }
-                    >
-                      Home
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to='/shop'
-                      className={({ isActive }) =>
-                        `p-2 block ${
-                          isActive ? 'text-[#059473]' : 'text-slate-600'
-                        }`
-                      }
-                    >
-                      Shop
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to='/blog'
-                      className={({ isActive }) =>
-                        `p-2 block ${
-                          isActive ? 'text-[#059473]' : 'text-slate-600'
-                        }`
-                      }
-                    >
-                      Blog
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to='/about'
-                      className={({ isActive }) =>
-                        `p-2 block ${
-                          isActive ? 'text-[#059473]' : 'text-slate-600'
-                        }`
-                      }
-                    >
-                      About Us
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to='/contact'
-                      className={({ isActive }) =>
-                        `p-2 block ${
-                          isActive ? 'text-[#059473]' : 'text-slate-600'
-                        }`
-                      }
-                    >
-                      Contact Us
-                    </NavLink>
-                  </li>
+                  {[
+                    { label: 'Home', link: '/' },
+                    { label: 'Shop', link: '/shop' },
+                    { label: 'Blog', link: '/blog' },
+                    { label: 'About Us', link: '/about' },
+                    { label: 'Contact Us', link: '/contact' },
+                  ].map((navigationItem) => {
+                    return (
+                      <li key={navigationItem.link}>
+                        <NavLink
+                          to={navigationItem.link}
+                          className={({ isActive }) =>
+                            `p-2 block ${
+                              isActive ? 'text-[#059473]' : 'text-slate-600'
+                            }`
+                          }
+                        >
+                          {navigationItem.label}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 <div className='hidden lg:flex justify-center items-center gap-5'>
@@ -200,13 +166,26 @@ const Header = () => {
                       </div>
                     </div>
 
-                    <div className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'>
+                    <div
+                      onClick={() => {
+                        if (user) {
+                          navigate('/cart');
+                        } else {
+                          navigate('/auth/login', {
+                            state: { customNavigateTo: '/cart' },
+                          });
+                        }
+                      }}
+                      className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
+                    >
                       <span className='text-xl text-green-500'>
                         <FaCartShopping />
                       </span>
-                      <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                        {wishlistCount}
-                      </div>
+                      {cartItemsCount > 0 && (
+                        <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
+                          {cartItemsCount}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
