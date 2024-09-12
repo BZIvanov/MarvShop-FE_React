@@ -9,6 +9,7 @@ import user from './features/user/userSlice';
 import seller from './features/seller/sellerSlice';
 import notification from './features/notification/notificationSlice';
 import productsFilters from './features/productsFilters/productsFiltersSlice';
+import cart from './features/cart/cartSlice';
 import { asyncErrorNotification } from './middlewares/asyncErrorNotification';
 
 export const createStore = (options = {}) => {
@@ -19,6 +20,7 @@ export const createStore = (options = {}) => {
       seller,
       notification,
       productsFilters,
+      cart,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware, asyncErrorNotification),
