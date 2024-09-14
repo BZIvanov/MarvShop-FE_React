@@ -1,35 +1,71 @@
 import { useState } from 'react';
 
+import { useCreateOrderMutation } from '../../store/services/orders';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import { currencyFormatter } from '../../utils/formatting';
+import { useCartSummary } from './hooks/useCartSummary';
+import { SHIPPING_FEE } from './constants';
 
 const Shipping = () => {
-  const [res, setRes] = useState(false);
-  const [formValues, setFormValues] = useState({
-    name: '',
-    address: '',
+  const { cart, cartProductsCount, cartTotalPrice, cartSellersCount } =
+    useCartSummary();
+
+  const [createOrder] = useCreateOrderMutation();
+
+  const shippingFee = cartSellersCount * SHIPPING_FEE;
+
+  const [isAddressProvided, setIsAddressProvided] = useState(false);
+
+  const [shippingInfoFormValues, setShippingInfoFormValues] = useState({
+    fullName: '',
     phone: '',
-    post: '',
-    province: '',
+    postalCode: '',
+    country: '',
     city: '',
-    area: '',
+    street: '',
   });
 
-  const handleInputChange = (event) => {
-    setFormValues((prevState) => ({
+  const [coupon, setCoupon] = useState('');
+
+  const handleShippingInfoInputChange = (event) => {
+    setShippingInfoFormValues((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleShippingInfoSubmit = (event) => {
     event.preventDefault();
 
-    const { name, address, phone, post, province, city, area } = formValues;
-    if (name && address && phone && post && province && city && area) {
-      setRes(true);
+    const { fullName, phone, postalCode, country, city, street } =
+      shippingInfoFormValues;
+    if (fullName && phone && postalCode && country && city && street) {
+      setIsAddressProvided(true);
     }
+  };
+
+  const handleCouponSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  const placeOrder = async () => {
+    const cartProducts = Object.keys(cart).map((cartProductId) => {
+      return {
+        count: cart[cartProductId].count,
+        product: cart[cartProductId].product._id,
+        seller: cart[cartProductId].product.seller,
+      };
+    });
+
+    const result = await createOrder({
+      addressInfo: shippingInfoFormValues,
+      coupon,
+      cart: cartProducts,
+    });
+
+    console.log(result);
   };
 
   return (
@@ -47,108 +83,95 @@ const Shipping = () => {
                   <h2 className='text-slate-600 font-bold pb-3'>
                     Shipping Information
                   </h2>
-                  {!res && (
-                    <form onSubmit={handleSubmit}>
+                  {!isAddressProvided && (
+                    <form onSubmit={handleShippingInfoSubmit}>
                       <div className='flex flex-col md:flex-row gap-2 md:gap-5 w-full text-slate-600'>
                         <div className='flex flex-col gap-1 mb-2 w-full'>
-                          <label htmlFor='name'>Name</label>
+                          <label htmlFor='full-name'>Full Name</label>
                           <input
-                            name='name'
-                            value={formValues.name}
-                            onChange={handleInputChange}
+                            name='fullName'
+                            value={shippingInfoFormValues.name}
+                            onChange={handleShippingInfoInputChange}
                             type='text'
-                            id='name'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                            placeholder='Name'
+                            id='full-name'
+                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
+                            placeholder='Full Name'
                           />
                         </div>
 
-                        <div className='flex flex-col gap-1 mb-2 w-full'>
-                          <label htmlFor='address'>Address</label>
-                          <input
-                            name='address'
-                            value={formValues.address}
-                            onChange={handleInputChange}
-                            type='text'
-                            id='address'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                            placeholder='Address'
-                          />
-                        </div>
-                      </div>
-
-                      <div className='flex flex-col md:flex-row gap-2 md:gap-5 w-full text-slate-600'>
                         <div className='flex flex-col gap-1 mb-2 w-full'>
                           <label htmlFor='phone'>Phone</label>
                           <input
                             name='phone'
-                            value={formValues.phone}
-                            onChange={handleInputChange}
+                            value={shippingInfoFormValues.phone}
+                            onChange={handleShippingInfoInputChange}
                             type='text'
                             id='phone'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
+                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
                             placeholder='Phone'
-                          />
-                        </div>
-
-                        <div className='flex flex-col gap-1 mb-2 w-full'>
-                          <label htmlFor='post'>Post</label>
-                          <input
-                            name='post'
-                            value={formValues.post}
-                            onChange={handleInputChange}
-                            type='text'
-                            id='post'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                            placeholder='Post'
                           />
                         </div>
                       </div>
 
                       <div className='flex flex-col md:flex-row gap-2 md:gap-5 w-full text-slate-600'>
                         <div className='flex flex-col gap-1 mb-2 w-full'>
-                          <label htmlFor='province'>Province</label>
+                          <label htmlFor='postal-code'>Postal Code</label>
                           <input
-                            name='province'
-                            value={formValues.province}
-                            onChange={handleInputChange}
+                            name='postalCode'
+                            value={shippingInfoFormValues.post}
+                            onChange={handleShippingInfoInputChange}
                             type='text'
-                            id='province'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                            placeholder='Province'
+                            id='postal-code'
+                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
+                            placeholder='Postal Code'
                           />
                         </div>
 
+                        <div className='flex flex-col gap-1 mb-2 w-full'>
+                          <label htmlFor='country'>Country</label>
+                          <input
+                            name='country'
+                            value={shippingInfoFormValues.province}
+                            onChange={handleShippingInfoInputChange}
+                            type='text'
+                            id='country'
+                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
+                            placeholder='Country'
+                          />
+                        </div>
+                      </div>
+
+                      <div className='flex flex-col md:flex-row gap-2 md:gap-5 w-full text-slate-600'>
                         <div className='flex flex-col gap-1 mb-2 w-full'>
                           <label htmlFor='city'>City</label>
                           <input
                             name='city'
-                            value={formValues.city}
-                            onChange={handleInputChange}
+                            value={shippingInfoFormValues.city}
+                            onChange={handleShippingInfoInputChange}
                             type='text'
                             id='city'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
+                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
                             placeholder='City'
+                          />
+                        </div>
+
+                        <div className='flex flex-col gap-1 mb-2 w-full'>
+                          <label htmlFor='street'>Street</label>
+                          <input
+                            name='street'
+                            value={shippingInfoFormValues.area}
+                            onChange={handleShippingInfoInputChange}
+                            type='text'
+                            id='street'
+                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
+                            placeholder='Street'
                           />
                         </div>
                       </div>
 
                       <div className='flex flex-col md:flex-row gap-2 md:gap-5 w-full text-slate-600'>
-                        <div className='flex flex-col gap-1 mb-2 w-full'>
-                          <label htmlFor='area'>Area</label>
-                          <input
-                            name='area'
-                            value={formValues.area}
-                            onChange={handleInputChange}
-                            type='text'
-                            id='area'
-                            className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                            placeholder='Area'
-                          />
-                        </div>
-
                         <div className='flex flex-col gap-1 mt-7 mb-2 w-full'>
-                          <button className='px-3 py-[6px] rounded-sm hover:shadow-green-500/50 hover:shadow-lg bg-green-500 text-white'>
+                          <button className='px-3 py-[9px] rounded-sm hover:shadow-green-500/50 hover:shadow-lg bg-green-500 text-white'>
                             Save Changes
                           </button>
                         </div>
@@ -156,22 +179,24 @@ const Shipping = () => {
                     </form>
                   )}
 
-                  {res && (
+                  {isAddressProvided && (
                     <div className='flex flex-col gap-1'>
                       <h2 className='text-slate-600 font-semibold pb-2'>
-                        Deliver To {formValues.name}
+                        Deliver To {shippingInfoFormValues.name}
                       </h2>
                       <p>
                         <span className='bg-blue-200 text-blue-800 text-sm font-medium mr-2 px-2 py-1 rounded'>
                           Home
                         </span>
                         <span>
-                          {formValues.phone} {formValues.address}{' '}
-                          {formValues.province} {formValues.city}{' '}
-                          {formValues.area}
+                          {shippingInfoFormValues.phone}{' '}
+                          {shippingInfoFormValues.address}{' '}
+                          {shippingInfoFormValues.province}{' '}
+                          {shippingInfoFormValues.city}{' '}
+                          {shippingInfoFormValues.area}
                         </span>
                         <span
-                          onClick={() => setRes(false)}
+                          onClick={() => setIsAddressProvided(false)}
                           className='text-indigo-500 cursor-pointer'
                         >
                           Change
@@ -184,53 +209,25 @@ const Shipping = () => {
                   )}
                 </div>
 
-                {[1, 2].map((p, i) => (
-                  <div key={i} className='flex bg-white p-4 flex-col gap-2'>
-                    <div className='flex justify-start items-center'>
-                      <h2 className='text-md text-slate-600 font-bold'>
-                        Marv Shop
-                      </h2>
+                <div className='bg-white p-6 shadow-sm rounded-md'>
+                  <h2 className='text-slate-600 font-bold pb-3'>Got Coupon?</h2>
+                  <form onSubmit={handleCouponSubmit}>
+                    <div className='flex flex-col md:flex-row gap-2 md:gap-5 text-slate-600'>
+                      <input
+                        name='coupon'
+                        value={coupon}
+                        onChange={(event) => setCoupon(event.target.value)}
+                        type='text'
+                        className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-sm'
+                        placeholder='Your Coupon'
+                      />
+
+                      <button className='w-full md:w-auto px-5 py-[9px] uppercase rounded-sm hover:shadow-green-500/50 hover:shadow-lg bg-green-500 text-white'>
+                        Apply
+                      </button>
                     </div>
-
-                    {[1, 2].map((k, j) => (
-                      <div key={j} className='w-full flex flex-wrap'>
-                        <div className='w-full sm:w-7/12 flex gap-2'>
-                          <div className='flex gap-2 justify-start items-center'>
-                            <img
-                              className='w-[80px] h-[80px]'
-                              src='/images/logo.png'
-                              alt='Product preview'
-                            />
-                            <div className='pr-4 text-slate-600'>
-                              <h2 className='text-md font-semibold'>
-                                Product Name
-                              </h2>
-                              <span className='text-sm'>Brand: TestBrand</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className='w-full sm:w-5/12 flex justify-between mt-3 sm:mt-0'>
-                          <div className='pl-0 sm:pl-4'>
-                            <h2 className='text-lg text-orange-500'>$240</h2>
-                            <p className='line-through'>$300</p>
-                            <p>-15%</p>
-                          </div>
-                          <div className='flex gap-2 flex-col'>
-                            <div className='flex bg-slate-200 h-[30px] justify-center items-center text-xl'>
-                              <div className='px-3 cursor-pointer'>-</div>
-                              <div className='px-3'>2</div>
-                              <div className='px-3 cursor-pointer'>+</div>
-                            </div>
-                            <button className='px-5 py-[3px] bg-red-500 text-white'>
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
+                  </form>
+                </div>
               </div>
             </div>
 
@@ -239,27 +236,41 @@ const Shipping = () => {
                 <div className='bg-white p-3 text-slate-600 flex flex-col gap-3'>
                   <h2 className='text-xl font-bold'>Order Summary</h2>
                   <div className='flex justify-between items-center'>
-                    <span>Items Total (5) </span>
-                    <span>$343 </span>
+                    <span>Products ({cartProductsCount})</span>
+                    <span>{currencyFormatter(cartTotalPrice)}</span>
                   </div>
                   <div className='flex justify-between items-center'>
-                    <span>Delivery Fee </span>
-                    <span>$40 </span>
+                    <span>Shipping Fee</span>
+                    <span>{currencyFormatter(shippingFee)}</span>
                   </div>
 
-                  <div className='flex justify-between items-center'>
-                    <span>Total Payment </span>
-                    <span>$450 </span>
-                  </div>
+                  {!coupon && (
+                    <div className='flex justify-between items-center'>
+                      <span>Total Price</span>
+                      <span className='text-lg text-[#059473]'>
+                        {currencyFormatter(cartTotalPrice + shippingFee)}
+                      </span>
+                    </div>
+                  )}
 
-                  <div className='flex justify-between items-center'>
-                    <span>Total</span>
-                    <span className='text-lg text-[#059473]'>$490 </span>
-                  </div>
+                  {coupon && (
+                    <>
+                      <div className='flex justify-between items-center'>
+                        <span>Coupon</span>
+                        <span>-20%</span>
+                      </div>
+                      <div className='flex justify-between items-center'>
+                        <span>Total Price with Coupon</span>
+                        <span className='text-lg text-[#059473]'>$490</span>
+                      </div>
+                    </>
+                  )}
+
                   <button
-                    disabled={!res}
+                    onClick={placeOrder}
+                    disabled={!isAddressProvided}
                     className={`px-5 py-[6px] rounded-sm hover:shadow-red-500/50 hover:shadow-lg ${
-                      res ? 'bg-red-500' : 'bg-red-300'
+                      isAddressProvided ? 'bg-red-500' : 'bg-red-300'
                     }  text-sm text-white uppercase`}
                   >
                     Place Order
