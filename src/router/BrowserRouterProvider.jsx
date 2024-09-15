@@ -37,7 +37,10 @@ import {
   SellerToAdmin,
   SellerToCustomer,
   SellerProfile,
+  BuyerDashboard,
   BuyerOrders,
+  BuyerProfile,
+  BuyerWishlist,
 } from './lazy-routes';
 import Home from '../components/home/Home';
 import Shop from '../components/shop/Shop';
@@ -229,11 +232,23 @@ const router = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <Navigate to='orders' replace={true} />,
+            element: <Navigate to='dashboard' replace={true} />,
+          },
+          {
+            path: 'dashboard',
+            element: <BuyerDashboard />,
           },
           {
             path: 'orders',
             element: <BuyerOrders />,
+          },
+          {
+            path: 'profile',
+            element: <BuyerProfile />,
+          },
+          {
+            path: 'wishlist',
+            element: <BuyerWishlist />,
           },
         ],
       },

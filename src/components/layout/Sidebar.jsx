@@ -13,6 +13,7 @@ import { BsCartCheck } from 'react-icons/bs';
 import { IoChatbubbles } from 'react-icons/io5';
 import { BsFillChatQuoteFill } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
+import { PiListHeartLight } from 'react-icons/pi';
 
 import { useSelector } from '../../store/store';
 import { selectUser } from '../../store/features/user/userSlice';
@@ -111,9 +112,24 @@ const sellerLinks = [
 
 const buyerLinks = [
   {
+    title: 'Dashboard',
+    icon: <AiOutlineDashboard />,
+    path: '/buyer/dashboard',
+  },
+  {
     title: 'Orders',
     icon: <BsCartCheck />,
     path: '/buyer/orders',
+  },
+  {
+    title: 'Profile',
+    icon: <CgProfile />,
+    path: '/buyer/profile',
+  },
+  {
+    title: 'Wishlist',
+    icon: <PiListHeartLight />,
+    path: '/buyer/wishlist',
   },
 ];
 

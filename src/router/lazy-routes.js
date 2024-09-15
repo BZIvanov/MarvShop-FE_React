@@ -70,6 +70,15 @@ export const SellerProfile = lazy(() =>
   import('../components/seller/SellerProfile')
 );
 
+export const BuyerDashboard = lazy(() =>
+  import('../components/dashboard/buyer/BuyerDashboard')
+);
 export const BuyerOrders = lazy(() =>
   import('../components/dashboard/buyer/BuyerOrders')
+);
+export const BuyerProfile = lazy(() =>
+  import('../components/dashboard/buyer/BuyerProfile')
+);
+export const BuyerWishlist = lazy(() =>
+  import('../components/dashboard/buyer/BuyerWishlist')
 );
