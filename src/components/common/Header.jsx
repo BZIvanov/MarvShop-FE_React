@@ -89,7 +89,7 @@ const Header = () => {
                 </div>
                 {user ? (
                   <Link
-                    to={`/${user.role}/dashboard`}
+                    to={`/${user.role}`}
                     className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   >
                     <FaUser />

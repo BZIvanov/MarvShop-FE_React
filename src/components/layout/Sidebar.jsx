@@ -109,13 +109,27 @@ const sellerLinks = [
   },
 ];
 
+const buyerLinks = [
+  {
+    title: 'Orders',
+    icon: <BsCartCheck />,
+    path: '/buyer/orders',
+  },
+];
+
+const roleLinks = {
+  admin: adminLinks,
+  seller: sellerLinks,
+  buyer: buyerLinks,
+};
+
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const user = useSelector(selectUser);
-  const isAdmin = user?.role === 'admin';
+  const userRole = user?.role || 'buyer';
 
   const [logout] = useLogoutMutation();
 
-  const links = isAdmin ? adminLinks : sellerLinks;
+  const links = roleLinks[userRole];
 
   return (
     <div>

@@ -69,3 +69,7 @@ export const SellerToCustomer = lazy(() =>
 export const SellerProfile = lazy(() =>
   import('../components/seller/SellerProfile')
 );
+
+export const BuyerOrders = lazy(() =>
+  import('../components/dashboard/buyer/BuyerOrders')
+);

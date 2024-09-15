@@ -37,12 +37,14 @@ import {
   SellerToAdmin,
   SellerToCustomer,
   SellerProfile,
+  BuyerOrders,
 } from './lazy-routes';
 import Home from '../components/home/Home';
 import Shop from '../components/shop/Shop';
 import Cart from '../components/cart/Cart';
 import Shipping from '../components/cart/Shipping';
 import ProductDetails from '../components/product/ProductDetails';
+import Payment from '../components/cart/Payment';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: 'shipping',
         element: <Shipping />,
+      },
+      {
+        path: 'payment',
+        element: <Payment />,
       },
       {
         path: 'products/:slug',
@@ -141,6 +147,10 @@ const router = createBrowserRouter([
         ),
         children: [
           {
+            path: '',
+            element: <Navigate to='dashboard' replace={true} />,
+          },
+          {
             path: 'dashboard',
             element: <SellerDashboard />,
           },
@@ -202,6 +212,28 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <SellerProfile />,
+          },
+        ],
+      },
+      {
+        path: 'buyer',
+        element: (
+          <ProtectedRoute
+            authRedirectTo='/auth/login'
+            roleRedirectTo='/'
+            roles={['buyer']}
+          >
+            <DashboardLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: '',
+            element: <Navigate to='orders' replace={true} />,
+          },
+          {
+            path: 'orders',
+            element: <BuyerOrders />,
           },
         ],
       },

@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import { FaList } from 'react-icons/fa';
 
+import { useSelector } from '../../store/store';
+import { selectUser } from '../../store/features/user/userSlice';
+
 const Header = ({ setShowSidebar }) => {
+  const user = useSelector(selectUser);
+
   return (
     <div className='fixed top-0 left-0 w-full py-5 px-2 lg:px-7 z-40'>
       <div className='ml-0 lg:ml-[260px] rounded-md h-[65px] flex justify-between items-center bg-[#b1addf] px-5 transition-all'>
@@ -9,9 +14,7 @@ const Header = ({ setShowSidebar }) => {
           onClick={() => setShowSidebar((prevState) => !prevState)}
           className='w-[35px] flex lg:hidden h-[35px] rounded-sm bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 justify-center items-center cursor-pointer'
         >
-          <span>
-            <FaList />
-          </span>
+          <FaList />
         </div>
 
         <div className='hidden md:block'>
@@ -27,8 +30,10 @@ const Header = ({ setShowSidebar }) => {
           <div className='flex justify-center items-center'>
             <div className='flex justify-center items-center gap-3'>
               <div className='flex justify-center items-center flex-col text-end'>
-                <h2 className='text-md font-bold'>Biser Ivanov</h2>
-                <span className='text-[14px] w-full font-normal'>Admin</span>
+                <h2 className='text-md font-bold'>{user?.username}</h2>
+                <span className='text-[14px] w-full font-normal'>
+                  {user?.role}
+                </span>
               </div>
               <img
                 className='w-[45px] h-[45px] rounded-full overflow-hidden'
