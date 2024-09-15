@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useCreateOrderMutation } from '../../store/services/orders';
 import Header from '../common/Header';
@@ -9,6 +10,8 @@ import { useCartSummary } from './hooks/useCartSummary';
 import { SHIPPING_FEE } from './constants';
 
 const Shipping = () => {
+  const navigate = useNavigate();
+
   const { cart, cartProductsCount, cartTotalPrice, cartSellersCount } =
     useCartSummary();
 
@@ -65,7 +68,19 @@ const Shipping = () => {
       cart: cartProducts,
     });
 
-    console.log(result);
+    if (!('error' in result)) {
+      setShippingInfoFormValues({
+        fullName: '',
+        phone: '',
+        postalCode: '',
+        country: '',
+        city: '',
+        street: '',
+      });
+      setCoupon('');
+
+      navigate(`/payment/${result.data.order._id}`);
+    }
   };
 
   return (

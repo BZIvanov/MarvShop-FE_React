@@ -18,6 +18,18 @@ export const ordersApi = api.injectEndpoints({
         ];
       },
     }),
+    getOrder: build.query({
+      query: (id) => {
+        return {
+          url: `/orders/${id}`,
+          method: 'GET',
+          credentials: 'include',
+        };
+      },
+      providesTags: (_result, _error, payload) => {
+        return [{ type: 'Orders', id: payload }];
+      },
+    }),
     createOrder: build.mutation({
       query: (data) => ({
         url: '/orders',
@@ -44,6 +56,7 @@ export const ordersApi = api.injectEndpoints({
 
 export const {
   useGetOrdersQuery,
+  useGetOrderQuery,
   useCreateOrderMutation,
   useGetOrdersStatsQuery,
 } = ordersApi;

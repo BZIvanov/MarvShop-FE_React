@@ -1,15 +1,26 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
+import { useGetOrderQuery } from '../../store/services/orders';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import Card from './Card';
+import { currencyFormatter } from '../../utils/formatting';
 
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState('card');
 
+  const { orderId } = useParams();
+
+  const { data } = useGetOrderQuery(orderId, {
+    skip: !orderId,
+  });
+  const order = data?.order || {};
+
   return (
     <div>
       <Header />
+
       <section className='bg-[#eeeeee]'>
         <div className='w-[90%] mx-auto py-16 mt-4'>
           <div className='flex flex-wrap'>
@@ -61,11 +72,13 @@ const Payment = () => {
                   <h2 className='font-bold text-lg'>Order Summary</h2>
                   <div className='flex justify-between items-center'>
                     <span>3 Items and Shipping Fee Included</span>
-                    <span>$234</span>
+                    <span>{currencyFormatter(order.totalPrice)}</span>
                   </div>
                   <div className='flex justify-between items-center font-semibold'>
                     <span>Total Amount</span>
-                    <span className='text-lg text-green-600'>$345</span>
+                    <span className='text-lg text-green-600'>
+                      {currencyFormatter(order.totalPrice)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -73,6 +86,7 @@ const Payment = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );

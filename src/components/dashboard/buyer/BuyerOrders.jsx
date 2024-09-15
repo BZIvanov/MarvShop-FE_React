@@ -48,10 +48,10 @@ const BuyerOrders = () => {
                   Price
                 </th>
                 <th scope='col' className='py-3 px-4'>
-                  Payment Status
+                  Delivery Status
                 </th>
                 <th scope='col' className='py-3 px-4'>
-                  Order Status
+                  Payment Status
                 </th>
                 <th scope='col' className='py-3 px-4'>
                   Actions
@@ -78,7 +78,7 @@ const BuyerOrders = () => {
                     scope='row'
                     className='py-1 px-4 font-medium whitespace-nowrap'
                   >
-                    {order.status}
+                    {order.deliveryStatus}
                   </td>
                   <td
                     scope='row'
@@ -96,11 +96,13 @@ const BuyerOrders = () => {
                           View
                         </span>
                       </Link>
-                      <Link>
-                        <span className='bg-green-200 text-green-800 text-md font-semibold mr-2 px-3 py-[2px] rounded'>
-                          Pay Now
-                        </span>
-                      </Link>
+                      {order.paymentStatus === 'Pending' && (
+                        <Link to={`/payment/${order._id}`}>
+                          <span className='bg-green-200 text-green-800 text-md font-semibold mr-2 px-3 py-[2px] rounded'>
+                            Pay Now
+                          </span>
+                        </Link>
+                      )}
                     </div>
                   </td>
                 </tr>
