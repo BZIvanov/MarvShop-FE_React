@@ -39,6 +39,7 @@ import {
   SellerProfile,
   BuyerDashboard,
   BuyerOrders,
+  BuyerOrderDetails,
   BuyerProfile,
   BuyerWishlist,
 } from './lazy-routes';
@@ -241,6 +242,10 @@ const router = createBrowserRouter([
           {
             path: 'orders',
             element: <BuyerOrders />,
+          },
+          {
+            path: 'orders/:orderId',
+            element: <BuyerOrderDetails />,
           },
           {
             path: 'profile',

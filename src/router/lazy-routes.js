@@ -76,6 +76,9 @@ export const BuyerDashboard = lazy(() =>
 export const BuyerOrders = lazy(() =>
   import('../components/dashboard/buyer/BuyerOrders')
 );
+export const BuyerOrderDetails = lazy(() =>
+  import('../components/dashboard/buyer/BuyerOrderDetails')
+);
 export const BuyerProfile = lazy(() =>
   import('../components/dashboard/buyer/BuyerProfile')
 );

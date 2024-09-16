@@ -3,25 +3,32 @@ import { FaEye, FaRegHeart } from 'react-icons/fa';
 import { RiShoppingCartLine } from 'react-icons/ri';
 
 import Rating from '../../common/Rating';
+import { useGetWishlistProductsQuery } from '../../../store/services/wishlist';
+import { currencyFormatter, percentFormatter } from '../../../utils/formatting';
 
 const Wishlist = () => {
+  const { data } = useGetWishlistProductsQuery();
+  const products = data?.products || [];
+
   return (
     <div className='m-7 p-4 rounded-md'>
       <h2 className='text-[#000000] font-semibold text-lg mb-3'>Wishlist</h2>
       <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-        {[1, 2, 3, 4].map((p, i) => (
+        {products.map((product) => (
           <div
-            key={i}
+            key={product._id}
             className='border group transition-all duration-500 hover:shadow-md hover:-mt-3 bg-white'
           >
             <div className='relative overflow-hidden'>
-              <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>
-                5%
-              </div>
+              {product.discount > 0 && (
+                <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>
+                  {percentFormatter(product.discount)}
+                </div>
+              )}
 
               <img
                 className='w-full sm:w-auto h-[240px]'
-                src='/images/logo.png'
+                src={product.images[0].imageUrl}
                 alt='Product preview'
               />
 
@@ -30,7 +37,7 @@ const Wishlist = () => {
                   <FaRegHeart />
                 </li>
                 <Link
-                  to='/product/details/new'
+                  to={`/products/${product.slug}`}
                   className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'
                 >
                   <FaEye />
@@ -42,9 +49,11 @@ const Wishlist = () => {
             </div>
 
             <div className='py-3 text-slate-600 px-2'>
-              <h2 className='font-bold'>Product Name</h2>
+              <h2 className='font-bold'>{product.name}</h2>
               <div className='flex justify-start items-center gap-3'>
-                <span className='text-md font-semibold'>$122</span>
+                <span className='text-md font-semibold'>
+                  {currencyFormatter(product.price)}
+                </span>
                 <div className='flex'>
                   <Rating rating={5} />
                 </div>

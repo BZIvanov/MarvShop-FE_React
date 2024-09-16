@@ -10,10 +10,12 @@ const BuyerOrders = () => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
   const [searchText, setSearchText] = useState('');
+  const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
 
   const { data } = useGetOrdersQuery({
     page,
     perPage,
+    deliveryStatus: selectedDeliveryStatus,
   });
   const orders = data?.orders || [];
 
@@ -30,7 +32,13 @@ const BuyerOrders = () => {
         />
 
         <div className='mt-3'>
-          <select className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'>
+          <select
+            name='deliveryStatus'
+            value={selectedDeliveryStatus}
+            onChange={(event) => setSelectedDeliveryStatus(event.target.value)}
+            className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+          >
+            <option value=''>All</option>
             <option value='pending'>Pending</option>
             <option value='completed'>Completed</option>
             <option value='canceled'>Canceled</option>
@@ -91,7 +99,7 @@ const BuyerOrders = () => {
                     className='py-1 px-4 font-medium whitespace-nowrap'
                   >
                     <div className='flex justify-start items-center gap-4'>
-                      <Link>
+                      <Link to={`/buyer/orders/${order._id}`}>
                         <span className='bg-green-200 text-green-800 text-md font-semibold mr-2 px-3 py-[2px] rounded'>
                           View
                         </span>
