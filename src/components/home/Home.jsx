@@ -1,5 +1,5 @@
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import MainBanner from './MainBanner';
 import CategoriesBanner from './CategoriesBanner';
 import FeaturedProducts from '../product/FeaturedProducts';

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from '../../store/store';
 import { selectCart } from '../../store/features/cart/cartSlice';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
 import CartProductItem from './CartProductItem';
 import CartOrderSummary from './CartOrderSummary';

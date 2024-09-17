@@ -5,8 +5,8 @@ import { FaGoogle } from 'react-icons/fa6';
 
 import { useLoginMutation } from '../../../store/services/users';
 import ButtonLoadingIndicator from '../../common/feedback/ButtonLoadingIndicator';
-import Header from '../../common/Header';
-import Footer from '../../common/Footer';
+import Header from '../../header/Header';
+import Footer from '../../footer/Footer';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({

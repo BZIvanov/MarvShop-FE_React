@@ -20,6 +20,7 @@ import {
   selectTextFilter,
 } from '../../store/features/productsFilters/productsFiltersSlice';
 import { selectCart } from '../../store/features/cart/cartSlice';
+import { useGetWishlistProductsQuery } from '../../store/services/wishlist';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -35,10 +36,11 @@ const Header = () => {
 
   const selectedText = useSelector(selectTextFilter);
 
-  const { data } = useGetCategoriesQuery();
-  const categories = data?.categories || [];
+  const { data: categoriesData } = useGetCategoriesQuery();
+  const categories = categoriesData?.categories || [];
 
-  const wishlistCount = 3;
+  const { data: wishlistData } = useGetWishlistProductsQuery();
+  const wishlistProducts = wishlistData?.products || [];
 
   return (
     <div className='w-full bg-white'>
@@ -157,12 +159,23 @@ const Header = () => {
 
                 <div className='hidden lg:flex justify-center items-center gap-5'>
                   <div className='flex justify-center gap-5'>
-                    <div className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'>
+                    <div
+                      onClick={() => {
+                        if (user) {
+                          navigate('/buyer/wishlist');
+                        } else {
+                          navigate('/auth/login', {
+                            state: { customNavigateTo: '/buyer/wishlist' },
+                          });
+                        }
+                      }}
+                      className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
+                    >
                       <span className='text-xl text-green-500'>
                         <FaHeart />
                       </span>
                       <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                        {wishlistCount}
+                        {wishlistProducts.length}
                       </div>
                     </div>
 

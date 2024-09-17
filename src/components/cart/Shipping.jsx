@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useCreateOrderMutation } from '../../store/services/orders';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
 import { currencyFormatter } from '../../utils/formatting';
 import { useCartSummary } from './hooks/useCartSummary';

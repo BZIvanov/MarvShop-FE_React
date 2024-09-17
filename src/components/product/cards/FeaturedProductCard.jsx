@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaEye, FaRegHeart } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 
 import { useDispatch } from '../../../store/store';
 import { addToCart } from '../../../store/features/cart/cartSlice';
 import { useAddToWishlistMutation } from '../../../store/services/wishlist';
 import { showNotification } from '../../../store/features/notification/notificationSlice';
 import Rating from '../../common/Rating';
-import AddToCart from '../actions/AddToCart';
-import AddToWishlist from '../actions/AddToWishlist';
+import AddToCart from './actions/AddToCart';
+import AddToWishlist from './actions/AddToWishlist';
 import { currencyFormatter, percentFormatter } from '../../../utils/formatting';
 
 const FeaturedProductCard = ({ product }) => {
@@ -52,10 +52,12 @@ const FeaturedProductCard = ({ product }) => {
         />
 
         <ul className='flex transition-all duration-700 -bottom-10 justify-center items-center gap-2 absolute w-full group-hover:bottom-3'>
-          <AddToWishlist
-            productId={product._id}
-            onAddToWishlist={handleAddToWishlist}
-          />
+          <li>
+            <AddToWishlist
+              productId={product._id}
+              onAddToWishlist={handleAddToWishlist}
+            />
+          </li>
           <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
             <Link to={`/products/${product.slug}`}>
               <FaEye />

@@ -13,8 +13,8 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
