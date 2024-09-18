@@ -171,7 +171,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'edit-product/:productId',
+            path: 'edit-product/:slug',
             element: (
               <SellerStatus
                 statusRedirectTo='/seller/chat-support'

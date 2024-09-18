@@ -30,6 +30,26 @@ export const productsApi = api.injectEndpoints({
           return [{ type: 'Products', id: payload }];
         },
       }),
+      getSimilarProducts: build.query({
+        query: (params) => {
+          const { id, ...rest } = params;
+
+          return {
+            url: `/products/${id}/similar`,
+            method: 'GET',
+            params: rest,
+          };
+        },
+        providesTags: (result) => {
+          return [
+            ...result.products.map(({ _id }) => ({
+              type: 'SimilarProducts',
+              id: _id,
+            })),
+            { type: 'SimilarProducts', id: 'LIST' },
+          ];
+        },
+      }),
       createProduct: build.mutation({
         query: (data) => {
           return {
@@ -71,6 +91,7 @@ export const productsApi = api.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductQuery,
+  useGetSimilarProductsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useGetProductsPriceRangeQuery,

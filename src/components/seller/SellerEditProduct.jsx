@@ -16,7 +16,7 @@ import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 const SellerEditProduct = () => {
   const dispatch = useDispatch();
 
-  const { productId } = useParams();
+  const { slug } = useParams();
 
   const isLoading = useIsAnyApiRequestPending();
 
@@ -26,8 +26,8 @@ const SellerEditProduct = () => {
     useGetCategoriesQuery();
 
   const { data: productData, isSuccess: isProductsSuccess } =
-    useGetProductQuery(productId, {
-      skip: !productId,
+    useGetProductQuery(slug, {
+      skip: !slug,
     });
 
   const categories = useMemo(
@@ -173,7 +173,10 @@ const SellerEditProduct = () => {
       }
     }
 
-    const result = await updateProduct({ id: productId, formData });
+    const result = await updateProduct({
+      id: productData.product._id,
+      formData,
+    });
 
     if (!('error' in result)) {
       dispatch(

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FaHeart } from 'react-icons/fa6';
 import { FaFacebookF } from 'react-icons/fa';
@@ -13,25 +13,70 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+import { useDispatch } from '../../store/store';
+import {
+  useGetProductQuery,
+  useGetSimilarProductsQuery,
+} from '../../store/services/products';
+import { showNotification } from '../../store/features/notification/notificationSlice';
+import { addToCart } from '../../store/features/cart/cartSlice';
+import { useAddToWishlistMutation } from '../../store/services/wishlist';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import { currencyFormatter, percentFormatter } from '../../utils/formatting';
 
 const ProductDetails = () => {
-  const images = [
-    '/images/logo.png',
-    '/images/logo.png',
-    '/images/logo.png',
-    '/images/logo.png',
-    '/images/logo.png',
-    '/images/logo.png',
-  ];
-  const [image, setImage] = useState('');
-  const discount = 10;
-  const stock = 3;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { slug } = useParams();
+
+  const { data: productData } = useGetProductQuery(slug);
+  const product = productData?.product;
+
+  const { data: sameSellerProductsData } = useGetSimilarProductsQuery(
+    { id: product?._id, similarColumn: 'seller' },
+    { skip: !product?._id }
+  );
+  const sameSellerProducts = sameSellerProductsData?.products || [];
+  const { data: sameCategoryProductsData } = useGetSimilarProductsQuery(
+    { id: product?._id, similarColumn: 'category' },
+    { skip: !product?._id }
+  );
+  const sameCategoryProducts = sameCategoryProductsData?.products || [];
+
+  const [addToWishlist] = useAddToWishlistMutation();
+
+  const [selectedPreviewImage, setSelectedPreviewImage] = useState('');
+
+  const [selectedProductQuantity, setSelectedProductQuantity] = useState(1);
+
   const [activeTab, setActiveTab] = useState('reviews');
+
+  const handleAddToWishlist = async () => {
+    const result = await addToWishlist(product._id);
+
+    if ('error' in result) {
+      navigate('/buyer/wishlist');
+    } else {
+      dispatch(
+        showNotification({ type: 'success', message: 'Added to the wishlist' })
+      );
+    }
+  };
+
+  const buyNow = () => {
+    dispatch(
+      addToCart({
+        product,
+        count: selectedProductQuantity,
+      })
+    );
+    navigate('/shipping');
+  };
 
   const responsive = {
     superLargeDesktop: {
@@ -78,11 +123,11 @@ const ProductDetails = () => {
               <span className='pt-1'>
                 <IoIosArrowForward />
               </span>
-              <Link to='/'>Category</Link>
+              <Link to='/'>{product?.category.name}</Link>
               <span className='pt-1'>
                 <IoIosArrowForward />
               </span>
-              <span>Product Name</span>
+              <span>{product?.name}</span>
             </div>
           </div>
         </div>
@@ -95,24 +140,29 @@ const ProductDetails = () => {
               <div className='p-5 border'>
                 <img
                   className='h-[400px] w-full'
-                  src={image ? '/images/logo.png' : '/images/logo.png'}
+                  src={selectedPreviewImage || product?.images[0].imageUrl}
                   alt='Product preview'
                 />
               </div>
               <div className='py-3'>
-                {images && (
+                {product?.images && (
                   <Carousel
                     autoPlay={true}
                     infinite={true}
                     responsive={responsive}
                     transitionDuration={500}
                   >
-                    {images.map((img, i) => {
+                    {product.images.map((productImage) => {
                       return (
-                        <div key={i} onClick={() => setImage(img)}>
+                        <div
+                          key={productImage.publicId}
+                          onClick={() =>
+                            setSelectedPreviewImage(productImage.imageUrl)
+                          }
+                        >
                           <img
                             className='h-[120px] cursor-pointer'
-                            src={`/images/logo.png`}
+                            src={productImage.imageUrl}
                             alt='Product preview'
                           />
                         </div>
@@ -125,54 +175,114 @@ const ProductDetails = () => {
 
             <div className='flex flex-col gap-5'>
               <div className='text-3xl text-slate-600 font-bold'>
-                <h3>Product Name</h3>
+                <h3>{product?.name}</h3>
               </div>
               <div className='flex justify-start items-center gap-4'>
                 <div className='flex text-xl'>
-                  <Rating rating={4.5} />
+                  <Rating rating={product?.rating} />
                 </div>
                 <span className='text-green-500'>(24 reviews)</span>
               </div>
 
               <div className='text-2xl text-red-500 font-bold flex gap-3'>
-                {discount !== 0 ? (
+                {product?.discount !== 0 ? (
                   <h2>
-                    Price: <span className='line-through'>$500</span> $
-                    {500 - Math.floor((500 * discount) / 100)} (-{discount}%)
+                    Price:{' '}
+                    <span className='line-through'>
+                      {currencyFormatter(product?.price)}
+                    </span>{' '}
+                    $
+                    {product?.price -
+                      Math.floor(
+                        (product?.price * product?.discount) / 100
+                      )}{' '}
+                    (-
+                    {product?.discount}%)
                   </h2>
                 ) : (
-                  <h2>Price: $200</h2>
+                  <h2>Price: {currencyFormatter(product?.price)}</h2>
                 )}
               </div>
 
               <div className='text-slate-600'>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry&apos;s
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley
+                  {product?.description.length > 300
+                    ? product?.description.substring(0, 300) + '...'
+                    : product?.description}
                 </p>
               </div>
 
               <div className='flex gap-3 pb-10 border-b'>
-                {stock ? (
+                {product?.stock > 0 ? (
                   <>
                     <div className='flex bg-slate-200 h-[50px] justify-center items-center text-xl'>
-                      <div className='px-4 lg:px-5 cursor-pointer'>-</div>
-                      <div className='px-4 lg:px-5'>2</div>
-                      <div className='px-4 lg:px-5 cursor-pointer'>+</div>
+                      <div
+                        onClick={() => {
+                          setSelectedProductQuantity((prevState) => {
+                            if (prevState <= 1) {
+                              return 1;
+                            }
+                            return prevState - 1;
+                          });
+                        }}
+                        className='px-3 lg:px-4 cursor-pointer'
+                      >
+                        -
+                      </div>
+                      <div className='px-3 lg:px-4'>
+                        {selectedProductQuantity}
+                      </div>
+                      <div
+                        onClick={() => {
+                          setSelectedProductQuantity((prevState) => {
+                            if (prevState >= product.stock) {
+                              return prevState;
+                            }
+                            return prevState + 1;
+                          });
+
+                          if (selectedProductQuantity >= product.stock) {
+                            dispatch(
+                              showNotification({
+                                type: 'success',
+                                message: `Maximum quantity selected`,
+                              })
+                            );
+                          }
+                        }}
+                        className='px-3 lg:px-4 cursor-pointer'
+                      >
+                        +
+                      </div>
                     </div>
                     <div>
-                      <button className='px-5 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white'>
+                      <button
+                        onClick={() => {
+                          dispatch(
+                            addToCart({
+                              product,
+                              count: selectedProductQuantity,
+                            })
+                          );
+                          dispatch(
+                            showNotification({
+                              type: 'success',
+                              message: `Added to cart`,
+                            })
+                          );
+                        }}
+                        className='px-5 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#059473] text-white'
+                      >
                         Add To Cart
                       </button>
                     </div>
                   </>
                 ) : null}
-                <div>
-                  <div className='h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white'>
-                    <FaHeart />
-                  </div>
+                <div
+                  onClick={handleAddToWishlist}
+                  className='h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white'
+                >
+                  <FaHeart />
                 </div>
               </div>
 
@@ -182,8 +292,14 @@ const ProductDetails = () => {
                   <span>Share On</span>
                 </div>
                 <div className='flex flex-col gap-5'>
-                  <span className={`text-${stock ? 'green' : 'red'}-500`}>
-                    {stock ? `In Stock(${stock})` : 'Out Of Stock'}
+                  <span
+                    className={`text-${
+                      product?.stock > 0 ? 'green' : 'red'
+                    }-500`}
+                  >
+                    {product?.stock > 0
+                      ? `In Stock (${product?.stock})`
+                      : 'Out Of Stock'}
                   </span>
 
                   <ul className='flex justify-start items-center gap-3'>
@@ -224,8 +340,11 @@ const ProductDetails = () => {
               </div>
 
               <div className='flex gap-3'>
-                {stock ? (
-                  <button className='px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#247462] text-white'>
+                {product?.stock > 0 ? (
+                  <button
+                    onClick={buyNow}
+                    className='px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-green-500/40 bg-[#247462] text-white'
+                  >
                     Buy Now
                   </button>
                 ) : null}
@@ -272,20 +391,10 @@ const ProductDetails = () => {
 
                 <div>
                   {activeTab === 'reviews' ? (
-                    <Reviews />
+                    <>{product && <Reviews product={product} />}</>
                   ) : (
                     <p className='py-5 text-slate-600'>
-                      What is Lorem Ipsum? Lorem Ipsum is simply dummy text of
-                      the printing and typesetting industry. Lorem Ipsum has
-                      been the industrys standard dummy text ever since the
-                      1500s, when an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book. It has survived
-                      not only five centuries, but also the leap into electronic
-                      typesetting, remaining essentially unchanged. It was
-                      popularised in the 1960s with the release of Letraset
-                      sheets containing Lorem Ipsum passages, and more recently
-                      with desktop publishing software like Aldus PageMaker
-                      including versions of Lorem Ipsum.
+                      {product?.description}
                     </p>
                   )}
                 </div>
@@ -298,31 +407,31 @@ const ProductDetails = () => {
                   <h2 className='font-bold'>From Marv Shop</h2>
                 </div>
                 <div className='flex flex-col gap-5 mt-3 border p-3'>
-                  {[1, 2, 3].map((p, i) => {
+                  {sameSellerProducts.map((sellerProduct) => {
                     return (
-                      <Link key={i} className='block'>
+                      <Link key={sellerProduct._id} className='block'>
                         <div className='relative h-[270px]'>
                           <img
                             className='w-full h-full'
-                            src={`/images/logo.png`}
-                            alt=''
+                            src={sellerProduct.images[0].imageUrl}
+                            alt='Product preview'
                           />
-                          {discount !== 0 && (
+                          {sellerProduct.discount !== 0 && (
                             <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>
-                              {discount}%
+                              {percentFormatter(sellerProduct.discount)}
                             </div>
                           )}
                         </div>
 
                         <h2 className='text-slate-600 py-1 font-bold'>
-                          Product Name
+                          {sellerProduct.name}
                         </h2>
                         <div className='flex gap-2'>
                           <h2 className='text-lg font-bold text-slate-600'>
-                            $434
+                            {currencyFormatter(sellerProduct.price)}
                           </h2>
                           <div className='flex items-center gap-2'>
-                            <Rating rating={4.5} />
+                            <Rating rating={sellerProduct.rating} />
                           </div>
                         </div>
                       </Link>
@@ -358,36 +467,36 @@ const ProductDetails = () => {
               modules={[Pagination]}
               className='mySwiper'
             >
-              {[1, 2, 3, 4, 5, 6].map((p, i) => {
+              {sameCategoryProducts.map((categoryProduct) => {
                 return (
-                  <SwiperSlide key={i}>
+                  <SwiperSlide key={categoryProduct._id}>
                     <Link className='block'>
                       <div className='relative h-[270px]'>
                         <div className='w-full h-full'>
                           <img
                             className='w-full h-full'
-                            src={`/images/logo.png`}
-                            alt=''
+                            src={categoryProduct.images[0].imageUrl}
+                            alt='Product preview'
                           />
                           <div className='absolute h-full w-full top-0 left-0 bg-[#000] opacity-25 hover:opacity-50 transition-all duration-500'></div>
                         </div>
-                        {discount !== 0 && (
+                        {categoryProduct.discount !== 0 && (
                           <div className='flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2'>
-                            {discount}%
+                            {percentFormatter(categoryProduct.discount)}
                           </div>
                         )}
                       </div>
 
                       <div className='p-4 flex flex-col gap-1'>
                         <h2 className='text-slate-600 text-lg font-bold'>
-                          Product Name
+                          {categoryProduct.name}
                         </h2>
                         <div className='flex justify-start items-center gap-3'>
                           <h2 className='text-lg font-bold text-slate-600'>
-                            $434
+                            {currencyFormatter(categoryProduct.price)}
                           </h2>
                           <div className='flex'>
-                            <Rating rating={4.5} />
+                            <Rating rating={categoryProduct.rating} />
                           </div>
                         </div>
                       </div>

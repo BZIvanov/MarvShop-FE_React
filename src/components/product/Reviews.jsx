@@ -1,19 +1,24 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Rating, RoundedStar } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 
+import { useSelector } from '../../store/store';
+import { selectUser } from '../../store/features/user/userSlice';
 import MyRating from '../common/Rating';
 import RatingTemp from './RatingTemp';
 import Pagination from './Pagination';
 
-const Reviews = () => {
+const Reviews = ({ product }) => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
 
-  const userInfo = {};
+  const user = useSelector(selectUser);
 
   const [rating, setRating] = useState(0);
+  const [userReview, setUserReview] = useState('');
+
   const ratingStyles = {
     itemShapes: RoundedStar,
     itemStrokeWidth: 1,
@@ -22,12 +27,16 @@ const Reviews = () => {
     inactiveFillColor: '#fbfaaa',
   };
 
+  const handleReviewSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div className='mt-8 mb-8 lg:mb-0'>
       <div className='flex flex-col lg:flex-row gap-10'>
         <div className='flex flex-col gap-2 justify-start items-start py-4'>
           <div>
-            <span className='text-6xl font-semibold'>4.5</span>
+            <span className='text-6xl font-semibold'>{product.rating}</span>
             <span className='text-3xl font-semibold text-slate-600'>/5</span>
           </div>
           <div className='flex text-3xl'>
@@ -132,7 +141,7 @@ const Reviews = () => {
       </div>
 
       <div>
-        {userInfo ? (
+        {user ? (
           <div className='flex flex-col gap-3'>
             <div className='flex gap-1'>
               <Rating
@@ -142,11 +151,11 @@ const Reviews = () => {
                 itemStyles={ratingStyles}
               />
             </div>
-            <form>
+            <form onSubmit={handleReviewSubmit}>
               <textarea
-                name=''
+                value={userReview}
+                onChange={(event) => setUserReview(event.target.value)}
                 required={true}
-                id=''
                 cols='30'
                 rows='5'
                 className='border outline-0 p-3 w-full'
@@ -171,6 +180,10 @@ const Reviews = () => {
       </div>
     </div>
   );
+};
+
+Reviews.propTypes = {
+  product: PropTypes.object,
 };
 
 export default Reviews;

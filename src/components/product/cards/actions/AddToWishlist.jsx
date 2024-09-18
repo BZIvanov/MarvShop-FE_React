@@ -5,7 +5,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { useSelector } from '../../../../store/store';
 import { selectUser } from '../../../../store/features/user/userSlice';
 
-const AddToWishlist = ({ productId, onAddToWishlist }) => {
+const AddToWishlist = ({ slug, onAddToWishlist }) => {
   const navigate = useNavigate();
 
   const user = useSelector(selectUser);
@@ -16,7 +16,7 @@ const AddToWishlist = ({ productId, onAddToWishlist }) => {
         if (!user) {
           return navigate('/auth/login', {
             state: {
-              customNavigateTo: `/products/${productId}`,
+              customNavigateTo: `/products/${slug}`,
             },
           });
         }
@@ -31,7 +31,7 @@ const AddToWishlist = ({ productId, onAddToWishlist }) => {
 };
 
 AddToWishlist.propTypes = {
-  productId: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   onAddToWishlist: PropTypes.func.isRequired,
 };
 
