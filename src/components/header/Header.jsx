@@ -39,7 +39,9 @@ const Header = () => {
   const { data: categoriesData } = useGetCategoriesQuery();
   const categories = categoriesData?.categories || [];
 
-  const { data: wishlistData } = useGetWishlistProductsQuery();
+  const { data: wishlistData } = useGetWishlistProductsQuery(undefined, {
+    skip: !user,
+  });
   const wishlistProducts = wishlistData?.products || [];
 
   return (

@@ -4,20 +4,44 @@ import { Link } from 'react-router-dom';
 import { Rating, RoundedStar } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 
-import { useSelector } from '../../store/store';
+import { useDispatch, useSelector } from '../../store/store';
 import { selectUser } from '../../store/features/user/userSlice';
+import {
+  useGetProductReviewsQuery,
+  useReviewProductMutation,
+  useGetProductReviewsSummaryQuery,
+} from '../../store/services/reviews';
+import { showNotification } from '../../store/features/notification/notificationSlice';
 import MyRating from '../common/Rating';
 import RatingTemp from './RatingTemp';
 import Pagination from './Pagination';
+import { dateFormatter } from '../../utils/formatting';
+
+const perPage = 5;
 
 const Reviews = ({ product }) => {
+  const dispatch = useDispatch();
+
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
 
   const user = useSelector(selectUser);
 
-  const [rating, setRating] = useState(0);
-  const [userReview, setUserReview] = useState('');
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState('');
+
+  const { data: reviewsData } = useGetProductReviewsQuery({
+    productId: product._id,
+    page,
+    perPage,
+  });
+  const reviews = reviewsData?.reviews || [];
+
+  const { data: reviewsSummaryData } = useGetProductReviewsSummaryQuery(
+    product._id
+  );
+  const reviewSummary = reviewsSummaryData?.review || {};
+
+  const [reviewProduct] = useReviewProductMutation();
 
   const ratingStyles = {
     itemShapes: RoundedStar,
@@ -27,8 +51,25 @@ const Reviews = ({ product }) => {
     inactiveFillColor: '#fbfaaa',
   };
 
-  const handleReviewSubmit = (event) => {
+  const handleReviewSubmit = async (event) => {
     event.preventDefault();
+
+    const result = await reviewProduct({
+      id: product._id,
+      rating: reviewRating,
+      comment: reviewComment,
+    });
+
+    if (!('error' in result)) {
+      dispatch(
+        showNotification({
+          type: 'success',
+          message: `Successfully rated with rating of ${reviewRating} stars`,
+        })
+      );
+      setReviewRating(0);
+      setReviewComment('');
+    }
   };
 
   return (
@@ -36,108 +77,89 @@ const Reviews = ({ product }) => {
       <div className='flex flex-col lg:flex-row gap-10'>
         <div className='flex flex-col gap-2 justify-start items-start py-4'>
           <div>
-            <span className='text-6xl font-semibold'>{product.rating}</span>
+            <span className='text-6xl font-semibold'>
+              {reviewSummary.averageRating?.toFixed(1)}
+            </span>
             <span className='text-3xl font-semibold text-slate-600'>/5</span>
           </div>
           <div className='flex text-3xl'>
-            <MyRating rating={4.5} />
+            <MyRating rating={reviewSummary.averageRating} />
           </div>
-          <p className='text-sm text-slate-600'>15 Reviews</p>
+          <p className='text-sm text-slate-600'>
+            ({reviewSummary.totalReviews}) Reviews
+          </p>
         </div>
 
         <div className='flex gap-2 flex-col py-4'>
-          <div className='flex justify-start items-center gap-5'>
-            <div className='text-md flex gap-1 w-[93px]'>
-              <RatingTemp rating={5} />
-            </div>
-            <div className='w-[200px] h-[14px] bg-slate-200 relative'>
-              <div className='h-full bg-[#Edbb0E] w-[60%]'></div>
-            </div>
-            <p className='text-sm text-slate-600 w-[0%]'>10</p>
-          </div>
+          {Object.keys(reviewSummary?.ratings || {})
+            .reverse()
+            .map((reviewSummaryRating) => {
+              const totalReviewCount = reviewSummary.totalReviews;
+              const starReviewCount =
+                reviewSummary.ratings[reviewSummaryRating].count;
 
-          <div className='flex justify-start items-center gap-5'>
-            <div className='text-md flex gap-1 w-[93px]'>
-              <RatingTemp rating={4} />
-            </div>
-            <div className='w-[200px] h-[14px] bg-slate-200 relative'>
-              <div className='h-full bg-[#Edbb0E] w-[70%]'></div>
-            </div>
-            <p className='text-sm text-slate-600 w-[0%]'>20</p>
-          </div>
+              const barWidth =
+                totalReviewCount === 0 || starReviewCount === 0
+                  ? 0
+                  : (starReviewCount / totalReviewCount) * 100;
 
-          <div className='flex justify-start items-center gap-5'>
-            <div className='text-md flex gap-1 w-[93px]'>
-              <RatingTemp rating={3} />
-            </div>
-            <div className='w-[200px] h-[14px] bg-slate-200 relative'>
-              <div className='h-full bg-[#Edbb0E] w-[40%]'></div>
-            </div>
-            <p className='text-sm text-slate-600 w-[0%]'>8</p>
-          </div>
-
-          <div className='flex justify-start items-center gap-5'>
-            <div className='text-md flex gap-1 w-[93px]'>
-              <RatingTemp rating={2} />
-            </div>
-            <div className='w-[200px] h-[14px] bg-slate-200 relative'>
-              <div className='h-full bg-[#Edbb0E] w-[30%]'></div>
-            </div>
-            <p className='text-sm text-slate-600 w-[0%]'>5</p>
-          </div>
-
-          <div className='flex justify-start items-center gap-5'>
-            <div className='text-md flex gap-1 w-[93px]'>
-              <RatingTemp rating={1} />
-            </div>
-            <div className='w-[200px] h-[14px] bg-slate-200 relative'>
-              <div className='h-full bg-[#Edbb0E] w-[10%]'></div>
-            </div>
-            <p className='text-sm text-slate-600 w-[0%]'>3</p>
-          </div>
-
-          <div className='flex justify-start items-center gap-5'>
-            <div className='text-md flex gap-1 w-[93px]'>
-              <RatingTemp rating={0} />
-            </div>
-            <div className='w-[200px] h-[14px] bg-slate-200 relative'>
-              <div className='h-full bg-[#Edbb0E] w-[0%]'></div>
-            </div>
-            <p className='text-sm text-slate-600 w-[0%]'>0</p>
-          </div>
+              return (
+                <div
+                  key={reviewSummaryRating}
+                  className='flex justify-start items-center gap-5'
+                >
+                  <div className='text-md flex gap-1 w-[93px]'>
+                    <RatingTemp rating={Number(reviewSummaryRating)} />
+                  </div>
+                  <div className='w-[200px] h-[14px] bg-slate-200 relative'>
+                    <div
+                      className='h-full bg-[#Edbb0E]'
+                      style={{ width: `${barWidth}%` }}
+                    />
+                  </div>
+                  <p className='text-sm text-slate-600 w-[0%]'>
+                    {reviewSummary.ratings[reviewSummaryRating].count}
+                  </p>
+                </div>
+              );
+            })}
         </div>
       </div>
 
       <h2 className='text-slate-600 text-xl font-bold py-5'>
-        Product Reviews 10
+        Product Reviews ({reviewsData?.totalCount})
       </h2>
 
       <div className='flex flex-col gap-8 pb-10 pt-4'>
-        {[1, 2, 3, 4, 5].map((r, i) => (
-          <div key={i} className='flex flex-col gap-1'>
-            <div className='flex justify-between items-center'>
-              <div className='flex gap-1 text-xl'>
-                <RatingTemp rating={4} />
+        {reviews.map((productReview) => {
+          return (
+            <div key={productReview._id} className='flex flex-col gap-1'>
+              <div className='flex justify-between items-center'>
+                <div className='flex gap-1 text-xl'>
+                  <RatingTemp rating={productReview.rating} />
+                </div>
+                <span className='text-slate-600'>
+                  {dateFormatter(productReview.updatedAt)}
+                </span>
               </div>
-              <span className='text-slate-600'>8 Dec 2024</span>
+              <span className='text-slate-600 text-md'>
+                {productReview.user.username}
+              </span>
+              <p className='text-slate-600 text-sm'>{productReview.comment}</p>
             </div>
-            <span className='text-slate-600 text-md'>Iva Ivanova</span>
-            <p className='text-slate-600 text-sm'>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s
-            </p>
+          );
+        })}
+        {reviewsData?.totalCount > perPage && (
+          <div className='flex justify-end'>
+            <Pagination
+              pageNumber={page}
+              setPageNumber={setPage}
+              totalItem={reviewsData?.totalCount ?? 0}
+              perPage={perPage}
+              showItem={3}
+            />
           </div>
-        ))}
-        <div className='flex justify-end'>
-          <Pagination
-            pageNumber={page}
-            setPageNumber={setPage}
-            totalItem={10}
-            perPage={perPage}
-            showItem={Math.floor(10 / 3)}
-          />
-        </div>
+        )}
       </div>
 
       <div>
@@ -146,15 +168,15 @@ const Reviews = ({ product }) => {
             <div className='flex gap-1'>
               <Rating
                 style={{ maxWidth: 200 }} // maxWidth controls the size
-                value={rating}
-                onChange={setRating}
+                value={reviewRating}
+                onChange={setReviewRating}
                 itemStyles={ratingStyles}
               />
             </div>
             <form onSubmit={handleReviewSubmit}>
               <textarea
-                value={userReview}
-                onChange={(event) => setUserReview(event.target.value)}
+                value={reviewComment}
+                onChange={(event) => setReviewComment(event.target.value)}
                 required={true}
                 cols='30'
                 rows='5'

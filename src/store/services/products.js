@@ -22,12 +22,13 @@ export const productsApi = api.injectEndpoints({
         },
       }),
       getProduct: build.query({
-        query: (id) => ({
-          url: `/products/${id}`,
+        query: (slug) => ({
+          url: `/products/${slug}`,
           method: 'GET',
         }),
         providesTags: (_result, _error, payload) => {
-          return [{ type: 'Products', id: payload }];
+          // the payload will be the slug, which must be used in case we want to invalidate the cache results
+          return [{ type: 'Product', id: payload }];
         },
       }),
       getSimilarProducts: build.query({
