@@ -85,3 +85,6 @@ export const BuyerProfile = lazy(() =>
 export const BuyerWishlist = lazy(() =>
   import('../components/dashboard/buyer/BuyerWishlist')
 );
+export const BuyerChat = lazy(() =>
+  import('../components/dashboard/buyer/BuyerChat')
+);

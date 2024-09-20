@@ -131,6 +131,11 @@ const buyerLinks = [
     icon: <PiListHeartLight />,
     path: '/buyer/wishlist',
   },
+  {
+    title: 'Chat',
+    icon: <IoChatbubbles />,
+    path: '/buyer/chat',
+  },
 ];
 
 const roleLinks = {

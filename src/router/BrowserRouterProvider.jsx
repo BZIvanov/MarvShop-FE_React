@@ -42,6 +42,7 @@ import {
   BuyerOrderDetails,
   BuyerProfile,
   BuyerWishlist,
+  BuyerChat,
 } from './lazy-routes';
 import Home from '../components/home/Home';
 import Shop from '../components/shop/Shop';
@@ -254,6 +255,14 @@ const router = createBrowserRouter([
           {
             path: 'wishlist',
             element: <BuyerWishlist />,
+          },
+          {
+            path: 'chat',
+            element: <BuyerChat />,
+          },
+          {
+            path: 'chat/:sellerId',
+            element: <BuyerChat />,
           },
         ],
       },
