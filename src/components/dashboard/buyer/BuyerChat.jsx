@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaList } from 'react-icons/fa6';
@@ -9,10 +9,15 @@ import { IoSend } from 'react-icons/io5';
 
 import { useSelector } from '../../../store/store';
 import { selectUser } from '../../../store/features/user/userSlice';
-import { useGetChatQuery } from '../../../store/services/chat';
+import {
+  useGetChatsQuery,
+  useGetChatQuery,
+} from '../../../store/services/chat';
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const BuyerChat = () => {
-  const [show, setShow] = useState(false);
+  const [showSidebarUsersList, setShowSidebarUsersList] = useState(false);
 
   const user = useSelector(selectUser);
 
@@ -22,38 +27,46 @@ const BuyerChat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const { data } = useGetChatQuery(
+  const { data: chatsData } = useGetChatsQuery();
+  const chats = useMemo(() => {
+    return chatsData?.chats || [];
+  }, [chatsData]);
+
+  const { data: chatData } = useGetChatQuery(
     { receiverId: sellerId },
     { skip: !sellerId }
   );
+  const chat = useMemo(() => {
+    return chatData?.chat || {};
+  }, [chatData]);
 
   useEffect(() => {
-    if (data?.chat) {
-      setMessages(data.chat.messages);
+    if (chat.messages) {
+      setMessages(chat.messages);
     }
-  }, [data]);
+  }, [chat]);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3100');
+    const newSocket = io(backendUrl);
     setSocket(newSocket);
 
     return () => newSocket.disconnect();
   }, []);
 
   useEffect(() => {
-    if (socket && data?.chat) {
-      socket.emit('joinChat', { chatId: data.chat._id });
+    if (socket && chat._id) {
+      socket.emit('joinChat', { chatId: chat._id });
 
       socket.on('newMessage', (message) => {
         setMessages((prevState) => [...prevState, message]);
       });
     }
-  }, [socket, data]);
+  }, [socket, chat]);
 
   const handleSendMessage = () => {
-    if (socket && data?.chat && message) {
+    if (socket && chat._id && message) {
       socket.emit('sendMessage', {
-        chatId: data.chat._id,
+        chatId: chat._id,
         senderId: user.id,
         message,
       });
@@ -67,76 +80,52 @@ const BuyerChat = () => {
         <div className='flex w-full h-full relative'>
           <div
             className={`w-[280px] h-full absolute z-10 ${
-              show ? '-left-[16px]' : '-left-[336px]'
+              showSidebarUsersList ? '-left-[16px]' : '-left-[336px]'
             } md:left-0 md:relative transition-all `}
           >
             <div className='w-full h-[calc(100vh-177px)] bg-[#9e97e9] md:bg-transparent overflow-y-auto'>
               <div className='flex text-xl justify-between items-center p-4 md:p-0 md:px-3 md:pb-3 text-white'>
                 <h2>Sellers</h2>
                 <span
-                  onClick={() => setShow((prevState) => !prevState)}
+                  onClick={() =>
+                    setShowSidebarUsersList((prevState) => !prevState)
+                  }
                   className='block cursor-pointer md:hidden'
                 >
                   <IoMdClose />
                 </span>
               </div>
 
-              <div
-                className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-md cursor-pointer bg-[#8288ed] `}
-              >
-                <div className='relative'>
-                  <img
-                    className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full'
-                    src='/images/logo.png'
-                    alt=''
-                  />
-                  <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
-                </div>
+              {chats.map((c) => {
+                return (
+                  <Link key={c._id} to={`/buyer/chat/${c.seller._id}`}>
+                    <div
+                      className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-sm cursor-pointer ${
+                        sellerId === c.seller._id ? 'bg-[#8288ed]' : ''
+                      }`}
+                    >
+                      <div className='relative'>
+                        <img
+                          className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full'
+                          src={
+                            c.seller?.avatar?.imageUrl || '/images/avatar.png'
+                          }
+                          alt='User avatar'
+                        />
+                        <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0' />
+                      </div>
 
-                <div className='flex justify-center items-start flex-col w-full'>
-                  <div className='flex justify-between items-center w-full'>
-                    <h2 className='text-base font-semibold'>Iva Ivanova</h2>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-sm cursor-pointer`}
-              >
-                <div className='relative'>
-                  <img
-                    className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full'
-                    src='/images/logo.png'
-                    alt=''
-                  />
-                  <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
-                </div>
-
-                <div className='flex justify-center items-start flex-col w-full'>
-                  <div className='flex justify-between items-center w-full'>
-                    <h2 className='text-base font-semibold'>Ivan</h2>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`h-[60px] flex justify-start gap-2 items-center text-white px-2 py-2 rounded-sm cursor-pointer`}
-              >
-                <div className='relative'>
-                  <img
-                    className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[2px] rounded-full'
-                    src='/images/logo.png'
-                    alt=''
-                  />
-                  <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
-                </div>
-
-                <div className='flex justify-center items-start flex-col w-full'>
-                  <div className='flex justify-between items-center w-full'>
-                    <h2 className='text-base font-semibold'>Elena</h2>
-                  </div>
-                </div>
-              </div>
+                      <div className='flex justify-center items-start flex-col w-full'>
+                        <div className='flex justify-between items-center w-full'>
+                          <h2 className='text-base font-semibold'>
+                            {c.seller.username}
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
@@ -159,7 +148,9 @@ const BuyerChat = () => {
               )}
 
               <div
-                onClick={() => setShow((prevState) => !prevState)}
+                onClick={() =>
+                  setShowSidebarUsersList((prevState) => !prevState)
+                }
                 className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'
               >
                 <span>
@@ -171,30 +162,33 @@ const BuyerChat = () => {
             <div className='py-4'>
               <div className='bg-[#475569] h-[calc(100vh-290px)] rounded-md p-3 overflow-y-auto'>
                 {messages.map((m, index) => {
+                  const isCurrentUser = user?.id === m.senderId;
+                  const avatarUrl = isCurrentUser
+                    ? chat.buyer?.avatar?.imageUrl
+                    : chat.seller?.avatar?.imageUrl;
+
                   return (
                     <div
                       key={index}
                       className={`w-full flex items-center ${
-                        user?.id === m.senderId
-                          ? 'justify-end'
-                          : 'justify-start'
+                        isCurrentUser ? 'justify-end' : 'justify-start'
                       }`}
                     >
                       <div
                         className={`flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%] ${
-                          user?.id === m.senderId ? 'flex-row-reverse' : ''
+                          isCurrentUser ? 'flex-row-reverse' : ''
                         }`}
                       >
                         <div>
                           <img
                             className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
-                            src='/images/logo.png'
-                            alt=''
+                            src={avatarUrl || '/images/avatar.png'}
+                            alt='User avatar'
                           />
                         </div>
                         <div
                           className={`flex justify-center items-start flex-col w-full text-white py-1 px-2 rounded-sm ${
-                            user?.id === m.senderId
+                            isCurrentUser
                               ? 'bg-red-500 shadow-lg shadow-red-500/50'
                               : 'bg-blue-500 shadow-lg shadow-blue-500/50'
                           }`}

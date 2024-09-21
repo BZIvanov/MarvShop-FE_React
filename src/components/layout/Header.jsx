@@ -37,7 +37,7 @@ const Header = ({ setShowSidebar }) => {
               </div>
               <img
                 className='w-[45px] h-[45px] rounded-full overflow-hidden'
-                src='/images/logo.png'
+                src={user?.avatar?.imageUrl || '/images/avatar.png'}
                 alt='User avatar'
               />
             </div>
