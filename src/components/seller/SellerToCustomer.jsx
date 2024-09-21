@@ -1,11 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import io from 'socket.io-client';
 import { FaList } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
+
+import { useSelector } from '../../store/store';
+import { selectUser } from '../../store/features/user/userSlice';
+import { useGetChatQuery } from '../../store/services/chat';
 
 const SellerToCustomer = () => {
   const [show, setShow] = useState(false);
 
-  const sellerId = 35;
+  const user = useSelector(selectUser);
+
+  const { buyerId } = useParams();
+
+  const [socket, setSocket] = useState(null);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
+  const { data } = useGetChatQuery({ receiverId: buyerId }, { skip: !buyerId });
+
+  useEffect(() => {
+    if (data?.chat) {
+      setMessages(data.chat.messages);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const newSocket = io('http://localhost:3100');
+    setSocket(newSocket);
+
+    return () => newSocket.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (socket && data?.chat) {
+      socket.emit('joinChat', { chatId: data.chat._id });
+
+      socket.on('newMessage', (message) => {
+        setMessages((prevState) => [...prevState, message]);
+      });
+    }
+  }, [socket, data]);
+
+  const handleSendMessage = (event) => {
+    event.preventDefault();
+
+    if (socket && data?.chat && message) {
+      socket.emit('sendMessage', {
+        chatId: data.chat._id,
+        senderId: user.id,
+        message,
+      });
+      setMessage('');
+    }
+  };
 
   return (
     <div className='px-2 lg:px-7 py-5'>
@@ -18,7 +68,7 @@ const SellerToCustomer = () => {
           >
             <div className='w-full h-[calc(100vh-177px)] bg-[#9e97e9] md:bg-transparent overflow-y-auto'>
               <div className='flex text-xl justify-between items-center p-4 md:p-0 md:px-3 md:pb-3 text-white'>
-                <h2>Customers</h2>
+                <h2>Buyers</h2>
                 <span
                   onClick={() => setShow((prevState) => !prevState)}
                   className='block cursor-pointer md:hidden'
@@ -88,17 +138,19 @@ const SellerToCustomer = () => {
 
           <div className='w-full md:w-[calc(100%-200px)] md:pl-4'>
             <div className='flex justify-between items-center'>
-              {sellerId && (
+              {user && (
                 <div className='flex justify-start items-center gap-3'>
                   <div className='relative'>
                     <img
                       className='w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full'
-                      src='/images/logo.png'
-                      alt=''
+                      src={user?.avatar.imageUrl || '/images/avatar.png'}
+                      alt='User avatar'
                     />
                     <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
                   </div>
-                  <h2 className='text-base text-white font-semibold'>Biserr</h2>
+                  <h2 className='text-base text-white font-semibold'>
+                    {user?.username}
+                  </h2>
                 </div>
               )}
 
@@ -114,57 +166,50 @@ const SellerToCustomer = () => {
 
             <div className='py-4'>
               <div className='bg-[#475569] h-[calc(100vh-290px)] rounded-md p-3 overflow-y-auto'>
-                <div className='w-full flex justify-start items-center'>
-                  <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
-                    <div>
-                      <img
-                        className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
-                        src='/images/logo.png'
-                        alt=''
-                      />
+                {messages.map((m, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`w-full flex items-center ${
+                        user?.id === m.senderId
+                          ? 'justify-end'
+                          : 'justify-start'
+                      }`}
+                    >
+                      <div
+                        className={`flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%] ${
+                          user?.id === m.senderId ? 'flex-row-reverse' : ''
+                        }`}
+                      >
+                        <div>
+                          <img
+                            className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
+                            src='/images/logo.png'
+                            alt=''
+                          />
+                        </div>
+                        <div
+                          className={`flex justify-center items-start flex-col w-full text-white py-1 px-2 rounded-sm ${
+                            user?.id === m.senderId
+                              ? 'bg-red-500 shadow-lg shadow-red-500/50'
+                              : 'bg-blue-500 shadow-lg shadow-blue-500/50'
+                          }`}
+                        >
+                          <span>{m.message}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className='flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm'>
-                      <span>How Are you?</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className='w-full flex justify-end items-center'>
-                  <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
-                    <div className='flex justify-center items-start flex-col w-full bg-red-500 shadow-lg shadow-red-500/50 text-white py-1 px-2 rounded-sm'>
-                      <span>How Are you?</span>
-                    </div>
-                    <div>
-                      <img
-                        className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
-                        src='/images/logo.png'
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className='w-full flex justify-start items-center'>
-                  <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
-                    <div>
-                      <img
-                        className='w-[38px] h-[38px] border-2 border-white rounded-full max-w-[38px] p-[3px]'
-                        src='/images/logo.png'
-                        alt=''
-                      />
-                    </div>
-                    <div className='flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm'>
-                      <span>I Need some help</span>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
             </div>
 
-            <form className='flex gap-3'>
+            <form onSubmit={handleSendMessage} className='flex gap-3'>
               <input
-                className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]'
                 type='text'
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]'
                 placeholder='Input Your Message'
               />
               <button className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'>

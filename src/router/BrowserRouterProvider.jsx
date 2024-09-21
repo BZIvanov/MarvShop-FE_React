@@ -207,11 +207,11 @@ const router = createBrowserRouter([
             element: <SellerToAdmin />,
           },
           {
-            path: 'chat-customer',
+            path: 'chat',
             element: <SellerToCustomer />,
           },
           {
-            path: 'chat-customer/:customerId',
+            path: 'chat/:buyerId',
             element: <SellerToCustomer />,
           },
           {

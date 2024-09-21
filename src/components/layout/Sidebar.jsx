@@ -96,7 +96,7 @@ const sellerLinks = [
   {
     title: 'Chat-Customer',
     icon: <IoChatbubbles />,
-    path: '/seller/chat-customer',
+    path: '/seller/chat',
   },
   {
     title: 'Chat-Support',
