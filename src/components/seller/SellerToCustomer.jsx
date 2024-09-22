@@ -20,6 +20,7 @@ const SellerToCustomer = () => {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [userStatuses, setUserStatuses] = useState({});
 
   const { data: chatsData } = useGetChatsQuery();
   const chats = useMemo(() => {
@@ -41,11 +42,40 @@ const SellerToCustomer = () => {
   }, [chat]);
 
   useEffect(() => {
-    const newSocket = io(backendUrl);
-    setSocket(newSocket);
+    let newSocket;
 
-    return () => newSocket.disconnect();
-  }, []);
+    if (user) {
+      newSocket = io(backendUrl, {
+        query: { userId: user.id },
+      });
+      setSocket(newSocket);
+
+      newSocket.on('activeUsers', (activeUsersList) => {
+        const activeUsersListStatuses = activeUsersList.reduce((acc, curr) => {
+          return { ...acc, [curr]: 'online' };
+        }, {});
+
+        setUserStatuses((prevStatuses) => ({
+          ...prevStatuses,
+          ...activeUsersListStatuses,
+        }));
+      });
+
+      newSocket.on('userStatus', ({ userId, status }) => {
+        setUserStatuses((prevStatuses) => ({
+          ...prevStatuses,
+          [userId]: status,
+        }));
+      });
+    }
+
+    return () => {
+      if (newSocket) {
+        newSocket.off('userStatus');
+        return newSocket.disconnect();
+      }
+    };
+  }, [user]);
 
   useEffect(() => {
     if (socket && chat._id) {
@@ -108,7 +138,14 @@ const SellerToCustomer = () => {
                           }
                           alt='User avatar'
                         />
-                        <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0' />
+                        <div
+                          className={`w-[10px] h-[10px] rounded-full absolute right-0 bottom-0 ${
+                            Object.keys(userStatuses).includes(c.buyer._id) &&
+                            userStatuses[c.buyer._id] === 'online'
+                              ? 'bg-green-500'
+                              : 'bg-red-500'
+                          }`}
+                        />
                       </div>
 
                       <div className='flex justify-center items-start flex-col w-full'>
@@ -127,20 +164,29 @@ const SellerToCustomer = () => {
 
           <div className='w-full md:w-[calc(100%-200px)] md:pl-4'>
             <div className='flex justify-between items-center'>
-              {user && (
+              {buyerId ? (
                 <div className='flex justify-start items-center gap-3'>
                   <div className='relative'>
                     <img
-                      className='w-[45px] h-[45px] border-green-500 border-2 max-w-[45px] p-[2px] rounded-full'
-                      src={user?.avatar.imageUrl || '/images/avatar.png'}
+                      className='w-[45px] h-[45px] border-2 max-w-[45px] p-[2px] rounded-full'
+                      src={chat.buyer?.avatar?.imageUrl || '/images/avatar.png'}
                       alt='User avatar'
                     />
-                    <div className='w-[10px] h-[10px] bg-green-500 rounded-full absolute right-0 bottom-0'></div>
+                    <div
+                      className={`w-[10px] h-[10px] rounded-full absolute right-0 bottom-0 ${
+                        Object.keys(userStatuses).includes(chat?.buyer?._id) &&
+                        userStatuses[chat?.buyer?._id] === 'online'
+                          ? 'bg-green-500'
+                          : 'bg-red-500'
+                      }`}
+                    />
                   </div>
                   <h2 className='text-base text-white font-semibold'>
-                    {user?.username}
+                    {chat.buyer?.username}
                   </h2>
                 </div>
+              ) : (
+                <div className='h-[45px]' />
               )}
 
               <div
