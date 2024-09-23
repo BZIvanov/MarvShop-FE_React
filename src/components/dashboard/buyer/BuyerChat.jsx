@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 
@@ -29,6 +29,7 @@ const BuyerChat = () => {
     { receiverId },
     { skip: !receiverId }
   );
+  const chatId = useMemo(() => chatData?.chat._id, [chatData]);
 
   const [createChat] = useCreateChatMutation();
 
@@ -76,10 +77,10 @@ const BuyerChat = () => {
   }, [user]);
 
   useEffect(() => {
-    if (socket && chatData?.chat?._id) {
-      socket.emit('joinChat', { chatId: chatData.chat._id });
+    if (socket && chatId) {
+      socket.emit('joinChat', { chatId });
     }
-  }, [socket, chatData]);
+  }, [socket, chatId]);
 
   return (
     <div className='px-2 lg:px-7 py-5'>
@@ -99,9 +100,9 @@ const BuyerChat = () => {
               setShowSidebarUsersList={setShowSidebarUsersList}
             />
 
-            <ChatMessages socket={socket} chatId={chatData?.chat._id} />
+            <ChatMessages socket={socket} chatId={chatId} />
 
-            <ChatForm socket={socket} chatId={chatData?.chat._id} />
+            <ChatForm socket={socket} chatId={chatId} />
           </div>
         </div>
       </div>

@@ -47,15 +47,6 @@ export const chatApi = api.injectEndpoints({
           credentials: 'include',
         };
       },
-      providesTags: (result) => {
-        return [
-          ...result.messages.map(({ _id }) => ({
-            type: 'Messages',
-            id: _id,
-          })),
-          { type: 'Messages', id: 'PARTIAL-LIST' },
-        ];
-      },
     }),
     createChat: build.mutation({
       query: (data) => {

@@ -1,21 +1,31 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 
-import { useSelector } from '../../../../store/store';
+import { useDispatch, useSelector } from '../../../../store/store';
 import { selectUser } from '../../../../store/features/user/userSlice';
 import { useGetChatMessagesQuery } from '../../../../store/services/chat';
+import { showNotification } from '../../../../store/features/notification/notificationSlice';
 
 const ChatMessages = ({ socket, chatId }) => {
+  const dispatch = useDispatch();
+
   const [messages, setMessages] = useState([]);
 
   const messagesEndRef = useRef(null);
 
   const user = useSelector(selectUser);
 
-  const { data: messagesData } = useGetChatMessagesQuery(
+  const { data: messagesData, refetch } = useGetChatMessagesQuery(
     { chatId },
     { skip: !chatId }
   );
+
+  useEffect(() => {
+    if (chatId) {
+      // refetch the data everytime the chatId changes, this is to get the latest messages, if we were on a different user chat window
+      refetch();
+    }
+  }, [chatId, refetch]);
 
   useEffect(() => {
     if (messagesData?.messages) {
@@ -24,12 +34,31 @@ const ChatMessages = ({ socket, chatId }) => {
   }, [messagesData]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on('newMessage', (newMessage) => {
+    const handleNewMessage = (newMessage) => {
+      // only set messages for the same chat id so the user will not receive messages in any other opened user chat
+      if (chatId === newMessage.chat) {
         setMessages((prevState) => [...prevState, newMessage]);
-      });
+      } else {
+        // notify about new messages in other chats
+        dispatch(
+          showNotification({
+            type: 'success',
+            message: 'You have a new message',
+          })
+        );
+      }
+    };
+
+    if (socket && chatId) {
+      socket.on('newMessage', handleNewMessage);
     }
-  }, [socket]);
+
+    return () => {
+      if (socket) {
+        socket.off('newMessage', handleNewMessage);
+      }
+    };
+  }, [dispatch, socket, chatId]);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
