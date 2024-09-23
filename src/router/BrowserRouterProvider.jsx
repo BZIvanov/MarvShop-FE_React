@@ -211,7 +211,7 @@ const router = createBrowserRouter([
             element: <SellerToCustomer />,
           },
           {
-            path: 'chat/:buyerId',
+            path: 'chat/:receiverId',
             element: <SellerToCustomer />,
           },
           {
@@ -261,7 +261,7 @@ const router = createBrowserRouter([
             element: <BuyerChat />,
           },
           {
-            path: 'chat/:sellerId',
+            path: 'chat/:receiverId',
             element: <BuyerChat />,
           },
         ],

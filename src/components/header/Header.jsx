@@ -246,7 +246,7 @@ const Header = () => {
               {user ? (
                 <Link
                   className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
-                  to={`${user.role}/dashboard`}
+                  to={`/${user.role}/dashboard`}
                 >
                   <span>
                     <FaUser />
