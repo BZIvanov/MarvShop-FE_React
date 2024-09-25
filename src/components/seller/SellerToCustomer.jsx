@@ -96,6 +96,7 @@ const SellerToCustomer = () => {
           <div className='w-full md:w-[calc(100%-200px)] md:pl-4'>
             <ChatHeader
               chat={chatData?.chat}
+              receiverId={receiverId}
               userStatuses={userStatuses}
               setShowSidebarUsersList={setShowSidebarUsersList}
             />

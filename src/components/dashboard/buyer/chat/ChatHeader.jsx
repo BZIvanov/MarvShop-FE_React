@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
 import { FaList } from 'react-icons/fa6';
 
-const ChatHeader = ({ chat = {}, userStatuses, setShowSidebarUsersList }) => {
-  const { receiverId } = useParams();
-
+const ChatHeader = ({
+  chat = {},
+  receiverId,
+  userStatuses,
+  setShowSidebarUsersList,
+}) => {
   const receiver = chat?.participants?.find(
     (participant) => participant.user._id === receiverId
   );
@@ -36,20 +38,23 @@ const ChatHeader = ({ chat = {}, userStatuses, setShowSidebarUsersList }) => {
         <div className='h-[45px]' />
       )}
 
-      <div
-        onClick={() => setShowSidebarUsersList((prevState) => !prevState)}
-        className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'
-      >
-        <span>
-          <FaList />
-        </span>
-      </div>
+      {setShowSidebarUsersList && (
+        <div
+          onClick={() => setShowSidebarUsersList((prevState) => !prevState)}
+          className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'
+        >
+          <span>
+            <FaList />
+          </span>
+        </div>
+      )}
     </div>
   );
 };
 
 ChatHeader.propTypes = {
   chat: PropTypes.object,
+  receiverId: PropTypes.string,
   userStatuses: PropTypes.object,
   setShowSidebarUsersList: PropTypes.func,
 };

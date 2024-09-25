@@ -134,7 +134,11 @@ const router = createBrowserRouter([
             element: <AdminSellerRequest />,
           },
           {
-            path: 'chat-sellers',
+            path: 'chat',
+            element: <AdminChatSeller />,
+          },
+          {
+            path: 'chat/:receiverId',
             element: <AdminChatSeller />,
           },
         ],
