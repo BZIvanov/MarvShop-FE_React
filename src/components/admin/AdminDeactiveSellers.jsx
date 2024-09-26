@@ -123,7 +123,7 @@ const AdminDeactiveSellers = () => {
             <Pagination
               pageNumber={page}
               setPageNumber={setPage}
-              totalItem={50}
+              totalItem={data.totalCount}
               perPage={perPage}
               showItem={3}
             />
