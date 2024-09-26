@@ -33,10 +33,14 @@ const ChatForm = ({ socket, chatId }) => {
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         type='text'
+        disabled={!chatId}
         className='w-full flex justify-between px-2 border border-slate-700 items-center py-[5px] focus:border-blue-500 rounded-md outline-none bg-transparent text-[#d0d2d6]'
         placeholder='Your message'
       />
-      <button className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'>
+      <button
+        disabled={!chatId}
+        className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'
+      >
         Send
       </button>
     </form>

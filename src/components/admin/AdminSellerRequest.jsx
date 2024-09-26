@@ -15,7 +15,7 @@ const AdminSellerRequest = () => {
     page,
     perPage,
     searchText,
-    status: 'active',
+    status: 'pending',
   });
 
   return (
@@ -42,10 +42,10 @@ const AdminSellerRequest = () => {
                   Email
                 </th>
                 <th scope='col' className='py-3 px-4'>
-                  Payment Status
+                  Status
                 </th>
                 <th scope='col' className='py-3 px-4'>
-                  Status
+                  Payment Status
                 </th>
                 <th scope='col' className='py-3 px-4'>
                   Action
@@ -79,15 +79,14 @@ const AdminSellerRequest = () => {
                       scope='row'
                       className='py-2 px-4 font-medium whitespace-nowrap'
                     >
-                      <span>{seller.sellerInfo.payment}</span>
+                      <span>{seller.sellerInfo.status}</span>
                     </td>
                     <td
                       scope='row'
                       className='py-2 px-4 font-medium whitespace-nowrap'
                     >
-                      <span>{seller.sellerInfo.status}</span>
+                      <span>{seller.sellerInfo.payment}</span>
                     </td>
-
                     <td
                       scope='row'
                       className='py-2 px-4 font-medium whitespace-nowrap'

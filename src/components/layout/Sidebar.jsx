@@ -15,8 +15,9 @@ import { BsFillChatQuoteFill } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { PiListHeartLight } from 'react-icons/pi';
 
-import { useSelector } from '../../store/store';
+import { useDispatch, useSelector } from '../../store/store';
 import { selectUser } from '../../store/features/user/userSlice';
+import { clearCart } from '../../store/features/cart/cartSlice';
 import { useLogoutMutation } from '../../store/services/users';
 
 const adminLinks = [
@@ -56,9 +57,9 @@ const adminLinks = [
     path: '/admin/sellers-request',
   },
   {
-    title: 'Live Chat',
+    title: 'Chat with Sellers',
     icon: <IoIosChatbubbles />,
-    path: '/admin/chat-sellers',
+    path: '/admin/chat',
   },
 ];
 
@@ -94,12 +95,12 @@ const sellerLinks = [
     path: '/seller/payments',
   },
   {
-    title: 'Chat',
+    title: 'Chat with Buyers',
     icon: <IoChatbubbles />,
     path: '/seller/chat',
   },
   {
-    title: 'Chat-Support',
+    title: 'Chat with Support',
     icon: <BsFillChatQuoteFill />,
     path: '/seller/chat-support',
   },
@@ -132,7 +133,7 @@ const buyerLinks = [
     path: '/buyer/wishlist',
   },
   {
-    title: 'Chat',
+    title: 'Chat with Sellers',
     icon: <IoChatbubbles />,
     path: '/buyer/chat',
   },
@@ -145,12 +146,19 @@ const roleLinks = {
 };
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
+  const dispatch = useDispatch();
+
   const user = useSelector(selectUser);
   const userRole = user?.role || 'buyer';
 
   const [logout] = useLogoutMutation();
 
   const links = roleLinks[userRole];
+
+  const handleLogout = () => {
+    logout();
+    dispatch(clearCart());
+  };
 
   return (
     <div>
@@ -195,7 +203,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             ))}
             <li>
               <button
-                onClick={() => logout()}
+                onClick={handleLogout}
                 className='text-[#030811] font-bold duration-200 px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1'
               >
                 <span>
