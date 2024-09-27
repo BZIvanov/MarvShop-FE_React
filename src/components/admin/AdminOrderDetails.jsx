@@ -1,15 +1,37 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetOrderQuery } from '../../store/services/orders';
+import { useDispatch } from '../../store/store';
+import {
+  useGetOrderQuery,
+  useUpdateOrderStatusMutation,
+} from '../../store/services/orders';
+import { showNotification } from '../../store/features/notification/notificationSlice';
 import { dateFormatter, currencyFormatter } from '../../utils/formatting';
 
 const AdminOrderDetails = () => {
+  const dispatch = useDispatch();
+
   const { orderId } = useParams();
 
   const { data } = useGetOrderQuery(orderId, {
     skip: !orderId,
   });
   const order = data?.order || {};
+
+  const [updateOrderStatus, { isLoading, isSuccess }] =
+    useUpdateOrderStatusMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(
+        showNotification({
+          type: 'success',
+          message: 'Order status updated successfully',
+        })
+      );
+    }
+  }, [dispatch, isSuccess]);
 
   return (
     <div className='px-2 lg:px-7 pt-5'>
@@ -18,6 +40,14 @@ const AdminOrderDetails = () => {
           <h2 className='text-xl text-[#d0d2d6]'>Order Details</h2>
           <select
             name='deliveryStatus'
+            value={order.deliveryStatus}
+            onChange={(event) => {
+              updateOrderStatus({
+                id: order._id,
+                deliveryStatus: event.target.value,
+              });
+            }}
+            disabled={isLoading}
             className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#475569] border border-slate-700 rounded-md text-[#d0d2d6]'
           >
             <option value='pending'>Pending</option>

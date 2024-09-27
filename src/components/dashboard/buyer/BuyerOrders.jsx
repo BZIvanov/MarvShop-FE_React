@@ -50,7 +50,7 @@ const BuyerOrders = () => {
             <thead className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
               <tr>
                 <th scope='col' className='py-3 px-4'>
-                  Order Id
+                  Order ID
                 </th>
                 <th scope='col' className='py-3 px-4'>
                   Price
@@ -119,15 +119,17 @@ const BuyerOrders = () => {
           </table>
         </div>
 
-        <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
-          <Pagination
-            pageNumber={page}
-            setPageNumber={setPage}
-            totalItem={data?.totalCount ?? 0}
-            perPage={perPage}
-            showItem={3}
-          />
-        </div>
+        {data?.totalCount > perPage && (
+          <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
+            <Pagination
+              pageNumber={page}
+              setPageNumber={setPage}
+              totalItem={data.totalCount}
+              perPage={perPage}
+              showItem={3}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
