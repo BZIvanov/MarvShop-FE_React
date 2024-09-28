@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useCreateOrderMutation } from '../../store/services/orders';
+import { useCreateOrderMutation } from '@/store/services/orders';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';

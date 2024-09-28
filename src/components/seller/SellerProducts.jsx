@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
-import { useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
-import { useGetProductsQuery } from '../../store/services/products';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { useGetProductsQuery } from '@/store/services/products';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
 

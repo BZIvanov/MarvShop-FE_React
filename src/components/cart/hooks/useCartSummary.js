@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import { useSelector } from '../../../store/store';
-import { selectCart } from '../../../store/features/cart/cartSlice';
+import { useSelector } from '@/store/store';
+import { selectCart } from '@/store/features/cart/cartSlice';
 
 export const useCartSummary = () => {
   const cart = useSelector(selectCart);

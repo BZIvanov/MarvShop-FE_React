@@ -13,20 +13,20 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-import { useDispatch } from '../../store/store';
+import { useDispatch } from '@/store/store';
 import {
   useGetProductQuery,
   useGetSimilarProductsQuery,
-} from '../../store/services/products';
-import { showNotification } from '../../store/features/notification/notificationSlice';
-import { addToCart } from '../../store/features/cart/cartSlice';
-import { useAddToWishlistMutation } from '../../store/services/wishlist';
+} from '@/store/services/products';
+import { showNotification } from '@/store/features/notification/notificationSlice';
+import { addToCart } from '@/store/features/cart/cartSlice';
+import { useAddToWishlistMutation } from '@/store/services/wishlist';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
-import { currencyFormatter, percentFormatter } from '../../utils/formatting';
+import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const ProductDetails = () => {
   const navigate = useNavigate();

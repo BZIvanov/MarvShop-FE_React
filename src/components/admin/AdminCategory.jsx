@@ -7,7 +7,7 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
-} from '../../store/services/categories';
+} from '@/store/services/categories';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';

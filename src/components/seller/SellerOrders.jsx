@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 
-import { useGetSellerOrdersQuery } from '../../store/services/orders';
+import { useGetSellerOrdersQuery } from '@/store/services/orders';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
-import { currencyFormatter } from '../../utils/formatting';
+import { currencyFormatter } from '@/utils/formatting';
 
 const SellerOrders = () => {
   const [page, setPage] = useState(1);

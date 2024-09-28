@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 
-import { useSelector } from '../../../../store/store';
-import { selectUser } from '../../../../store/features/user/userSlice';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 
 const AddToWishlist = ({ slug, onAddToWishlist }) => {
   const navigate = useNavigate();

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { IoMdImages } from 'react-icons/io';
 import { IoMdCloseCircle } from 'react-icons/io';
 
-import { useDispatch } from '../../store/store';
-import { useCreateProductMutation } from '../../store/services/products';
-import { useGetCategoriesQuery } from '../../store/services/categories';
-import { showNotification } from '../../store/features/notification/notificationSlice';
+import { useDispatch } from '@/store/store';
+import { useCreateProductMutation } from '@/store/services/products';
+import { useGetCategoriesQuery } from '@/store/services/categories';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 
 const SellerAddProduct = () => {

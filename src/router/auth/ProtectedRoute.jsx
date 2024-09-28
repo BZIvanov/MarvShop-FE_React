@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
-import { useSelector } from '../../store/store';
+import { useSelector } from '@/store/store';
 import {
   selectUser,
   selectUserInitialLoadingCompleted,
-} from '../../store/features/user/userSlice';
+} from '@/store/features/user/userSlice';
 
 const ProtectedRoute = ({
   children,

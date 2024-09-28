@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { useSelector, useDispatch } from '../../../store/store';
+import { useSelector, useDispatch } from '@/store/store';
 import {
   selectNotification,
   hideNotification,
-} from '../../../store/features/notification/notificationSlice';
+} from '@/store/features/notification/notificationSlice';
 
 const Notification = () => {
   const dispatch = useDispatch();

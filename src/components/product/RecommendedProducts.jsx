@@ -5,8 +5,8 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-import { useGetProductsQuery } from '../../store/services/products';
-import { currencyFormatter } from '../../utils/formatting';
+import { useGetProductsQuery } from '@/store/services/products';
+import { currencyFormatter } from '@/utils/formatting';
 
 const ButtonGroup = ({ title, next, previous }) => {
   return (

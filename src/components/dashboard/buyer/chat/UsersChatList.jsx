@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 
-import { useSelector } from '../../../../store/store';
-import { selectUser } from '../../../../store/features/user/userSlice';
-import { useGetChatsQuery } from '../../../../store/services/chat';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { useGetChatsQuery } from '@/store/services/chat';
 
 const UsersChatList = ({
   userStatuses,

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-import { useSelector } from '../../../store/store';
-import { selectUser } from '../../../store/features/user/userSlice';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 
 const ChatForm = ({ socket, chatId }) => {
   const [message, setMessage] = useState('');

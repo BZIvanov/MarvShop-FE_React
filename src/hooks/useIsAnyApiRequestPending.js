@@ -1,4 +1,4 @@
-import { useSelector } from '../store/store';
+import { useSelector } from '@/store/store';
 
 export const useIsAnyApiRequestPending = () => {
   // check for any pending query or mutation

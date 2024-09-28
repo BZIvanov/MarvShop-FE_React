@@ -4,8 +4,8 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { GrEmoji } from 'react-icons/gr';
 import { IoSend } from 'react-icons/io5';
 
-import { useSelector } from '../../../../store/store';
-import { selectUser } from '../../../../store/features/user/userSlice';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 
 const ChatForm = ({ socket, chatId }) => {
   const [message, setMessage] = useState('');

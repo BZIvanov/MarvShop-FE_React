@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useLocation, Navigate } from 'react-router-dom';
 
-import { useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 
 const NonUserRoute = ({ children }) => {
   const location = useLocation();

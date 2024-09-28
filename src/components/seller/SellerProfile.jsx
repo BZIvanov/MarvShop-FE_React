@@ -3,11 +3,11 @@ import { FadeLoader } from 'react-spinners';
 import { FaImages } from 'react-icons/fa6';
 import { FaRegEdit } from 'react-icons/fa';
 
-import { useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
-import { selectSeller } from '../../store/features/seller/sellerSlice';
-import { useUpdateAvatarMutation } from '../../store/services/users';
-import { useUpdateShopInfoMutation } from '../../store/services/sellers';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { selectSeller } from '@/store/features/seller/sellerSlice';
+import { useUpdateAvatarMutation } from '@/store/services/users';
+import { useUpdateShopInfoMutation } from '@/store/services/sellers';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 
 const SellerProfile = () => {

@@ -2,12 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 
-import { useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
-import {
-  useGetChatQuery,
-  useCreateChatMutation,
-} from '../../store/services/chat';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { useGetChatQuery, useCreateChatMutation } from '@/store/services/chat';
 import ChatForm from '../seller/chat/ChatForm';
 import ChatMessages from '../dashboard/buyer/chat/ChatMessages';
 import ChatHeader from '../dashboard/buyer/chat/ChatHeader';

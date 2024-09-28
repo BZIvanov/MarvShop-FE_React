@@ -1,6 +1,6 @@
 import { FaCartShopping } from 'react-icons/fa6';
 
-import { useGetOrdersStatsQuery } from '../../../store/services/orders';
+import { useGetOrdersStatsQuery } from '@/store/services/orders';
 
 const BuyerDashboard = () => {
   const { data } = useGetOrdersStatsQuery();

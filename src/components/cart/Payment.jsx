@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetOrderQuery } from '../../store/services/orders';
+import { useGetOrderQuery } from '@/store/services/orders';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Card from './Card';
-import { currencyFormatter } from '../../utils/formatting';
+import { currencyFormatter } from '@/utils/formatting';
 
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState('card');

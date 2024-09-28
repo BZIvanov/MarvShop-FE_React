@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaFacebookF } from 'react-icons/fa6';
 import { FaGoogle } from 'react-icons/fa6';
 
-import { useRegisterMutation } from '../../../store/services/users';
+import { useRegisterMutation } from '@/store/services/users';
 import ButtonLoadingIndicator from '../../common/feedback/ButtonLoadingIndicator';
 import Header from '../../header/Header';
 import Footer from '../../footer/Footer';

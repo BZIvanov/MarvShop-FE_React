@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-import { useDispatch } from '../../store/store';
-import { addToCart, removeFromCart } from '../../store/features/cart/cartSlice';
-import { currencyFormatter, percentFormatter } from '../../utils/formatting';
+import { useDispatch } from '@/store/store';
+import { addToCart, removeFromCart } from '@/store/features/cart/cartSlice';
+import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const CartProductItem = ({ product, count }) => {
   const dispatch = useDispatch();

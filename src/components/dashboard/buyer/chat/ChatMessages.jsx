@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { FaRegFaceGrinHearts } from 'react-icons/fa6';
 
-import { useDispatch, useSelector } from '../../../../store/store';
-import { selectUser } from '../../../../store/features/user/userSlice';
-import { useGetChatMessagesQuery } from '../../../../store/services/chat';
-import { showNotification } from '../../../../store/features/notification/notificationSlice';
+import { useDispatch, useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { useGetChatMessagesQuery } from '@/store/services/chat';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 
 const ChatMessages = ({ socket, chatId }) => {
   const dispatch = useDispatch();

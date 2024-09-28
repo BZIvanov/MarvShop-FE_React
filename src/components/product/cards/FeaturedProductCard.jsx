@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 
-import { useDispatch } from '../../../store/store';
-import { addToCart } from '../../../store/features/cart/cartSlice';
-import { useAddToWishlistMutation } from '../../../store/services/wishlist';
-import { showNotification } from '../../../store/features/notification/notificationSlice';
+import { useDispatch } from '@/store/store';
+import { addToCart } from '@/store/features/cart/cartSlice';
+import { useAddToWishlistMutation } from '@/store/services/wishlist';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 import Rating from '../../common/Rating';
 import AddToCart from './actions/AddToCart';
 import AddToWishlist from './actions/AddToWishlist';
-import { currencyFormatter, percentFormatter } from '../../../utils/formatting';
+import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const FeaturedProductCard = ({ product }) => {
   const navigate = useNavigate();

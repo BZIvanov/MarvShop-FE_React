@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useGetOrdersQuery } from '../../../store/services/orders';
+import { useGetOrdersQuery } from '@/store/services/orders';
 import Pagination from '../../common/Pagination';
 import Search from '../../common/Search';
-import { currencyFormatter } from '../../../utils/formatting';
+import { currencyFormatter } from '@/utils/formatting';
 
 const BuyerOrders = () => {
   const [page, setPage] = useState(1);

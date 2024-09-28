@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 
-import { useGetSellersQuery } from '../../store/services/users';
+import { useGetSellersQuery } from '@/store/services/users';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
 

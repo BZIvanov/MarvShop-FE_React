@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Range } from 'react-range';
 
-import { useDispatch } from '../../store/store';
-import { changeFilter } from '../../store/features/productsFilters/productsFiltersSlice';
-import { useGetProductsPriceRangeQuery } from '../../store/services/products';
-import { currencyFormatter } from '../../utils/formatting';
+import { useDispatch } from '@/store/store';
+import { changeFilter } from '@/store/features/productsFilters/productsFiltersSlice';
+import { useGetProductsPriceRangeQuery } from '@/store/services/products';
+import { currencyFormatter } from '@/utils/formatting';
 
 const STEP = 10;
 

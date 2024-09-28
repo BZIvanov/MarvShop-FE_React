@@ -12,15 +12,15 @@ import { FaCartShopping } from 'react-icons/fa6';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { useDispatch, useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
-import { useGetCategoriesQuery } from '../../store/services/categories';
+import { useDispatch, useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { useGetCategoriesQuery } from '@/store/services/categories';
 import {
   changeFilter,
   selectTextFilter,
-} from '../../store/features/productsFilters/productsFiltersSlice';
-import { selectCart } from '../../store/features/cart/cartSlice';
-import { useGetWishlistProductsQuery } from '../../store/services/wishlist';
+} from '@/store/features/productsFilters/productsFiltersSlice';
+import { selectCart } from '@/store/features/cart/cartSlice';
+import { useGetWishlistProductsQuery } from '@/store/services/wishlist';
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { FaEye, FaRegHeart } from 'react-icons/fa';
 import { RiShoppingCartLine } from 'react-icons/ri';
 
-import { useDispatch } from '../../../store/store';
+import { useDispatch } from '@/store/store';
 import {
   useGetWishlistProductsQuery,
   useRemoveFromWishlistMutation,
-} from '../../../store/services/wishlist';
-import { showNotification } from '../../../store/features/notification/notificationSlice';
+} from '@/store/services/wishlist';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 import Rating from '../../common/Rating';
-import { currencyFormatter, percentFormatter } from '../../../utils/formatting';
+import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const Wishlist = () => {
   const dispatch = useDispatch();

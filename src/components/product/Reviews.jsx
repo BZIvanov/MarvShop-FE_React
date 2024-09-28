@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom';
 import { Rating, RoundedStar } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 
-import { useDispatch, useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
+import { useDispatch, useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 import {
   useGetProductReviewsQuery,
   useReviewProductMutation,
   useGetProductReviewsSummaryQuery,
-} from '../../store/services/reviews';
-import { showNotification } from '../../store/features/notification/notificationSlice';
+} from '@/store/services/reviews';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 import MyRating from '../common/Rating';
 import RatingTemp from './RatingTemp';
 import Pagination from './Pagination';
-import { dateFormatter } from '../../utils/formatting';
+import { dateFormatter } from '@/utils/formatting';
 
 const perPage = 5;
 

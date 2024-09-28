@@ -11,6 +11,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
     "@smastrom/react-rating": "^1.5.0",
+    "clsx": "^2.1.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
@@ -24,9 +25,11 @@
     "react-spinners": "^0.13.8",
     "react-window": "^1.8.10",
     "socket.io-client": "^4.7.5",
-    "swiper": "^11.1.12"
+    "swiper": "^11.1.12",
+    "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
+    "@types/node": "^22.7.4",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",

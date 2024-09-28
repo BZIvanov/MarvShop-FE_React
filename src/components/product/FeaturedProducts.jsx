@@ -1,4 +1,4 @@
-import { useGetProductsQuery } from '../../store/services/products';
+import { useGetProductsQuery } from '@/store/services/products';
 import FeaturedProductCard from './cards/FeaturedProductCard';
 
 const FeaturedProducts = () => {

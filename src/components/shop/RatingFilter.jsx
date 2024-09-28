@@ -1,8 +1,8 @@
 import { AiFillStar } from 'react-icons/ai';
 import { CiStar } from 'react-icons/ci';
 
-import { useDispatch } from '../../store/store';
-import { changeFilter } from '../../store/features/productsFilters/productsFiltersSlice';
+import { useDispatch } from '@/store/store';
+import { changeFilter } from '@/store/features/productsFilters/productsFiltersSlice';
 
 const RatingFilter = () => {
   const dispatch = useDispatch();

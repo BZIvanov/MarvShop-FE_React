@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetSellerQuery } from '../../store/services/users';
+import { useGetSellerQuery } from '@/store/services/users';
 
 const AdminSellerDetails = () => {
   const { sellerId } = useParams();

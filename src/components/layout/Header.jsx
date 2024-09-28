@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { FaList } from 'react-icons/fa';
 
-import { useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 
 const Header = ({ setShowSidebar }) => {
   const user = useSelector(selectUser);

@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { useGetOrderQuery } from '../../../store/services/orders';
+import { useGetOrderQuery } from '@/store/services/orders';
 
 const BuyerOrderDetails = () => {
   const { orderId } = useParams();

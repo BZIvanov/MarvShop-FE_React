@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
-import { useSelector } from '../../store/store';
+import { useSelector } from '@/store/store';
 import {
   selectSeller,
   selectSellerInitialLoadingCompleted,
-} from '../../store/features/seller/sellerSlice';
+} from '@/store/features/seller/sellerSlice';
 
 const SellerStatus = ({ children, statusRedirectTo, statuses }) => {
   const seller = useSelector(selectSeller);

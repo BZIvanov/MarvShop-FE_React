@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from '../../store/store';
-import { useGetCategoriesQuery } from '../../store/services/categories';
+import { useDispatch, useSelector } from '@/store/store';
+import { useGetCategoriesQuery } from '@/store/services/categories';
 import {
   changeFilter,
   selectCategoriesFilter,
-} from '../../store/features/productsFilters/productsFiltersSlice';
+} from '@/store/features/productsFilters/productsFiltersSlice';
 
 const CategoryFilter = () => {
   const dispatch = useDispatch();

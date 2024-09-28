@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { TbShoppingCartOff } from 'react-icons/tb';
 
-import { useDispatch, useSelector } from '../../../../store/store';
-import { selectCartProductById } from '../../../../store/features/cart/cartSlice';
-import { showNotification } from '../../../../store/features/notification/notificationSlice';
+import { useDispatch, useSelector } from '@/store/store';
+import { selectCartProductById } from '@/store/features/cart/cartSlice';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 
 const AddToCart = ({ onAddToCart, productId, productStock }) => {
   const dispatch = useDispatch();

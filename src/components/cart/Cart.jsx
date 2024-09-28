@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from '../../store/store';
-import { selectCart } from '../../store/features/cart/cartSlice';
+import { useSelector } from '@/store/store';
+import { selectCart } from '@/store/features/cart/cartSlice';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';

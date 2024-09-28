@@ -15,10 +15,10 @@ import { BsFillChatQuoteFill } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { PiListHeartLight } from 'react-icons/pi';
 
-import { useDispatch, useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
-import { clearCart } from '../../store/features/cart/cartSlice';
-import { useLogoutMutation } from '../../store/services/users';
+import { useDispatch, useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
+import { clearCart } from '@/store/features/cart/cartSlice';
+import { useLogoutMutation } from '@/store/services/users';
 
 const adminLinks = [
   {

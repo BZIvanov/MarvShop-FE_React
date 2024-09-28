@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useDispatch } from '../../store/store';
+import { useDispatch } from '@/store/store';
 import {
   useGetOrderQuery,
   useUpdateOrderStatusMutation,
-} from '../../store/services/orders';
-import { showNotification } from '../../store/features/notification/notificationSlice';
-import { dateFormatter, currencyFormatter } from '../../utils/formatting';
+} from '@/store/services/orders';
+import { showNotification } from '@/store/features/notification/notificationSlice';
+import { dateFormatter, currencyFormatter } from '@/utils/formatting';
 
 const AdminOrderDetails = () => {
   const dispatch = useDispatch();

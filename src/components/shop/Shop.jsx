@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { BsFillGridFill } from 'react-icons/bs';
 import { FaThList } from 'react-icons/fa';
 
-import { useSelector } from '../../store/store';
-import { useGetProductsQuery } from '../../store/services/products';
-import { selectFilters } from '../../store/features/productsFilters/productsFiltersSlice';
+import { useSelector } from '@/store/store';
+import { useGetProductsQuery } from '@/store/services/products';
+import { selectFilters } from '@/store/features/productsFilters/productsFiltersSlice';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';

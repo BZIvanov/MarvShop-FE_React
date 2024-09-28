@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { useGetCurrentSellerQuery } from '../../store/services/sellers';
-import { useSelector } from '../../store/store';
-import { selectUser } from '../../store/features/user/userSlice';
+import { useGetCurrentSellerQuery } from '@/store/services/sellers';
+import { useSelector } from '@/store/store';
+import { selectUser } from '@/store/features/user/userSlice';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
