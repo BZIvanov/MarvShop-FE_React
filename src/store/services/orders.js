@@ -82,6 +82,16 @@ export const ordersApi = api.injectEndpoints({
         };
       },
     }),
+    getSellerOrdersStats: build.query({
+      query: (params = {}) => {
+        return {
+          url: '/orders/seller/stats',
+          method: 'GET',
+          params,
+          credentials: 'include',
+        };
+      },
+    }),
     updateOrderStatus: build.mutation({
       query: (data) => {
         const { id, ...body } = data;
@@ -125,6 +135,7 @@ export const {
   useGetSellerOrderQuery,
   useCreateOrderMutation,
   useGetOrdersStatsQuery,
+  useGetSellerOrdersStatsQuery,
   useUpdateOrderStatusMutation,
   useUpdateSellerOrderStatusMutation,
 } = ordersApi;
