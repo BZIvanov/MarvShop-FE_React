@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { FaImage } from 'react-icons/fa';
-import { IoMdCloseCircle } from 'react-icons/io';
 
 import {
   useGetCategoriesQuery,
@@ -11,6 +8,12 @@ import {
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
+import {
+  CloseCircleIcon,
+  EditIcon,
+  ImageIcon,
+  TrashIcon,
+} from '@/components/common/icons/Icons';
 
 const AdminCategory = () => {
   const [page, setPage] = useState(1);
@@ -151,10 +154,10 @@ const AdminCategory = () => {
                       >
                         <div className='flex justify-start items-center gap-4'>
                           <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'>
-                            <FaEdit />
+                            <EditIcon />
                           </Link>
                           <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'>
-                            <FaTrash />
+                            <TrashIcon />
                           </Link>
                         </div>
                       </td>
@@ -191,7 +194,7 @@ const AdminCategory = () => {
                   onClick={() => setShowSmallScreenCategoryForm(false)}
                   className='block lg:hidden cursor-pointer'
                 >
-                  <IoMdCloseCircle />
+                  <CloseCircleIcon />
                 </div>
               </div>
               <form onSubmit={handleCategorySubmit}>
@@ -220,9 +223,7 @@ const AdminCategory = () => {
                       />
                     ) : (
                       <>
-                        <span>
-                          <FaImage />
-                        </span>
+                        <ImageIcon />
                         <span>Select Image</span>
                       </>
                     )}

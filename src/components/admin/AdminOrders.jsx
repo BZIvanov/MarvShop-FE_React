@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { LuArrowDownSquare } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import { useGetOrdersQuery } from '@/store/services/orders';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
 import { currencyFormatter } from '@/utils/formatting';
+import { ArrowDownSquareIcon } from '@/components/common/icons/Icons';
 
 const AdminOrders = () => {
   const [page, setPage] = useState(1);
@@ -47,7 +47,7 @@ const AdminOrders = () => {
                 <div className='py-3 w-[18%] font-bold'>Payment Status</div>
                 <div className='py-3 w-[18%] font-bold'>Action</div>
                 <div className='py-3 w-[8%] font-bold'>
-                  <LuArrowDownSquare />
+                  <ArrowDownSquareIcon />
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@ const AdminOrders = () => {
                       onClick={() => handleOrderDetailsExpansion(order._id)}
                       className='py-3 w-[8%] font-medium cursor-pointer'
                     >
-                      <LuArrowDownSquare />
+                      <ArrowDownSquareIcon />
                     </div>
                   </div>
 

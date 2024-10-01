@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { FaList } from 'react-icons/fa';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
+import { ListIcon } from '@/components/common/icons/Icons';
 
 const Header = ({ setShowSidebar }) => {
   const user = useSelector(selectUser);
@@ -14,7 +14,7 @@ const Header = ({ setShowSidebar }) => {
           onClick={() => setShowSidebar((prevState) => !prevState)}
           className='w-[35px] flex lg:hidden h-[35px] rounded-sm bg-indigo-500 shadow-lg hover:shadow-indigo-500/50 justify-center items-center cursor-pointer'
         >
-          <FaList />
+          <ListIcon />
         </div>
 
         <div className='hidden md:block'>

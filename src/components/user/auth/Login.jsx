@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF } from 'react-icons/fa6';
-import { FaGoogle } from 'react-icons/fa6';
 
 import { useLoginMutation } from '@/store/services/users';
 import ButtonLoadingIndicator from '../../common/feedback/ButtonLoadingIndicator';
 import Header from '../../header/Header';
 import Footer from '../../footer/Footer';
+import { FacebookIcon, GoogleIcon } from '@/components/common/icons/Icons';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({
@@ -93,16 +92,12 @@ const Login = () => {
                 </div>
 
                 <button className='px-8 w-full py-2 bg-indigo-500 shadow hover:shadow-indigo-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3'>
-                  <span>
-                    <FaFacebookF />
-                  </span>
+                  <FacebookIcon />
                   <span>Login With Facebook</span>
                 </button>
 
                 <button className='px-8 w-full py-2 bg-red-500 shadow hover:shadow-red-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3'>
-                  <span>
-                    <FaGoogle />
-                  </span>
+                  <GoogleIcon />
                   <span>Login With Google</span>
                 </button>
               </div>

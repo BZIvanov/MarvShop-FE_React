@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 import Search from '../common/Search';
 import Pagination from '../common/Pagination';
+import { EyeIcon, EditIcon, TrashIcon } from '@/components/common/icons/Icons';
 
 const SellerDiscountProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,13 +118,13 @@ const SellerDiscountProducts = () => {
                   >
                     <div className='flex justify-start items-center gap-4'>
                       <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'>
-                        <FaEdit />
+                        <EditIcon />
                       </Link>
                       <Link className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'>
-                        <FaEye />
+                        <EyeIcon />
                       </Link>
                       <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'>
-                        <FaTrash />
+                        <TrashIcon />
                       </Link>
                     </div>
                   </td>

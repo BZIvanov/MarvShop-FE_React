@@ -1,6 +1,3 @@
-import { MdCurrencyExchange, MdProductionQuantityLimits } from 'react-icons/md';
-import { FaUsers } from 'react-icons/fa';
-import { FaCartShopping } from 'react-icons/fa6';
 import Chart from 'react-apexcharts';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +9,12 @@ import { useGetSellersQuery } from '@/store/services/users';
 import { useGetOrdersQuery } from '@/store/services/orders';
 import { useGetChatsQuery } from '@/store/services/chat';
 import { currencyFormatter, dateFormatter } from '@/utils/formatting';
+import {
+  CurrencyExchangeIcon,
+  UsersIcon,
+  CartShoppingIcon,
+  ProductionQuantityLimitsIcon,
+} from '@/components/common/icons/Icons';
 
 const state = {
   series: [
@@ -122,7 +125,7 @@ const AdminDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl'>
-            <MdCurrencyExchange className='text-[#fae8e8] shadow-lg' />
+            <CurrencyExchangeIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -133,7 +136,7 @@ const AdminDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#760077] flex justify-center items-center text-xl'>
-            <MdProductionQuantityLimits className='text-[#fae8e8] shadow-lg' />
+            <ProductionQuantityLimitsIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -144,7 +147,7 @@ const AdminDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#038000] flex justify-center items-center text-xl'>
-            <FaUsers className='text-[#fae8e8] shadow-lg' />
+            <UsersIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -155,7 +158,7 @@ const AdminDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#0200f8] flex justify-center items-center text-xl'>
-            <FaCartShopping className='text-[#fae8e8] shadow-lg' />
+            <CartShoppingIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
       </div>

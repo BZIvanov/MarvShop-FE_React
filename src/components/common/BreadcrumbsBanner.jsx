@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { IoIosArrowForward } from 'react-icons/io';
+
+import { ArrowForwardIcon } from '@/components/common/icons/Icons';
 
 const BreadcrumbsBanner = ({ pageName }) => {
   return (
@@ -12,7 +13,7 @@ const BreadcrumbsBanner = ({ pageName }) => {
             <div className='flex justify-center items-center gap-2 text-2xl w-full'>
               <Link to='/'>Home</Link>
               <span className='pt-1'>
-                <IoIosArrowForward />
+                <ArrowForwardIcon />
               </span>
               <span>{pageName}</span>
             </div>

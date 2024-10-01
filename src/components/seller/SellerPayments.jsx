@@ -1,7 +1,8 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { MdCurrencyExchange } from 'react-icons/md';
 import { FixedSizeList as List } from 'react-window';
+
+import { CurrencyExchangeIcon } from '@/components/common/icons/Icons';
 
 function handleOnWheel({ deltaY }) {
   console.log('handleOnWheel', deltaY);
@@ -42,7 +43,7 @@ const SellerPayments = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl'>
-            <MdCurrencyExchange className='text-[#fae8e8] shadow-lg' />
+            <CurrencyExchangeIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -53,7 +54,7 @@ const SellerPayments = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#760077] flex justify-center items-center text-xl'>
-            <MdCurrencyExchange className='text-[#fae8e8] shadow-lg' />
+            <CurrencyExchangeIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -64,7 +65,7 @@ const SellerPayments = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#038000] flex justify-center items-center text-xl'>
-            <MdCurrencyExchange className='text-[#fae8e8] shadow-lg' />
+            <CurrencyExchangeIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -75,7 +76,7 @@ const SellerPayments = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#0200f8] flex justify-center items-center text-xl'>
-            <MdCurrencyExchange className='text-[#fae8e8] shadow-lg' />
+            <CurrencyExchangeIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
       </div>

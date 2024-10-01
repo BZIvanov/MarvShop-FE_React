@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+
 import {
-  MdOutlineKeyboardDoubleArrowLeft,
-  MdOutlineKeyboardDoubleArrowRight,
-} from 'react-icons/md';
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '@/components/common/icons/Icons';
 
 const Pagination = ({
   pageNumber,
@@ -53,7 +54,7 @@ const Pagination = ({
           onClick={() => setPageNumber((prevState) => prevState - 1)}
           className='w-[33px] h-[33px] rounded-full flex justify-center items-center bg-slate-300 text-[#000000] cursor-pointer'
         >
-          <MdOutlineKeyboardDoubleArrowLeft />
+          <DoubleArrowLeftIcon />
         </li>
       )}
       {createBtns()}
@@ -62,7 +63,7 @@ const Pagination = ({
           onClick={() => setPageNumber((prevState) => prevState + 1)}
           className='w-[33px] h-[33px] rounded-full flex justify-center items-center bg-slate-300 text-[#000000] cursor-pointer'
         >
-          <MdOutlineKeyboardDoubleArrowRight />
+          <DoubleArrowRightIcon />
         </li>
       )}
     </ul>

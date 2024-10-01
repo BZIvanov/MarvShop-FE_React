@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
 
 import { useGetSellerOrdersQuery } from '@/store/services/orders';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
+import { EyeIcon } from '@/components/common/icons/Icons';
 import { currencyFormatter } from '@/utils/formatting';
 
 const SellerOrders = () => {
@@ -87,7 +87,7 @@ const SellerOrders = () => {
                         to={`/seller/orders/${order._id}`}
                         className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'
                       >
-                        <FaEye />
+                        <EyeIcon />
                       </Link>
                     </div>
                   </td>

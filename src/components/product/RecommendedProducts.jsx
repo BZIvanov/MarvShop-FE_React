@@ -3,9 +3,12 @@ import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { useGetProductsQuery } from '@/store/services/products';
+import {
+  ArrowBackIcon,
+  ArrowForwardIcon,
+} from '@/components/common/icons/Icons';
 import { currencyFormatter } from '@/utils/formatting';
 
 const ButtonGroup = ({ title, next, previous }) => {
@@ -17,13 +20,13 @@ const ButtonGroup = ({ title, next, previous }) => {
           onClick={previous}
           className='w-[30px] h-[30px] flex justify-center items-center bg-slate-300 border border-slate-200'
         >
-          <IoIosArrowBack />
+          <ArrowBackIcon />
         </button>
         <button
           onClick={next}
           className='w-[30px] h-[30px] flex justify-center items-center bg-slate-300 border border-slate-200'
         >
-          <IoIosArrowForward />
+          <ArrowForwardIcon />
         </button>
       </div>
     </div>

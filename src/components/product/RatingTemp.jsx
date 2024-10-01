@@ -1,25 +1,25 @@
 import PropTypes from 'prop-types';
-import { FaStar } from 'react-icons/fa';
-import { CiStar } from 'react-icons/ci';
+
+import { StarC, StarF } from '@/components/common/icons/Icons';
 
 const RatingTemp = ({ rating }) => {
   if (rating === 5) {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
       </>
     );
@@ -27,19 +27,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
       </>
     );
@@ -47,19 +47,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
       </>
     );
@@ -67,19 +67,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
       </>
     );
@@ -87,19 +87,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <FaStar />
+          <StarF />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
       </>
     );
@@ -107,19 +107,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
         <span className='text-[#Edbb0E]'>
-          <CiStar />
+          <StarC />
         </span>
       </>
     );

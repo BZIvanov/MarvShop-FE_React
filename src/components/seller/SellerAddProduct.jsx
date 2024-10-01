@@ -1,13 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { IoMdImages } from 'react-icons/io';
-import { IoMdCloseCircle } from 'react-icons/io';
 
 import { useDispatch } from '@/store/store';
 import { useCreateProductMutation } from '@/store/services/products';
 import { useGetCategoriesQuery } from '@/store/services/categories';
 import { showNotification } from '@/store/features/notification/notificationSlice';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
+import { CloseCircleIcon, ImagesIcon } from '@/components/common/icons/Icons';
 
 const SellerAddProduct = () => {
   const dispatch = useDispatch();
@@ -324,7 +323,7 @@ const SellerAddProduct = () => {
                     onClick={() => removeImage(idx)}
                     className='p-2 z-10 cursor-pointer bg-slate-700 hover:shadow-lg hover:shadow-slate-400/50 text-white absolute top-1 right-1 rounded-full'
                   >
-                    <IoMdCloseCircle />
+                    <CloseCircleIcon />
                   </span>
                 </div>
               ))}
@@ -333,9 +332,7 @@ const SellerAddProduct = () => {
                 className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full text-[#d0d2d6]'
                 htmlFor='image'
               >
-                <span>
-                  <IoMdImages />
-                </span>
+                <ImagesIcon />
                 <span>Select Image</span>
               </label>
               <input

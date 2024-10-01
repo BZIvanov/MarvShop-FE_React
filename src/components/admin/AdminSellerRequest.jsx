@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
 
 import { useGetSellersQuery } from '@/store/services/users';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
+import { EyeIcon } from '@/components/common/icons/Icons';
 
 const AdminSellerRequest = () => {
   const [page, setPage] = useState(1);
@@ -96,7 +96,7 @@ const AdminSellerRequest = () => {
                           to={`/admin/sellers/${seller._id}`}
                           className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'
                         >
-                          <FaEye />
+                          <EyeIcon />
                         </Link>
                       </div>
                     </td>

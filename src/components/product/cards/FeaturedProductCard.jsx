@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
 
 import { useDispatch } from '@/store/store';
 import { addToCart } from '@/store/features/cart/cartSlice';
@@ -9,6 +8,7 @@ import { showNotification } from '@/store/features/notification/notificationSlic
 import Rating from '../../common/Rating';
 import AddToCart from './actions/AddToCart';
 import AddToWishlist from './actions/AddToWishlist';
+import { EyeIcon } from '@/components/common/icons/Icons';
 import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const FeaturedProductCard = ({ product }) => {
@@ -60,7 +60,7 @@ const FeaturedProductCard = ({ product }) => {
           </li>
           <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
             <Link to={`/products/${product.slug}`}>
-              <FaEye />
+              <EyeIcon />
             </Link>
           </li>
           <li>

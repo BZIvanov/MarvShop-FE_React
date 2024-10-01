@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
-import { CiStar } from 'react-icons/ci';
+
+import { StarC, StarF, StarHalfIcon } from '@/components/common/icons/Icons';
 
 const Rating = ({ rating }) => {
   const stars = Array.from({ length: 5 }, (_, i) => {
@@ -9,19 +9,19 @@ const Rating = ({ rating }) => {
     if (rating >= value) {
       return (
         <span key={i} className='text-[#EDBB0E]'>
-          <FaStar />
+          <StarF />
         </span>
       );
     } else if (rating >= value - 0.5) {
       return (
         <span key={i} className='text-[#EDBB0E]'>
-          <FaStarHalfAlt />
+          <StarHalfIcon />
         </span>
       );
     } else {
       return (
         <span key={i} className='text-slate-600'>
-          <CiStar />
+          <StarC />
         </span>
       );
     }
