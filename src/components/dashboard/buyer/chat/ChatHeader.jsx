@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { FaList } from 'react-icons/fa6';
+
+import { List6Icon } from '@/components/common/icons/Icons';
 
 const ChatHeader = ({
   chat = {},
@@ -43,9 +44,7 @@ const ChatHeader = ({
           onClick={() => setShowSidebarUsersList((prevState) => !prevState)}
           className='w-[35px] flex md:hidden h-[35px] rounded-sm bg-blue-500 shadow-lg hover:shadow-blue-500/50 justify-center cursor-pointer items-center text-white'
         >
-          <span>
-            <FaList />
-          </span>
+          <List6Icon />
         </div>
       )}
     </div>

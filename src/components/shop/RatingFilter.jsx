@@ -1,8 +1,6 @@
-import { AiFillStar } from 'react-icons/ai';
-import { CiStar } from 'react-icons/ci';
-
 import { useDispatch } from '@/store/store';
 import { changeFilter } from '@/store/features/productsFilters/productsFiltersSlice';
+import { FillStarIcon, StarCIcon } from '@/components/common/icons/Icons';
 
 const RatingFilter = () => {
   const dispatch = useDispatch();
@@ -10,7 +8,9 @@ const RatingFilter = () => {
   const renderStars = (fullStars) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
-      stars.push(i < fullStars ? <AiFillStar key={i} /> : <CiStar key={i} />);
+      stars.push(
+        i < fullStars ? <FillStarIcon key={i} /> : <StarCIcon key={i} />
+      );
     }
     return stars;
   };

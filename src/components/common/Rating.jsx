@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 
-import { StarC, StarF, StarHalfIcon } from '@/components/common/icons/Icons';
+import {
+  StarCIcon,
+  StarFIcon,
+  StarHalfIcon,
+} from '@/components/common/icons/Icons';
 
 const Rating = ({ rating }) => {
   const stars = Array.from({ length: 5 }, (_, i) => {
@@ -9,7 +13,7 @@ const Rating = ({ rating }) => {
     if (rating >= value) {
       return (
         <span key={i} className='text-[#EDBB0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
       );
     } else if (rating >= value - 0.5) {
@@ -21,7 +25,7 @@ const Rating = ({ rating }) => {
     } else {
       return (
         <span key={i} className='text-slate-600'>
-          <StarC />
+          <StarCIcon />
         </span>
       );
     }

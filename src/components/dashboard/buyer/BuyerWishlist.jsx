@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEye, FaRegHeart } from 'react-icons/fa';
-import { RiShoppingCartLine } from 'react-icons/ri';
 
 import { useDispatch } from '@/store/store';
 import {
@@ -10,6 +8,11 @@ import {
 } from '@/store/services/wishlist';
 import { showNotification } from '@/store/features/notification/notificationSlice';
 import Rating from '../../common/Rating';
+import {
+  RegHeartIcon,
+  EyeIcon,
+  ShoppingCartLineIcon,
+} from '@/components/common/icons/Icons';
 import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const Wishlist = () => {
@@ -64,18 +67,18 @@ const Wishlist = () => {
                     }}
                     className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'
                   >
-                    <FaRegHeart />
+                    <RegHeartIcon />
                   </li>
                   <li>
                     <Link
                       to={`/products/${product.slug}`}
                       className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'
                     >
-                      <FaEye />
+                      <EyeIcon />
                     </Link>
                   </li>
                   <li className='w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all'>
-                    <RiShoppingCartLine />
+                    <ShoppingCartLineIcon />
                   </li>
                 </ul>
               </div>

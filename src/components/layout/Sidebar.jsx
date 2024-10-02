@@ -1,24 +1,28 @@
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 import { AiOutlineDashboard, AiOutlineShoppingCart } from 'react-icons/ai';
-import { BiCategory, BiLogOutCircle } from 'react-icons/bi';
-import { FaUserTimes, FaUsers } from 'react-icons/fa';
-import { MdPayment } from 'react-icons/md';
-import { FaCodePullRequest } from 'react-icons/fa6';
-import { IoIosChatbubbles } from 'react-icons/io';
-import { IoMdAdd } from 'react-icons/io';
-import { MdViewList } from 'react-icons/md';
-import { TbBasketDiscount } from 'react-icons/tb';
-import { BsCartCheck } from 'react-icons/bs';
-import { IoChatbubbles } from 'react-icons/io5';
-import { BsFillChatQuoteFill } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
-import { PiListHeartLight } from 'react-icons/pi';
 
 import { useDispatch, useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { clearCart } from '@/store/features/cart/cartSlice';
 import { useLogoutMutation } from '@/store/services/users';
+import {
+  AddIcon,
+  PaymentIcon,
+  ListHeartIcon,
+  ProfileIcon,
+  ChatQuoteIcon,
+  ChatbubblesIcon,
+  CartCheckIcon,
+  BasketDiscountIcon,
+  ViewListIcon,
+  Chatbubbles2Icon,
+  CodePullRequestIcon,
+  UsersIcon,
+  UserTimesIcon,
+  CategoryIcon,
+  LogOutCircleIcon,
+} from '@/components/common/icons/Icons';
 
 const adminLinks = [
   {
@@ -33,32 +37,32 @@ const adminLinks = [
   },
   {
     title: 'Category',
-    icon: <BiCategory />,
+    icon: <CategoryIcon />,
     path: '/admin/category',
   },
   {
     title: 'Sellers',
-    icon: <FaUsers />,
+    icon: <UsersIcon />,
     path: '/admin/sellers',
   },
   {
     title: 'Payment Request',
-    icon: <MdPayment />,
+    icon: <PaymentIcon />,
     path: '/admin/payment-request',
   },
   {
     title: 'Deactive Sellers',
-    icon: <FaUserTimes />,
+    icon: <UserTimesIcon />,
     path: '/admin/deactive-sellers',
   },
   {
     title: 'Sellers Requests',
-    icon: <FaCodePullRequest />,
+    icon: <CodePullRequestIcon />,
     path: '/admin/sellers-request',
   },
   {
     title: 'Chat with Sellers',
-    icon: <IoIosChatbubbles />,
+    icon: <Chatbubbles2Icon />,
     path: '/admin/chat',
   },
 ];
@@ -71,42 +75,42 @@ const sellerLinks = [
   },
   {
     title: 'Add Product',
-    icon: <IoMdAdd />,
+    icon: <AddIcon />,
     path: '/seller/add-product',
   },
   {
     title: 'All Products',
-    icon: <MdViewList />,
+    icon: <ViewListIcon />,
     path: '/seller/products',
   },
   {
     title: 'Discount Products',
-    icon: <TbBasketDiscount />,
+    icon: <BasketDiscountIcon />,
     path: '/seller/discount-products',
   },
   {
     title: 'Orders',
-    icon: <BsCartCheck />,
+    icon: <CartCheckIcon />,
     path: '/seller/orders',
   },
   {
     title: 'Payments',
-    icon: <MdPayment />,
+    icon: <PaymentIcon />,
     path: '/seller/payments',
   },
   {
     title: 'Chat with Buyers',
-    icon: <IoChatbubbles />,
+    icon: <ChatbubblesIcon />,
     path: '/seller/chat',
   },
   {
     title: 'Chat with Support',
-    icon: <BsFillChatQuoteFill />,
+    icon: <ChatQuoteIcon />,
     path: '/seller/chat-support',
   },
   {
     title: 'Profile',
-    icon: <CgProfile />,
+    icon: <ProfileIcon />,
     path: '/seller/profile',
   },
 ];
@@ -119,22 +123,22 @@ const buyerLinks = [
   },
   {
     title: 'Orders',
-    icon: <BsCartCheck />,
+    icon: <CartCheckIcon />,
     path: '/buyer/orders',
   },
   {
     title: 'Profile',
-    icon: <CgProfile />,
+    icon: <ProfileIcon />,
     path: '/buyer/profile',
   },
   {
     title: 'Wishlist',
-    icon: <PiListHeartLight />,
+    icon: <ListHeartIcon />,
     path: '/buyer/wishlist',
   },
   {
     title: 'Chat with Sellers',
-    icon: <IoChatbubbles />,
+    icon: <ChatbubblesIcon />,
     path: '/buyer/chat',
   },
 ];
@@ -206,9 +210,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                 onClick={handleLogout}
                 className='text-[#030811] font-bold duration-200 px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1'
               >
-                <span>
-                  <BiLogOutCircle />
-                </span>
+                <LogOutCircleIcon />
                 <span>Logout</span>
               </button>
             </li>

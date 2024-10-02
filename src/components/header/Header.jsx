@@ -1,16 +1,5 @@
 import { useMemo, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { MdEmail } from 'react-icons/md';
-import { IoMdPhonePortrait } from 'react-icons/io';
-import { FaFacebookF, FaList, FaLock, FaUser } from 'react-icons/fa';
-import { FaTwitter } from 'react-icons/fa6';
-import { FaLinkedin } from 'react-icons/fa';
-import { FaGithub } from 'react-icons/fa';
-import { IoMdArrowDropdown } from 'react-icons/io';
-import { FaHeart } from 'react-icons/fa6';
-import { FaCartShopping } from 'react-icons/fa6';
-import { FaPhoneAlt } from 'react-icons/fa';
-import { IoIosArrowDown } from 'react-icons/io';
 
 import { useDispatch, useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
@@ -21,6 +10,22 @@ import {
 } from '@/store/features/productsFilters/productsFiltersSlice';
 import { selectCart } from '@/store/features/cart/cartSlice';
 import { useGetWishlistProductsQuery } from '@/store/services/wishlist';
+import {
+  TwitterIcon,
+  GithubIcon,
+  FacebookIcon,
+  LinkedInIcon,
+  PhoneIcon,
+  EmailIcon,
+  CartShoppingIcon,
+  HeartIcon,
+  PhonePortraitIcon,
+  ArrowDownIcon,
+  ArrowDropdownIcon,
+  ListIcon,
+  LockIcon,
+  UserIcon,
+} from '@/components/common/icons/Icons';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -51,15 +56,11 @@ const Header = () => {
           <div className='flex w-full justify-between items-center h-[50px] text-slate-500'>
             <ul className='flex justify-start items-center gap-8 font-semibold text-black'>
               <li className='flex relative justify-center items-center gap-2 text-sm after:absolute after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px]'>
-                <span>
-                  <MdEmail />
-                </span>
+                <EmailIcon />
                 <span>support@mail.com</span>
               </li>
               <li className='flex relative justify-center items-center gap-2 text-sm '>
-                <span>
-                  <IoMdPhonePortrait />
-                </span>
+                <PhonePortraitIcon />
                 <span>+(123) 456 789</span>
               </li>
             </ul>
@@ -67,16 +68,16 @@ const Header = () => {
               <div className='flex justify-center items-center gap-10'>
                 <div className='flex justify-center items-center gap-4 text-black'>
                   <Link to='/'>
-                    <FaFacebookF />
+                    <FacebookIcon />
                   </Link>
                   <Link to='/'>
-                    <FaTwitter />
+                    <TwitterIcon />
                   </Link>
                   <Link to='/'>
-                    <FaLinkedin />
+                    <LinkedInIcon />
                   </Link>
                   <Link to='/'>
-                    <FaGithub />
+                    <GithubIcon />
                   </Link>
                 </div>
                 <div className='flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
@@ -85,7 +86,7 @@ const Header = () => {
                     src='/images/flag.png'
                     alt='Language selection'
                   />
-                  <IoMdArrowDropdown />
+                  <ArrowDropdownIcon />
                   <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
                     <li>English</li>
                     <li>Bulgarian</li>
@@ -96,7 +97,7 @@ const Header = () => {
                     to={`/${user.role}`}
                     className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   >
-                    <FaUser />
+                    <UserIcon />
                     <span>{user.username}</span>
                   </Link>
                 ) : (
@@ -104,7 +105,7 @@ const Header = () => {
                     to='/auth/login'
                     className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   >
-                    <FaLock />
+                    <LockIcon />
                     <span>Login</span>
                   </Link>
                 )}
@@ -125,9 +126,7 @@ const Header = () => {
                   className='flex justify-center items-center w-[30px] h-[30px] bg-white text-slate-600 border border-slate-600 rounded-sm cursor-pointer lg:hidden'
                   onClick={() => setShowSidebar(true)}
                 >
-                  <span>
-                    <FaList />
-                  </span>
+                  <ListIcon />
                 </div>
               </div>
             </div>
@@ -174,7 +173,7 @@ const Header = () => {
                       className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
                     >
                       <span className='text-xl text-green-500'>
-                        <FaHeart />
+                        <HeartIcon />
                       </span>
                       {wishlistProducts.length > 0 && (
                         <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
@@ -196,7 +195,7 @@ const Header = () => {
                       className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
                     >
                       <span className='text-xl text-green-500'>
-                        <FaCartShopping />
+                        <CartShoppingIcon />
                       </span>
                       {cartItemsCount > 0 && (
                         <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
@@ -235,9 +234,7 @@ const Header = () => {
                   src='/images/flag.png'
                   alt='Language selection'
                 />
-                <span>
-                  <IoMdArrowDropdown />
-                </span>
+                <ArrowDropdownIcon />
                 <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
                   <li>English</li>
                   <li>Bulgarian</li>
@@ -248,9 +245,7 @@ const Header = () => {
                   className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   to={`/${user.role}/dashboard`}
                 >
-                  <span>
-                    <FaUser />
-                  </span>
+                  <UserIcon />
                   <span>{user.username}</span>
                 </Link>
               ) : (
@@ -258,9 +253,7 @@ const Header = () => {
                   className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
                   to='/auth/login'
                 >
-                  <span>
-                    <FaLock />
-                  </span>
+                  <LockIcon />
                   <span>Login</span>
                 </Link>
               )}
@@ -330,24 +323,22 @@ const Header = () => {
 
             <div className='flex justify-start items-center gap-4 text-black'>
               <Link to='/'>
-                <FaFacebookF />
+                <FacebookIcon />
               </Link>
               <Link to='/'>
-                <FaTwitter />
+                <TwitterIcon />
               </Link>
               <Link to='/'>
-                <FaLinkedin />
+                <LinkedInIcon />
               </Link>
               <Link to='/'>
-                <FaGithub />
+                <GithubIcon />
               </Link>
             </div>
 
             <div className='w-full flex justify-start lg:justify-end gap-3 items-center'>
               <div className='w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center'>
-                <span>
-                  <FaPhoneAlt />
-                </span>
+                <PhoneIcon />
               </div>
               <div className='flex justify-end flex-col gap-1'>
                 <h2 className='text-sm font-medium text-slate-700'>
@@ -359,9 +350,7 @@ const Header = () => {
 
             <ul className='flex flex-col justify-start items-start gap-3 text-[#1c1c1c]'>
               <li className='flex justify-start items-center gap-2 text-sm'>
-                <span>
-                  <MdEmail />
-                </span>
+                <EmailIcon />
                 <span>support@mail.com</span>
               </li>
             </ul>
@@ -378,13 +367,11 @@ const Header = () => {
                 className='h-[50px] bg-[#059473] text-white flex justify-between lg:justify-center px-6 lg:px-0 items-center gap-3 font-bold text-md cursor-pointer'
               >
                 <div className='flex justify-center items-center gap-3'>
-                  <span>
-                    <FaList />
-                  </span>
+                  <ListIcon />
                   <span>All Categories</span>
                 </div>
                 <span className='pt-1'>
-                  <IoIosArrowDown />
+                  <ArrowDownIcon />
                 </span>
               </div>
               <div
@@ -471,9 +458,7 @@ const Header = () => {
               <div className='hidden lg:block w-full lg:w-3/12 pl-0 lg:pl-2'>
                 <div className='w-full flex justify-start lg:justify-end gap-3 items-center'>
                   <div className='w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center'>
-                    <span>
-                      <FaPhoneAlt />
-                    </span>
+                    <PhoneIcon />
                   </div>
                   <div className='flex justify-end flex-col gap-1'>
                     <h2 className='text-md font-medium text-slate-700'>

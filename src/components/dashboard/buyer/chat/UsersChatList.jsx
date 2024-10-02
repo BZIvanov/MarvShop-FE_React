@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
-import { IoMdClose } from 'react-icons/io';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetChatsQuery } from '@/store/services/chat';
+import { CloseIcon } from '@/components/common/icons/Icons';
 
 const UsersChatList = ({
   userStatuses,
@@ -31,7 +31,7 @@ const UsersChatList = ({
             onClick={() => setShowSidebarUsersList((prevState) => !prevState)}
             className='block cursor-pointer md:hidden'
           >
-            <IoMdClose />
+            <CloseIcon />
           </span>
         </div>
 

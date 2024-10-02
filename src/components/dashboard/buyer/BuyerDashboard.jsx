@@ -1,6 +1,5 @@
-import { FaCartShopping } from 'react-icons/fa6';
-
 import { useGetOrdersStatsQuery } from '@/store/services/orders';
+import { CartShoppingIcon } from '@/components/common/icons/Icons';
 
 const BuyerDashboard = () => {
   const { data } = useGetOrdersStatsQuery();
@@ -15,7 +14,7 @@ const BuyerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl'>
-            <FaCartShopping className='text-[#fae8e8] shadow-lg' />
+            <CartShoppingIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -26,7 +25,7 @@ const BuyerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#760077] flex justify-center items-center text-xl'>
-            <FaCartShopping className='text-[#fae8e8] shadow-lg' />
+            <CartShoppingIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -37,7 +36,7 @@ const BuyerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#038000] flex justify-center items-center text-xl'>
-            <FaCartShopping className='text-[#fae8e8] shadow-lg' />
+            <CartShoppingIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
       </div>

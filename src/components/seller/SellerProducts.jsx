@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetProductsQuery } from '@/store/services/products';
 import Pagination from '../common/Pagination';
 import Search from '../common/Search';
+import { EditIcon, EyeIcon, TrashIcon } from '@/components/common/icons/Icons';
 
 const SellerProducts = () => {
   const [page, setPage] = useState(1);
@@ -142,13 +142,13 @@ const SellerProducts = () => {
                         to={`/seller/edit-product/${product.slug}`}
                         className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'
                       >
-                        <FaEdit />
+                        <EditIcon />
                       </Link>
                       <Link className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'>
-                        <FaEye />
+                        <EyeIcon />
                       </Link>
                       <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'>
-                        <FaTrash />
+                        <TrashIcon />
                       </Link>
                     </div>
                   </td>

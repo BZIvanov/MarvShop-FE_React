@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { GrEmoji } from 'react-icons/gr';
-import { IoSend } from 'react-icons/io5';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
+import { PlusIcon, EmojiIcon, SendIcon } from '@/components/common/icons/Icons';
 
 const ChatForm = ({ socket, chatId }) => {
   const [message, setMessage] = useState('');
@@ -36,7 +34,7 @@ const ChatForm = ({ socket, chatId }) => {
         <div className='flex justify-between items-center'>
           <div className='w-[40px] h-[40px] border p-2 justify-center items-center flex rounded-full'>
             <label className='cursor-pointer' htmlFor=''>
-              <AiOutlinePlus />
+              <PlusIcon />
             </label>
             <input className='hidden' type='file' />
           </div>
@@ -49,14 +47,12 @@ const ChatForm = ({ socket, chatId }) => {
               className='w-full rounded-full h-full outline-none p-3'
             />
             <div className='text-2xl right-2 top-2 absolute cursor-auto'>
-              <span>
-                <GrEmoji />
-              </span>
+              <EmojiIcon />
             </div>
           </div>
           <button className='w-[40px] p-2 justify-center items-center rounded-full'>
             <div className='text-2xl cursor-pointer'>
-              <IoSend />
+              <SendIcon />
             </div>
           </button>
         </div>

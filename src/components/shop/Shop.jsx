@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { BsFillGridFill } from 'react-icons/bs';
-import { FaThList } from 'react-icons/fa';
 
 import { useSelector } from '@/store/store';
 import { useGetProductsQuery } from '@/store/services/products';
@@ -14,6 +12,7 @@ import Pagination from '../product/Pagination';
 import CategoryFilter from './CategoryFilter';
 import PriceFilter from './PriceFilter';
 import RatingFilter from './RatingFilter';
+import { FillGridIcon, ThListIcon } from '@/components/common/icons/Icons';
 
 const perPage = 12;
 
@@ -118,7 +117,7 @@ const Shop = () => {
                           productsDisplayType === 'grid' && 'bg-slate-300'
                         } text-slate-600 hover:bg-slate-300 cursor-pointer rounded-sm`}
                       >
-                        <BsFillGridFill />
+                        <FillGridIcon />
                       </div>
                       <div
                         onClick={() => setProductsDisplayType('list')}
@@ -126,7 +125,7 @@ const Shop = () => {
                           productsDisplayType === 'list' && 'bg-slate-300'
                         } text-slate-600 hover:bg-slate-300 cursor-pointer rounded-sm`}
                       >
-                        <FaThList />
+                        <ThListIcon />
                       </div>
                     </div>
                   </div>

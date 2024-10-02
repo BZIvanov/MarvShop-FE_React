@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import Chart from 'react-apexcharts';
-import { MdCurrencyExchange, MdProductionQuantityLimits } from 'react-icons/md';
-import { FaCartShopping } from 'react-icons/fa6';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
@@ -9,6 +7,11 @@ import { useGetProductsQuery } from '@/store/services/products';
 import { useGetSellerOrdersQuery } from '@/store/services/orders';
 import { useGetSellerOrdersStatsQuery } from '@/store/services/orders';
 import { useGetChatsQuery } from '@/store/services/chat';
+import {
+  CurrencyExchangeIcon,
+  ProductionQuantityLimitsIcon,
+  CartShoppingIcon,
+} from '@/components/common/icons/Icons';
 import { currencyFormatter, dateFormatter } from '@/utils/formatting';
 
 const state = {
@@ -122,7 +125,7 @@ const SellerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#fa0305] flex justify-center items-center text-xl'>
-            <MdCurrencyExchange className='text-[#fae8e8] shadow-lg' />
+            <CurrencyExchangeIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -133,7 +136,7 @@ const SellerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#760077] flex justify-center items-center text-xl'>
-            <MdProductionQuantityLimits className='text-[#fae8e8] shadow-lg' />
+            <ProductionQuantityLimitsIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -144,7 +147,7 @@ const SellerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#038000] flex justify-center items-center text-xl'>
-            <FaCartShopping className='text-[#fae8e8] shadow-lg' />
+            <CartShoppingIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
 
@@ -157,7 +160,7 @@ const SellerDashboard = () => {
           </div>
 
           <div className='w-[40px] h-[47px] rounded-full bg-[#0200f8] flex justify-center items-center text-xl'>
-            <FaCartShopping className='text-[#fae8e8] shadow-lg' />
+            <CartShoppingIcon className='text-[#fae8e8] shadow-lg' />
           </div>
         </div>
       </div>

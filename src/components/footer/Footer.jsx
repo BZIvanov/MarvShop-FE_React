@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import { FaFacebookF } from 'react-icons/fa';
-import { FaTwitter } from 'react-icons/fa6';
-import { FaLinkedin } from 'react-icons/fa';
-import { FaGithub } from 'react-icons/fa';
+
+import {
+  FacebookIcon,
+  LinkedInIcon,
+  TwitterIcon,
+  GithubIcon,
+} from '@/components/common/icons/Icons';
 
 const Footer = () => {
   return (
@@ -93,7 +96,7 @@ const Footer = () => {
                   to='/'
                   className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full'
                 >
-                  <FaFacebookF />
+                  <FacebookIcon />
                 </Link>
               </li>
               <li>
@@ -101,7 +104,7 @@ const Footer = () => {
                   to='/'
                   className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full'
                 >
-                  <FaTwitter />
+                  <TwitterIcon />
                 </Link>
               </li>
               <li>
@@ -109,7 +112,7 @@ const Footer = () => {
                   to='/'
                   className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full'
                 >
-                  <FaLinkedin />
+                  <LinkedInIcon />
                 </Link>
               </li>
               <li>
@@ -117,7 +120,7 @@ const Footer = () => {
                   to='/'
                   className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full'
                 >
-                  <FaGithub />
+                  <GithubIcon />
                 </Link>
               </li>
             </ul>

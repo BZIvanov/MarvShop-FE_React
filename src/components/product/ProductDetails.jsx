@@ -1,11 +1,5 @@
 import { useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { IoIosArrowForward } from 'react-icons/io';
-import { FaHeart } from 'react-icons/fa6';
-import { FaFacebookF } from 'react-icons/fa';
-import { FaTwitter } from 'react-icons/fa6';
-import { FaLinkedin } from 'react-icons/fa';
-import { FaGithub } from 'react-icons/fa';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -26,6 +20,14 @@ import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
 import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import {
+  GithubIcon,
+  LinkedInIcon,
+  TwitterIcon,
+  FacebookIcon,
+  HeartIcon,
+  ArrowForwardIcon,
+} from '@/components/common/icons/Icons';
 import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
 const ProductDetails = () => {
@@ -121,11 +123,11 @@ const ProductDetails = () => {
             <div className='flex justify-start items-center text-md text-slate-600 w-full'>
               <Link to='/'>Home</Link>
               <span className='pt-1'>
-                <IoIosArrowForward />
+                <ArrowForwardIcon />
               </span>
               <Link to='/'>{product?.category.name}</Link>
               <span className='pt-1'>
-                <IoIosArrowForward />
+                <ArrowForwardIcon />
               </span>
               <span>{product?.name}</span>
             </div>
@@ -282,7 +284,7 @@ const ProductDetails = () => {
                   onClick={handleAddToWishlist}
                   className='h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white'
                 >
-                  <FaHeart />
+                  <HeartIcon />
                 </div>
               </div>
 
@@ -308,7 +310,7 @@ const ProductDetails = () => {
                         to='/'
                         className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-indigo-500 rounded-full text-white'
                       >
-                        <FaFacebookF />
+                        <FacebookIcon />
                       </Link>
                     </li>
                     <li>
@@ -316,7 +318,7 @@ const ProductDetails = () => {
                         to='/'
                         className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-cyan-500 rounded-full text-white'
                       >
-                        <FaTwitter />
+                        <TwitterIcon />
                       </Link>
                     </li>
                     <li>
@@ -324,7 +326,7 @@ const ProductDetails = () => {
                         to='/'
                         className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-purple-500 rounded-full text-white'
                       >
-                        <FaLinkedin />
+                        <LinkedInIcon />
                       </Link>
                     </li>
                     <li>
@@ -332,7 +334,7 @@ const ProductDetails = () => {
                         to='/'
                         className='w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-blue-500 rounded-full text-white'
                       >
-                        <FaGithub />
+                        <GithubIcon />
                       </Link>
                     </li>
                   </ul>

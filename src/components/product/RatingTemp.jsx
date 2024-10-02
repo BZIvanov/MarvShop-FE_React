@@ -1,25 +1,25 @@
 import PropTypes from 'prop-types';
 
-import { StarC, StarF } from '@/components/common/icons/Icons';
+import { StarCIcon, StarFIcon } from '@/components/common/icons/Icons';
 
 const RatingTemp = ({ rating }) => {
   if (rating === 5) {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
       </>
     );
@@ -27,19 +27,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
       </>
     );
@@ -47,19 +47,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
       </>
     );
@@ -67,19 +67,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
       </>
     );
@@ -87,19 +87,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <StarF />
+          <StarFIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
       </>
     );
@@ -107,19 +107,19 @@ const RatingTemp = ({ rating }) => {
     return (
       <>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
         <span className='text-[#Edbb0E]'>
-          <StarC />
+          <StarCIcon />
         </span>
       </>
     );

@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { FadeLoader } from 'react-spinners';
-import { FaImages } from 'react-icons/fa6';
-import { FaRegEdit } from 'react-icons/fa';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
@@ -9,6 +7,7 @@ import { selectSeller } from '@/store/features/seller/sellerSlice';
 import { useUpdateAvatarMutation } from '@/store/services/users';
 import { useUpdateShopInfoMutation } from '@/store/services/sellers';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
+import { ImagesFIcon, RegEditIcon } from '@/components/common/icons/Icons';
 
 const SellerProfile = () => {
   const user = useSelector(selectUser);
@@ -81,9 +80,7 @@ const SellerProfile = () => {
                   className='flex justify-center items-center flex-col h-[150px] w-[200px] cursor-pointer border border-dashed hover:border-red-500 border-[#d0d2d6] relative'
                   htmlFor='avatar'
                 >
-                  <span>
-                    <FaImages />
-                  </span>
+                  <ImagesFIcon />
                   <span>Select Image</span>
                   {isUpdateAvatarLoading && (
                     <div className='bg-slate-600 absolute left-0 top-0 w-full h-full opacity-70 flex justify-center items-center z-20'>
@@ -106,7 +103,7 @@ const SellerProfile = () => {
             <div className='px-0 md:px-5 py-2'>
               <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative'>
                 <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'>
-                  <FaRegEdit />
+                  <RegEditIcon />
                 </span>
                 <div className='flex gap-2'>
                   <span>Username: </span>
@@ -144,7 +141,7 @@ const SellerProfile = () => {
               {seller?.shopInfo?.shopName ? (
                 <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative'>
                   <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'>
-                    <FaRegEdit />
+                    <RegEditIcon />
                   </span>
                   <div className='flex gap-2'>
                     <span>Shop Name: </span>

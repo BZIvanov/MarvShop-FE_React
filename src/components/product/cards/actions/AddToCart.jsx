@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import { RiShoppingCartLine } from 'react-icons/ri';
-import { TbShoppingCartOff } from 'react-icons/tb';
 
 import { useDispatch, useSelector } from '@/store/store';
 import { selectCartProductById } from '@/store/features/cart/cartSlice';
 import { showNotification } from '@/store/features/notification/notificationSlice';
+import {
+  ShoppingCartLineIcon,
+  ShoppingCartOffIcon,
+} from '@/components/common/icons/Icons';
 
 const AddToCart = ({ onAddToCart, productId, productStock }) => {
   const dispatch = useDispatch();
@@ -44,9 +46,9 @@ const AddToCart = ({ onAddToCart, productId, productStock }) => {
       } hover:text-white hover:rotate-[720deg] transition-all`}
     >
       {isProductInCart || isOutOfStock ? (
-        <TbShoppingCartOff />
+        <ShoppingCartOffIcon />
       ) : (
-        <RiShoppingCartLine />
+        <ShoppingCartLineIcon />
       )}
     </span>
   );

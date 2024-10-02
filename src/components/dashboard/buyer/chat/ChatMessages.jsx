@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
-import { FaRegFaceGrinHearts } from 'react-icons/fa6';
 
 import { useDispatch, useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetChatMessagesQuery } from '@/store/services/chat';
 import { showNotification } from '@/store/features/notification/notificationSlice';
+import { FaceGrinHeartsIcon } from '@/components/common/icons/Icons';
 
 const ChatMessages = ({ socket, chatId }) => {
   const dispatch = useDispatch();
@@ -116,7 +116,7 @@ const ChatMessages = ({ socket, chatId }) => {
 
         {!chatId && (
           <div className='w-full h-full flex justify-center items-center flex-col gap-2 text-white'>
-            <FaRegFaceGrinHearts />
+            <FaceGrinHeartsIcon />
             <span>Select a user to start chatting</span>
           </div>
         )}
