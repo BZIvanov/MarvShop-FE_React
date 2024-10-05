@@ -1,32 +1,42 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 
-import { useLoginMutation } from '@/store/services/users';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import ForgotPasswordDialog from './ForgotPasswordDialog';
 import Header from '../../header/Header';
 import Footer from '../../footer/Footer';
-import { Button } from '@/components/ui/button';
+import { useLoginMutation } from '@/store/services/users';
+
+const formSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+  password: z.string().min(8, { message: 'Must be 8 or more characters long' }),
+});
 
 const Login = () => {
-  const [formValues, setFormValues] = useState({
-    email: '',
-    password: '',
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const [login, { isLoading }] = useLoginMutation();
 
-  const handleInputChange = (event) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const { email, password } = formValues;
-    login({ email, password });
+  const onSubmit = (values) => {
+    login(values);
   };
 
   return (
@@ -36,41 +46,57 @@ const Login = () => {
         <div className='w-full justify-center items-center p-10'>
           <div className='grid grid-cols-1 md:grid-cols-2 w-[95%] xl:w-[60%] mx-auto bg-white rounded-md'>
             <div className='w-full px-8 py-8'>
-              <h2 className='text-center w-full text-xl text-slate-600 font-bold mb-3'>
+              <h2 className='text-center w-full text-xl font-bold mb-3'>
                 Login with your account
               </h2>
 
-              <div>
-                <form onSubmit={handleSubmit} className='text-slate-600'>
-                  <div className='flex flex-col gap-1 mb-2'>
-                    <label htmlFor='email'>Email</label>
-                    <input
-                      name='email'
-                      value={formValues.email}
-                      onChange={handleInputChange}
-                      type='email'
-                      id='email'
-                      className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                      placeholder='Email'
-                      required={true}
-                    />
-                  </div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className='space-y-4'
+                >
+                  <FormField
+                    control={form.control}
+                    name='email'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='email'
+                            placeholder='Your email'
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                  <div className='flex flex-col gap-1 mb-2'>
-                    <label htmlFor='password'>Password</label>
-                    <input
-                      name='password'
-                      value={formValues.password}
-                      onChange={handleInputChange}
-                      type='password'
-                      id='password'
-                      className='w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md'
-                      placeholder='Password'
-                      required={true}
-                    />
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name='password'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='password'
+                            placeholder='Your password'
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                  <Button disabled={isLoading} size='lg' className='w-full'>
+                  <Button
+                    disabled={isLoading}
+                    type='submit'
+                    size='lg'
+                    className='w-full'
+                  >
                     {isLoading ? (
                       <>
                         <Loader2 className='mr-2 h-4 w-4 animate-spin' />
@@ -81,18 +107,16 @@ const Login = () => {
                     )}
                   </Button>
                 </form>
+              </Form>
 
-                <div className='flex items-center justify-end my-2'>
-                  <p>Don&apos;t have an account?</p>
-                  <Button variant='link' asChild={true}>
-                    <Link to='/auth/register'>Register</Link>
-                  </Button>
-                </div>
-
-                <div className='flex justify-end my-2'>
-                  <Button variant='ghost'>Forgot your password?</Button>
-                </div>
+              <div className='flex items-center justify-end my-2'>
+                <p>Don&apos;t have an account?</p>
+                <Button variant='link' asChild={true}>
+                  <Link to='/auth/register'>Register</Link>
+                </Button>
               </div>
+
+              <ForgotPasswordDialog />
             </div>
 
             <div className='w-full h-full py-4 pr-4 hidden md:block'>
