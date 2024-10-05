@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 
 import { useLoginMutation } from '@/store/services/users';
-import ButtonLoadingIndicator from '../../common/feedback/ButtonLoadingIndicator';
 import Header from '../../header/Header';
 import Footer from '../../footer/Footer';
-import { FacebookIcon, GoogleIcon } from '@/components/common/icons/Icons';
+import { Button } from '@/components/ui/button';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({
@@ -70,36 +70,28 @@ const Login = () => {
                     />
                   </div>
 
-                  <button
-                    disabled={isLoading}
-                    className='px-8 w-full py-2 bg-[#059473] shadow-lg hover:shadow-green-500/40 text-white rounded-md'
-                  >
-                    {isLoading ? <ButtonLoadingIndicator /> : 'Login'}
-                  </button>
+                  <Button disabled={isLoading} size='lg' className='w-full'>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                        Loading
+                      </>
+                    ) : (
+                      'Login'
+                    )}
+                  </Button>
                 </form>
 
-                <div className='flex items-center justify-center text-center gap-2 text-slate-600 pt-1 mt-3'>
+                <div className='flex items-center justify-end my-2'>
                   <p>Don&apos;t have an account?</p>
-                  <Link className='text-blue-500' to='/auth/register'>
-                    Register
-                  </Link>
+                  <Button variant='link' asChild={true}>
+                    <Link to='/auth/register'>Register</Link>
+                  </Button>
                 </div>
 
-                <div className='flex justify-center items-center py-2'>
-                  <div className='h-[1px] bg-slate-300 w-[95%]'></div>
-                  <span className='px-3 text-slate-600'>Or</span>
-                  <div className='h-[1px] bg-slate-300 w-[95%]'></div>
+                <div className='flex justify-end my-2'>
+                  <Button variant='ghost'>Forgot your password?</Button>
                 </div>
-
-                <button className='px-8 w-full py-2 bg-indigo-500 shadow hover:shadow-indigo-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3'>
-                  <FacebookIcon />
-                  <span>Login With Facebook</span>
-                </button>
-
-                <button className='px-8 w-full py-2 bg-red-500 shadow hover:shadow-red-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3'>
-                  <GoogleIcon />
-                  <span>Login With Google</span>
-                </button>
               </div>
             </div>
 
