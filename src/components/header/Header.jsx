@@ -19,7 +19,6 @@ import {
   EmailIcon,
   CartShoppingIcon,
   HeartIcon,
-  PhonePortraitIcon,
   ArrowDownIcon,
   ArrowDropdownIcon,
   ListIcon,
@@ -51,65 +50,44 @@ const Header = () => {
 
   return (
     <div className='w-full bg-white'>
-      <div className='bg-[#caddff] hidden lg:block'>
+      <div className='bg-[#caddff] shadow-lg'>
         <div className='w-[90%] lg:w-[85%] mx-auto'>
-          <div className='flex w-full justify-between items-center h-[50px] text-slate-500'>
-            <ul className='flex justify-start items-center gap-8 font-semibold text-black'>
-              <li className='flex relative justify-center items-center gap-2 text-sm after:absolute after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px]'>
-                <EmailIcon />
-                <span>support@mail.com</span>
-              </li>
-              <li className='flex relative justify-center items-center gap-2 text-sm '>
-                <PhonePortraitIcon />
-                <span>+(123) 456 789</span>
-              </li>
-            </ul>
-            <div>
-              <div className='flex justify-center items-center gap-10'>
-                <div className='flex justify-center items-center gap-4 text-black'>
-                  <Link to='/'>
-                    <FacebookIcon />
-                  </Link>
-                  <Link to='/'>
-                    <TwitterIcon />
-                  </Link>
-                  <Link to='/'>
-                    <LinkedInIcon />
-                  </Link>
-                  <Link to='/'>
-                    <GithubIcon />
-                  </Link>
-                </div>
-                <div className='flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
-                  <img
-                    className='w-[30px] h-[14px]'
-                    src='/images/flag.png'
-                    alt='Language selection'
-                  />
-                  <ArrowDropdownIcon />
-                  <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
-                    <li>English</li>
-                    <li>Bulgarian</li>
-                  </ul>
-                </div>
-                {user ? (
-                  <Link
-                    to={`/${user.role}`}
-                    className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
-                  >
-                    <UserIcon />
-                    <span>{user.username}</span>
-                  </Link>
-                ) : (
-                  <Link
-                    to='/auth/login'
-                    className='flex cursor-pointer justify-center items-center gap-2 text-sm text-black'
-                  >
-                    <LockIcon />
-                    <span>Login</span>
-                  </Link>
-                )}
+          <div className='flex w-full justify-between items-center h-[50px]'>
+            <div className='flex justify-start items-center gap-8 font-semibold'>
+              <Link to='/'>
+                <img src='/images/logo.png' alt='Shop logo' />
+              </Link>
+            </div>
+            <div className='flex justify-center items-center gap-10'>
+              <div className='flex group cursor-pointer text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
+                <img
+                  className='w-[30px] h-[14px]'
+                  src='/images/flag.png'
+                  alt='Language selection'
+                />
+                <ArrowDropdownIcon />
+                <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
+                  <li>English</li>
+                  <li>Bulgarian</li>
+                </ul>
               </div>
+              {user ? (
+                <Link
+                  to={`/${user.role}`}
+                  className='flex cursor-pointer justify-center items-center gap-2 text-sm'
+                >
+                  <UserIcon />
+                  <span>{user.username}</span>
+                </Link>
+              ) : (
+                <Link
+                  to='/auth/login'
+                  className='flex cursor-pointer justify-center items-center gap-2 text-sm'
+                >
+                  <LockIcon />
+                  <span>Login</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
