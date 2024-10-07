@@ -11,10 +11,6 @@ import {
 import { selectCart } from '@/store/features/cart/cartSlice';
 import { useGetWishlistProductsQuery } from '@/store/services/wishlist';
 import {
-  TwitterIcon,
-  GithubIcon,
-  FacebookIcon,
-  LinkedInIcon,
   PhoneIcon,
   EmailIcon,
   CartShoppingIcon,
@@ -25,6 +21,7 @@ import {
   LockIcon,
   UserIcon,
 } from '@/components/common/icons/Icons';
+import { Separator } from '@/components/ui/separator';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -50,139 +47,118 @@ const Header = () => {
 
   return (
     <div className='w-full bg-white'>
-      <div className='bg-[#caddff] shadow-lg'>
+      <div className='bg-[#caddff] shadow-lg fixed top-0 left-0 right-0 z-[2000]'>
         <div className='w-[90%] lg:w-[85%] mx-auto'>
           <div className='flex w-full justify-between items-center h-[50px]'>
             <div className='flex justify-start items-center gap-8 font-semibold'>
               <Link to='/'>
                 <img src='/images/logo.png' alt='Shop logo' />
               </Link>
+              <ul className='hidden lg:flex justify-start items-start gap-8 text-sm font-bold uppercase'>
+                {[{ label: 'Shop', link: '/shop' }].map((navigationItem) => {
+                  return (
+                    <li key={navigationItem.link}>
+                      <NavLink
+                        to={navigationItem.link}
+                        className={({ isActive }) =>
+                          `p-2 block ${
+                            isActive ? 'text-[#059473]' : 'text-slate-600'
+                          }`
+                        }
+                      >
+                        {navigationItem.label}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
             <div className='flex justify-center items-center gap-10'>
-              <div className='flex group cursor-pointer text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
-                <img
-                  className='w-[30px] h-[14px]'
-                  src='/images/flag.png'
-                  alt='Language selection'
-                />
-                <ArrowDropdownIcon />
-                <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
-                  <li>English</li>
-                  <li>Bulgarian</li>
-                </ul>
-              </div>
-              {user ? (
-                <Link
-                  to={`/${user.role}`}
-                  className='flex cursor-pointer justify-center items-center gap-2 text-sm'
-                >
-                  <UserIcon />
-                  <span>{user.username}</span>
-                </Link>
-              ) : (
-                <Link
-                  to='/auth/login'
-                  className='flex cursor-pointer justify-center items-center gap-2 text-sm'
-                >
-                  <LockIcon />
-                  <span>Login</span>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='w-white'>
-        <div className='w-[90%] lg:w-[85%] mx-auto'>
-          <div className='h-[100px] lg:h-[80px] flex justify-between items-center flex-wrap'>
-            <div className='w-full lg:w-3/12 pt-4 lg:pt-0'>
-              <div className='flex justify-between items-center'>
-                <Link to='/'>
-                  <img src='/images/logo.png' alt='Shop logo' />
-                </Link>
-                <div
-                  className='flex justify-center items-center w-[30px] h-[30px] bg-white text-slate-600 border border-slate-600 rounded-sm cursor-pointer lg:hidden'
-                  onClick={() => setShowSidebar(true)}
-                >
-                  <ListIcon />
-                </div>
-              </div>
-            </div>
+              <div className='hidden lg:flex justify-center items-center gap-10'>
+                <div className='flex justify-center items-center gap-5'>
+                  <div
+                    onClick={() => {
+                      if (user) {
+                        navigate('/buyer/wishlist');
+                      } else {
+                        navigate('/auth/login', {
+                          state: { customNavigateTo: '/buyer/wishlist' },
+                        });
+                      }
+                    }}
+                    className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full'
+                  >
+                    <span className='text-xl text-green-500'>
+                      <HeartIcon />
+                    </span>
+                    {wishlistProducts.length > 0 && (
+                      <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
+                        {wishlistProducts.length}
+                      </div>
+                    )}
+                  </div>
 
-            <div className='lg:w-9/12'>
-              <div className='flex justify-center lg:justify-between items-center flex-wrap pl-8'>
-                <ul className='hidden lg:flex justify-start items-start gap-8 text-sm font-bold uppercase'>
-                  {[
-                    { label: 'Home', link: '/' },
-                    { label: 'Shop', link: '/shop' },
-                    { label: 'Blog', link: '/blog' },
-                    { label: 'About Us', link: '/about' },
-                    { label: 'Contact Us', link: '/contact' },
-                  ].map((navigationItem) => {
-                    return (
-                      <li key={navigationItem.link}>
-                        <NavLink
-                          to={navigationItem.link}
-                          className={({ isActive }) =>
-                            `p-2 block ${
-                              isActive ? 'text-[#059473]' : 'text-slate-600'
-                            }`
-                          }
-                        >
-                          {navigationItem.label}
-                        </NavLink>
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <div className='hidden lg:flex justify-center items-center gap-5'>
-                  <div className='flex justify-center gap-5'>
-                    <div
-                      onClick={() => {
-                        if (user) {
-                          navigate('/buyer/wishlist');
-                        } else {
-                          navigate('/auth/login', {
-                            state: { customNavigateTo: '/buyer/wishlist' },
-                          });
-                        }
-                      }}
-                      className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
-                    >
-                      <span className='text-xl text-green-500'>
-                        <HeartIcon />
-                      </span>
-                      {wishlistProducts.length > 0 && (
-                        <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                          {wishlistProducts.length}
-                        </div>
-                      )}
-                    </div>
-
-                    <div
-                      onClick={() => {
-                        if (user) {
-                          navigate('/cart');
-                        } else {
-                          navigate('/auth/login', {
-                            state: { customNavigateTo: '/cart' },
-                          });
-                        }
-                      }}
-                      className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'
-                    >
-                      <span className='text-xl text-green-500'>
-                        <CartShoppingIcon />
-                      </span>
-                      {cartItemsCount > 0 && (
-                        <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                          {cartItemsCount}
-                        </div>
-                      )}
-                    </div>
+                  <div
+                    onClick={() => {
+                      if (user) {
+                        navigate('/cart');
+                      } else {
+                        navigate('/auth/login', {
+                          state: { customNavigateTo: '/cart' },
+                        });
+                      }
+                    }}
+                    className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full'
+                  >
+                    <span className='text-xl text-green-500'>
+                      <CartShoppingIcon />
+                    </span>
+                    {cartItemsCount > 0 && (
+                      <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
+                        {cartItemsCount}
+                      </div>
+                    )}
                   </div>
                 </div>
+                <div className='flex group cursor-pointer text-sm justify-center items-center gap-1 relative before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
+                  <img
+                    className='w-[30px] h-[14px]'
+                    src='/images/flag.png'
+                    alt='Language selection'
+                  />
+                  <ArrowDropdownIcon />
+                  <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
+                    <li>English</li>
+                    <li>Bulgarian</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div
+                className='lg:hidden flex justify-center items-center w-[30px] h-[30px] text-slate-600 border border-slate-600 rounded-sm cursor-pointer'
+                onClick={() => setShowSidebar(true)}
+              >
+                <ListIcon />
+              </div>
+
+              <div className='flex cursor-pointer text-sm justify-center items-center gap-1 relative before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
+                {user ? (
+                  <Link
+                    to={`/${user.role}`}
+                    className='flex justify-center items-center gap-2 text-sm'
+                  >
+                    <UserIcon />
+                    <span>{user.username}</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to='/auth/login'
+                    className='flex justify-center items-center gap-2 text-sm'
+                  >
+                    <LockIcon />
+                    <span>Login</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -201,10 +177,13 @@ const Header = () => {
             showSidebar ? 'left-0 top-0' : '-left-[300px]'
           } overflow-y-auto bg-white h-screen py-6 px-8 `}
         >
-          <div className='flex justify-start flex-col gap-6'>
+          <div className='flex justify-start flex-col gap-5'>
             <Link to='/'>
               <img src='/images/logo.png' alt='Shop logo' />
             </Link>
+
+            <Separator />
+
             <div className='flex justify-start items-center gap-10'>
               <div className='flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute '>
                 <img
@@ -236,19 +215,10 @@ const Header = () => {
                 </Link>
               )}
             </div>
+
+            <Separator />
+
             <ul className='flex flex-col justify-start items-start text-sm font-bold uppercase'>
-              <li>
-                <NavLink
-                  to='/'
-                  className={({ isActive }) =>
-                    `py-2 block ${
-                      isActive ? 'text-[#059473]' : 'text-slate-600'
-                    }`
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
               <li>
                 <NavLink
                   to='/shop'
@@ -261,58 +231,9 @@ const Header = () => {
                   Shop
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to='/blog'
-                  className={({ isActive }) =>
-                    `py-2 block ${
-                      isActive ? 'text-[#059473]' : 'text-slate-600'
-                    }`
-                  }
-                >
-                  Blog
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to='/about'
-                  className={({ isActive }) =>
-                    `py-2 block ${
-                      isActive ? 'text-[#059473]' : 'text-slate-600'
-                    }`
-                  }
-                >
-                  About Us
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to='/contact'
-                  className={({ isActive }) =>
-                    `py-2 block ${
-                      isActive ? 'text-[#059473]' : 'text-slate-600'
-                    }`
-                  }
-                >
-                  Contact Us
-                </NavLink>
-              </li>
             </ul>
 
-            <div className='flex justify-start items-center gap-4 text-black'>
-              <Link to='/'>
-                <FacebookIcon />
-              </Link>
-              <Link to='/'>
-                <TwitterIcon />
-              </Link>
-              <Link to='/'>
-                <LinkedInIcon />
-              </Link>
-              <Link to='/'>
-                <GithubIcon />
-              </Link>
-            </div>
+            <Separator />
 
             <div className='w-full flex justify-start lg:justify-end gap-3 items-center'>
               <div className='w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center'>
@@ -320,7 +241,7 @@ const Header = () => {
               </div>
               <div className='flex justify-end flex-col gap-1'>
                 <h2 className='text-sm font-medium text-slate-700'>
-                  083123213
+                  0888123456
                 </h2>
                 <span className='text-xs'>Support 24/7</span>
               </div>
@@ -336,7 +257,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className='w-[90%] lg:w-[85%] mx-auto'>
+      <div className='w-[90%] lg:w-[85%] mx-auto pt-20'>
         <div className='flex w-full flex-wrap gap-8 lg:gap-0'>
           <div className='w-full lg:w-3/12'>
             <div className='bg-white relative'>
@@ -440,7 +361,7 @@ const Header = () => {
                   </div>
                   <div className='flex justify-end flex-col gap-1'>
                     <h2 className='text-md font-medium text-slate-700'>
-                      0321321432
+                      0888123456
                     </h2>
                     <span className='text-sm'>Support 24/7</span>
                   </div>

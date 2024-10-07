@@ -351,7 +351,8 @@ const ProductDetails = () => {
                   </button>
                 ) : null}
                 <Link
-                  to={`/buyer/chat/${product?.seller.userId}`}
+                  // TODO: check for user and if no user, redirect to login
+                  to={`/buyer/chat/${product?.seller?.userId}`}
                   className='px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-red-500/40 bg-red-500 text-white'
                 >
                   Chat Seller
