@@ -13,8 +13,6 @@ import { useGetWishlistProductsQuery } from '@/store/services/wishlist';
 import {
   PhoneIcon,
   EmailIcon,
-  CartShoppingIcon,
-  HeartIcon,
   ArrowDownIcon,
   ArrowDropdownIcon,
   ListIcon,
@@ -22,6 +20,15 @@ import {
   UserIcon,
 } from '@/components/common/icons/Icons';
 import { Separator } from '@/components/ui/separator';
+import { Heart, ShoppingCart, User, Lock, LayoutDashboard } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -76,51 +83,59 @@ const Header = () => {
             <div className='flex justify-center items-center gap-10'>
               <div className='hidden lg:flex justify-center items-center gap-10'>
                 <div className='flex justify-center items-center gap-5'>
-                  <div
-                    onClick={() => {
-                      if (user) {
-                        navigate('/buyer/wishlist');
-                      } else {
-                        navigate('/auth/login', {
-                          state: { customNavigateTo: '/buyer/wishlist' },
-                        });
-                      }
-                    }}
-                    className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full'
-                  >
-                    <span className='text-xl text-green-500'>
-                      <HeartIcon />
-                    </span>
-                    {wishlistProducts.length > 0 && (
-                      <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                        {wishlistProducts.length}
-                      </div>
-                    )}
+                  <div className='relative'>
+                    <Button
+                      onClick={() => {
+                        if (user) {
+                          navigate('/buyer/wishlist');
+                        } else {
+                          navigate('/auth/login', {
+                            state: { customNavigateTo: '/buyer/wishlist' },
+                          });
+                        }
+                      }}
+                      variant='ghost'
+                      className='relative p-2 hover:bg-white hover:bg-opacity-30'
+                    >
+                      <Heart
+                        className='h-6 w-6 text-green-500'
+                        fill='currentColor'
+                      />
+                      {wishlistProducts.length > 0 && (
+                        <Badge className='absolute -top-1 -right-1 bg-red-500 hover:bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center'>
+                          {wishlistProducts.length}
+                        </Badge>
+                      )}
+                    </Button>
                   </div>
 
-                  <div
-                    onClick={() => {
-                      if (user) {
-                        navigate('/cart');
-                      } else {
-                        navigate('/auth/login', {
-                          state: { customNavigateTo: '/cart' },
-                        });
-                      }
-                    }}
-                    className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full'
-                  >
-                    <span className='text-xl text-green-500'>
-                      <CartShoppingIcon />
-                    </span>
-                    {cartItemsCount > 0 && (
-                      <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                        {cartItemsCount}
-                      </div>
-                    )}
+                  <div className='relative'>
+                    <Button
+                      onClick={() => {
+                        if (user) {
+                          navigate('/cart');
+                        } else {
+                          navigate('/auth/login', {
+                            state: { customNavigateTo: '/cart' },
+                          });
+                        }
+                      }}
+                      variant='ghost'
+                      className='relative p-2 hover:bg-white hover:bg-opacity-30'
+                    >
+                      <ShoppingCart
+                        className='h-6 w-6 text-green-500'
+                        fill='currentColor'
+                      />
+                      {cartItemsCount > 0 && (
+                        <Badge className='absolute -top-1 -right-1 bg-red-500 hover:bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center'>
+                          {cartItemsCount}
+                        </Badge>
+                      )}
+                    </Button>
                   </div>
                 </div>
-                <div className='flex group cursor-pointer text-sm justify-center items-center gap-1 relative before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
+                <div className='flex group cursor-pointer text-sm justify-center items-center gap-1 relative before:absolute before:h-[24px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
                   <img
                     className='w-[30px] h-[14px]'
                     src='/images/flag.png'
@@ -141,23 +156,39 @@ const Header = () => {
                 <ListIcon />
               </div>
 
-              <div className='flex cursor-pointer text-sm justify-center items-center gap-1 relative before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
+              <div className='flex cursor-pointer text-sm justify-center items-center gap-1 relative before:absolute before:h-[24px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]'>
                 {user ? (
-                  <Link
-                    to={`/${user.role}`}
-                    className='flex justify-center items-center gap-2 text-sm'
-                  >
-                    <UserIcon />
-                    <span>{user.username}</span>
-                  </Link>
+                  <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild={true}>
+                      <Button
+                        variant='ghost'
+                        className='p-2 hover:bg-white hover:bg-opacity-30'
+                      >
+                        <User className='h-6 w-6' />
+                        <span>{user.username}</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className='z-[2001]'>
+                      <DropdownMenuItem
+                        onClick={() => navigate(`/${user.role}`)}
+                        className='gap-2 text-md cursor-pointer'
+                      >
+                        <LayoutDashboard size={20} />
+                        <span>Dashboard</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 ) : (
-                  <Link
-                    to='/auth/login'
-                    className='flex justify-center items-center gap-2 text-sm'
+                  <Button
+                    variant='ghost'
+                    asChild={true}
+                    className='p-2 hover:bg-white hover:bg-opacity-30'
                   >
-                    <LockIcon />
-                    <span>Login</span>
-                  </Link>
+                    <Link to='/auth/login' className='gap-2'>
+                      <Lock />
+                      <span>Login</span>
+                    </Link>
+                  </Button>
                 )}
               </div>
             </div>
