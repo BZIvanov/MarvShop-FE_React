@@ -2,10 +2,8 @@ import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 import { AiOutlineDashboard, AiOutlineShoppingCart } from 'react-icons/ai';
 
-import { useDispatch, useSelector } from '@/store/store';
+import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
-import { clearCart } from '@/store/features/cart/cartSlice';
-import { useLogoutMutation } from '@/store/services/users';
 import {
   AddIcon,
   PaymentIcon,
@@ -21,7 +19,6 @@ import {
   UsersIcon,
   UserTimesIcon,
   CategoryIcon,
-  LogOutCircleIcon,
 } from '@/components/common/icons/Icons';
 
 const adminLinks = [
@@ -150,19 +147,10 @@ const roleLinks = {
 };
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
-  const dispatch = useDispatch();
-
   const user = useSelector(selectUser);
   const userRole = user?.role || 'buyer';
 
-  const [logout] = useLogoutMutation();
-
   const links = roleLinks[userRole];
-
-  const handleLogout = () => {
-    logout();
-    dispatch(clearCart());
-  };
 
   return (
     <div>
@@ -205,15 +193,6 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                 </NavLink>
               </li>
             ))}
-            <li>
-              <button
-                onClick={handleLogout}
-                className='text-[#030811] font-bold duration-200 px-[12px] py-[9px] rounded-sm flex justify-start items-center gap-[12px] hover:pl-4 transition-all w-full mb-1'
-              >
-                <LogOutCircleIcon />
-                <span>Logout</span>
-              </button>
-            </li>
           </ul>
         </div>
       </div>

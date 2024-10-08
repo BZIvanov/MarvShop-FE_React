@@ -19,14 +19,13 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
-import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import {
   GithubIcon,
   LinkedInIcon,
   TwitterIcon,
   FacebookIcon,
   HeartIcon,
-  ArrowForwardIcon,
 } from '@/components/common/icons/Icons';
 import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
@@ -115,25 +114,15 @@ const ProductDetails = () => {
     <div>
       <Header />
 
-      <BreadcrumbsBanner pageName='Product Details' />
-
-      <section>
-        <div className='bg-slate-100 py-5 mb-5'>
-          <div className='w-[90%] md:w-[85%] lg:w-[90%] h-full mx-auto'>
-            <div className='flex justify-start items-center text-md text-slate-600 w-full'>
-              <Link to='/'>Home</Link>
-              <span className='pt-1'>
-                <ArrowForwardIcon />
-              </span>
-              <Link to='/'>{product?.category.name}</Link>
-              <span className='pt-1'>
-                <ArrowForwardIcon />
-              </span>
-              <span>{product?.name}</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {product && (
+        <Breadcrumbs
+          links={[
+            { linkTo: '/', label: 'Home' },
+            { linkTo: '/category', label: product.category.name }, // TODO: create category page or redirect to Shop with category filtered
+          ]}
+          label={product.name}
+        />
+      )}
 
       <section>
         <div className='w-[90%] md:w-[85%] lg:w-[90%] h-full mx-auto mb-3'>

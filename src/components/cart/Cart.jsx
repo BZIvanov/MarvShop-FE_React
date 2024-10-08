@@ -5,7 +5,7 @@ import { useSelector } from '@/store/store';
 import { selectCart } from '@/store/features/cart/cartSlice';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CartProductItem from './CartProductItem';
 import CartOrderSummary from './CartOrderSummary';
 
@@ -19,7 +19,7 @@ const Cart = () => {
     <div>
       <Header />
 
-      <BreadcrumbsBanner pageName='Cart' />
+      <Breadcrumbs links={[{ linkTo: '/', label: 'Home' }]} label='Cart' />
 
       <section className='bg-[#eeeeee] py-16'>
         <div className='w-[90%] md:w-[85%] lg:w-[80%] mx-auto'>

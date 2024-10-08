@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateOrderMutation } from '@/store/services/orders';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import { currencyFormatter } from '../../utils/formatting';
 import { useCartSummary } from './hooks/useCartSummary';
 import { SHIPPING_FEE } from './constants';
@@ -87,7 +87,7 @@ const Shipping = () => {
     <div>
       <Header />
 
-      <BreadcrumbsBanner pageName='Shipping' />
+      <Breadcrumbs links={[{ linkTo: '/', label: 'Home' }]} label='Shipping' />
 
       <section className='bg-[#eeeeee] py-16'>
         <div className='w-[90%] md:w-[85%] lg:w-[80%] mx-auto'>

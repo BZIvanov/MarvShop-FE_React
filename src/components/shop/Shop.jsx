@@ -5,7 +5,7 @@ import { useGetProductsQuery } from '@/store/services/products';
 import { selectFilters } from '@/store/features/productsFilters/productsFiltersSlice';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import BreadcrumbsBanner from '../common/BreadcrumbsBanner';
+import Breadcrumbs from '@/components/common/Breadcrumbs';
 import RecommendedProducts from '../product/RecommendedProducts';
 import ProductsList from '../product/ProductsList';
 import Pagination from '../product/Pagination';
@@ -56,7 +56,7 @@ const Shop = () => {
     <div>
       <Header />
 
-      <BreadcrumbsBanner pageName='Shop' />
+      <Breadcrumbs links={[{ linkTo: '/', label: 'Home' }]} label='Shop' />
 
       <section className='py-16'>
         <div className='w-[90%] md:w-[85%] lg:w-[80%] h-full mx-auto'>
