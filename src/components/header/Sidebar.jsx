@@ -19,14 +19,14 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     <div className='lg:hidden'>
       <div
         onClick={() => setShowSidebar(false)}
-        className={`fixed duration-200 transition-all ${
-          showSidebar ? 'visible' : 'invisible'
-        } lg:hidden w-screen h-screen bg-[rgba(0,0,0,0.5)] top-0 left-0 z-20`}
+        className={`fixed transition-opacity duration-300 ${
+          showSidebar ? 'opacity-100 visible' : 'opacity-0 invisible'
+        } lg:hidden w-screen h-screen bg-[rgba(0,0,0,0.5)] top-0 left-0 z-[2010]`}
       />
       <div
-        className={`w-[300px] z-[9999] transition-all duration-200 fixed ${
-          showSidebar ? 'left-0 top-0' : '-left-[300px]'
-        } overflow-y-auto bg-white h-screen py-6 px-8 `}
+        className={`fixed w-[300px] z-[2010] transition-transform duration-300 top-0 h-screen bg-white py-6 px-8 ${
+          showSidebar ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
         <div className='flex justify-start flex-col gap-5'>
           <Link to='/'>

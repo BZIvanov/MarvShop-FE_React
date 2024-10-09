@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   Heart,
   ShoppingCart,
-  User,
+  User as UserIcon,
   Lock,
   LayoutDashboard,
   LogOut,
@@ -15,6 +15,7 @@ import { selectCart, clearCart } from '@/store/features/cart/cartSlice';
 import { useGetWishlistProductsQuery } from '@/store/services/wishlist';
 import { useLogoutMutation } from '@/store/services/users';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -161,8 +162,16 @@ const Header = () => {
                         variant='ghost'
                         className='p-2 hover:bg-white hover:bg-opacity-30'
                       >
-                        <User className='h-6 w-6' />
-                        <span>{user.username}</span>
+                        <Avatar className='w-8 h-8'>
+                          <AvatarImage
+                            src={user.avatar?.imageUrl}
+                            alt='User avatar'
+                          />
+                          <AvatarFallback>
+                            <UserIcon />
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className='pl-2'>{user.username}</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='z-[2001]'>
