@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   Heart,
@@ -24,14 +25,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { ArrowDropdownIcon, ListIcon } from '@/components/common/icons/Icons';
-import Subheader from './Subheader';
-import Sidebar from './Sidebar';
 
-const Header = () => {
+const Header = ({ setShowSidebar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [showSidebar, setShowSidebar] = useState(false);
 
   const user = useSelector(selectUser);
 
@@ -209,12 +206,12 @@ const Header = () => {
           </div>
         </div>
       </div>
-
-      <Subheader />
-
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
     </div>
   );
+};
+
+Header.propTypes = {
+  setShowSidebar: PropTypes.func,
 };
 
 export default Header;

@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
-import Header from '../../header/Header';
 import Footer from '../../footer/Footer';
 import { useLoginMutation } from '@/store/services/users';
 
@@ -41,7 +40,6 @@ const Login = () => {
 
   return (
     <div>
-      <Header />
       <div className='bg-slate-200 mt-4'>
         <div className='w-full justify-center items-center p-10'>
           <div className='grid grid-cols-1 md:grid-cols-2 w-[95%] xl:w-[60%] mx-auto bg-white rounded-md'>

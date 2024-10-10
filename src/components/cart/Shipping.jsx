@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useCreateOrderMutation } from '@/store/services/orders';
-import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import { currencyFormatter } from '../../utils/formatting';
@@ -85,8 +84,6 @@ const Shipping = () => {
 
   return (
     <div>
-      <Header />
-
       <Breadcrumbs links={[{ linkTo: '/', label: 'Home' }]} label='Shipping' />
 
       <section className='bg-[#eeeeee] py-16'>

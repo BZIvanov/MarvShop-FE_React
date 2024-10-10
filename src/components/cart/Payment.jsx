@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetOrderQuery } from '@/store/services/orders';
-import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Card from './Card';
 import { currencyFormatter } from '@/utils/formatting';
@@ -19,8 +18,6 @@ const Payment = () => {
 
   return (
     <div>
-      <Header />
-
       <section className='bg-[#eeeeee]'>
         <div className='w-[90%] mx-auto py-16 mt-4'>
           <div className='flex flex-wrap'>

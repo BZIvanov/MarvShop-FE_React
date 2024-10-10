@@ -16,7 +16,6 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useRegisterMutation } from '@/store/services/users';
-import Header from '../../header/Header';
 import Footer from '../../footer/Footer';
 
 const formSchema = z.object({
@@ -51,7 +50,6 @@ const Register = () => {
 
   return (
     <div>
-      <Header />
       <div className='bg-slate-200 mt-4'>
         <div className='w-full justify-center items-center p-10'>
           <div className='grid grid-cols-1 md:grid-cols-2 w-[95%] xl:w-[60%] mx-auto bg-white rounded-md'>

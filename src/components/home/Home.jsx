@@ -1,4 +1,3 @@
-import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import MainBanner from './MainBanner';
 import CategoriesBanner from './CategoriesBanner';
@@ -8,8 +7,6 @@ import RecommendedProducts from '../product/RecommendedProducts';
 const Home = () => {
   return (
     <div className='w-full'>
-      <Header />
-
       <MainBanner />
       <CategoriesBanner />
       <FeaturedProducts />

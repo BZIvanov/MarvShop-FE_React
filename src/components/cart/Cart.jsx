@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from '@/store/store';
 import { selectCart } from '@/store/features/cart/cartSlice';
-import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CartProductItem from './CartProductItem';
@@ -17,8 +16,6 @@ const Cart = () => {
 
   return (
     <div>
-      <Header />
-
       <Breadcrumbs links={[{ linkTo: '/', label: 'Home' }]} label='Cart' />
 
       <section className='bg-[#eeeeee] py-16'>

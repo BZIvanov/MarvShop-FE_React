@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from '@/store/store';
 import { useGetProductsQuery } from '@/store/services/products';
 import { selectFilters } from '@/store/features/productsFilters/productsFiltersSlice';
-import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import RecommendedProducts from '../product/RecommendedProducts';
@@ -54,8 +53,6 @@ const Shop = () => {
 
   return (
     <div>
-      <Header />
-
       <Breadcrumbs links={[{ linkTo: '/', label: 'Home' }]} label='Shop' />
 
       <section className='py-16'>

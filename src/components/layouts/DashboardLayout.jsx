@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom';
 import { useGetCurrentSellerQuery } from '@/store/services/sellers';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from '../layout/Header';
+import Sidebar from '../layout/Sidebar';
 
 const DashboardLayout = () => {
   const [showSidebar, setShowSidebar] = useState(false);

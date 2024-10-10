@@ -15,7 +15,6 @@ import {
 import { showNotification } from '@/store/features/notification/notificationSlice';
 import { addToCart } from '@/store/features/cart/cartSlice';
 import { useAddToWishlistMutation } from '@/store/services/wishlist';
-import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
@@ -112,8 +111,6 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <Header />
-
       {product && (
         <Breadcrumbs
           links={[

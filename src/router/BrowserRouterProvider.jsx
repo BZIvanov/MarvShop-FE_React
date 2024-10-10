@@ -2,12 +2,11 @@ import { Suspense } from 'react';
 import {
   createBrowserRouter,
   Navigate,
-  Outlet,
   RouterProvider,
 } from 'react-router-dom';
 
 import App from '../App';
-import DashboardLayout from '../components/layout/DashboardLayout';
+import DashboardLayout from '../components/layouts/DashboardLayout';
 import ErrorBoundary from './ErrorBoundary';
 import NotFound from './NotFound';
 import NonUserRoute from './auth/NonUserRoute';
@@ -44,6 +43,7 @@ import {
   BuyerWishlist,
   BuyerChat,
 } from './lazy-routes';
+import ShopLayout from '@/components/layouts/ShopLayout';
 import Home from '../components/home/Home';
 import Shop from '../components/shop/Shop';
 import Cart from '../components/cart/Cart';
@@ -59,27 +59,33 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Home />,
+        element: <ShopLayout />,
+        children: [{ path: '', element: <Home /> }],
       },
       {
         path: 'shop',
-        element: <Shop />,
+        element: <ShopLayout />,
+        children: [{ path: '', element: <Shop /> }],
       },
       {
         path: 'cart',
-        element: <Cart />,
+        element: <ShopLayout />,
+        children: [{ path: '', element: <Cart /> }],
       },
       {
         path: 'shipping',
-        element: <Shipping />,
+        element: <ShopLayout />,
+        children: [{ path: '', element: <Shipping /> }],
       },
       {
-        path: 'payment/:orderId',
-        element: <Payment />,
+        path: 'payment',
+        element: <ShopLayout showSubheader={false} />,
+        children: [{ path: ':orderId', element: <Payment /> }],
       },
       {
-        path: 'products/:slug',
-        element: <ProductDetails />,
+        path: 'products',
+        element: <ShopLayout />,
+        children: [{ path: ':slug', element: <ProductDetails /> }],
       },
       {
         path: 'admin',
@@ -274,7 +280,7 @@ const router = createBrowserRouter([
         path: 'auth',
         element: (
           <NonUserRoute>
-            <Outlet />
+            <ShopLayout />
           </NonUserRoute>
         ),
         children: [
