@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom';
 import { useGetCurrentSellerQuery } from '@/store/services/sellers';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
-import Header from '../layout/Header';
-import Sidebar from '../layout/Sidebar';
+import Header from './headers/Header';
+import DashboardSidebar from './sidebars/DashboardSidebar';
 
 const DashboardLayout = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -18,11 +18,14 @@ const DashboardLayout = () => {
 
   return (
     <div className='bg-[#cdcae9] w-full min-h-screen'>
-      <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <Header setShowSidebar={setShowSidebar} />
 
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <DashboardSidebar
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+      />
 
-      <div className='ml-0 lg:ml-[260px] pt-[95px] transition-all'>
+      <div className='ml-0 lg:ml-[260px] pt-[50px] transition-all'>
         <Outlet />
       </div>
     </div>

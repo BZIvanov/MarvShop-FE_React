@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useCreateOrderMutation } from '@/store/services/orders';
-import Footer from '../footer/Footer';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import { currencyFormatter } from '../../utils/formatting';
 import { useCartSummary } from './hooks/useCartSummary';
@@ -293,8 +292,6 @@ const Shipping = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

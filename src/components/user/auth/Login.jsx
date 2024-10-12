@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
-import Footer from '../../footer/Footer';
 import { useLoginMutation } from '@/store/services/users';
 
 const formSchema = z.object({
@@ -127,8 +126,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

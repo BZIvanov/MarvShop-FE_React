@@ -36,7 +36,7 @@ const Wishlist = () => {
   }, [dispatch, isSuccess]);
 
   return (
-    <div className='m-7 p-4 rounded-md'>
+    <div className='m-4'>
       <h2 className='text-[#000000] font-semibold text-lg mb-3'>Wishlist</h2>
       <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
         {products.map((product) => {
@@ -97,6 +97,8 @@ const Wishlist = () => {
             </div>
           );
         })}
+
+        {products.length === 0 && <p>No wishlist products</p>}
       </div>
     </div>
   );

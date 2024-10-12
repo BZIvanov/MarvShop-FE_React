@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AiOutlineDashboard, AiOutlineShoppingCart } from 'react-icons/ai';
 
 import { useSelector } from '@/store/store';
@@ -146,7 +146,7 @@ const roleLinks = {
   buyer: buyerLinks,
 };
 
-const Sidebar = ({ showSidebar, setShowSidebar }) => {
+const DashboardSidebar = ({ showSidebar, setShowSidebar }) => {
   const user = useSelector(selectUser);
   const userRole = user?.role || 'buyer';
 
@@ -165,16 +165,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
           showSidebar ? 'left-0' : '-left-[260px] lg:left-0'
         }`}
       >
-        <div className='h-[70px] flex justify-center items-center'>
-          <Link to='/' className='w-[180px] h-[50px]'>
-            <img
-              className='w-full h-full'
-              src='/images/logo.png'
-              alt='App logo'
-            />
-          </Link>
-        </div>
-        <div className='px-[16px]'>
+        <div className='mt-[50px] p-4'>
           <ul>
             {links.map((link) => (
               <li key={link.path}>
@@ -200,9 +191,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   );
 };
 
-Sidebar.propTypes = {
+DashboardSidebar.propTypes = {
   showSidebar: PropTypes.bool,
   setShowSidebar: PropTypes.func,
 };
 
-export default Sidebar;
+export default DashboardSidebar;

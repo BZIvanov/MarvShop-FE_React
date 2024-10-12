@@ -12,7 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 
-const Sidebar = ({ showSidebar, setShowSidebar }) => {
+const ShopSidebar = ({ showSidebar, setShowSidebar }) => {
   const user = useSelector(selectUser);
 
   return (
@@ -106,9 +106,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
   );
 };
 
-Sidebar.propTypes = {
+ShopSidebar.propTypes = {
   showSidebar: PropTypes.bool,
   setShowSidebar: PropTypes.func,
 };
 
-export default Sidebar;
+export default ShopSidebar;

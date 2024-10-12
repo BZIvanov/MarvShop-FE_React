@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from '@/store/store';
 import { useGetProductsQuery } from '@/store/services/products';
 import { selectFilters } from '@/store/features/productsFilters/productsFiltersSlice';
-import Footer from '../footer/Footer';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import RecommendedProducts from '../product/RecommendedProducts';
 import ProductsList from '../product/ProductsList';
@@ -151,8 +150,6 @@ const Shop = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

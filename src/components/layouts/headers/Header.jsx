@@ -146,7 +146,7 @@ const Header = ({ setShowSidebar }) => {
 
               <div
                 className='lg:hidden flex justify-center items-center w-[30px] h-[30px] text-slate-600 border border-slate-600 rounded-sm cursor-pointer'
-                onClick={() => setShowSidebar(true)}
+                onClick={() => setShowSidebar((prevState) => !prevState)}
               >
                 <ListIcon />
               </div>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from '@/store/store';
 import { selectCart } from '@/store/features/cart/cartSlice';
-import Footer from '../footer/Footer';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CartProductItem from './CartProductItem';
 import CartOrderSummary from './CartOrderSummary';
@@ -64,8 +63,6 @@ const Cart = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

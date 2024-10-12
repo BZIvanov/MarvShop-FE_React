@@ -15,7 +15,6 @@ import {
 import { showNotification } from '@/store/features/notification/notificationSlice';
 import { addToCart } from '@/store/features/cart/cartSlice';
 import { useAddToWishlistMutation } from '@/store/services/wishlist';
-import Footer from '../footer/Footer';
 import Rating from '../common/Rating';
 import Reviews from './Reviews';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
@@ -500,8 +499,6 @@ const ProductDetails = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

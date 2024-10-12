@@ -16,7 +16,6 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useRegisterMutation } from '@/store/services/users';
-import Footer from '../../footer/Footer';
 
 const formSchema = z.object({
   username: z.string().min(3, { message: 'Must be 3 or more characters long' }),
@@ -171,8 +170,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

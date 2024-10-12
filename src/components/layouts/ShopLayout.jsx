@@ -2,9 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Outlet } from 'react-router-dom';
 
-import Header from '../header/Header';
-import Subheader from '../header/Subheader';
-import Sidebar from '../header/Sidebar';
+import Header from './headers/Header';
+import Subheader from './headers/Subheader';
+import ShopSidebar from './sidebars/ShopSidebar';
+import Footer from './footers/Footer';
 
 const ShopLayout = ({ showSubheader = true }) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -15,11 +16,13 @@ const ShopLayout = ({ showSubheader = true }) => {
 
       {showSubheader && <Subheader />}
 
-      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <ShopSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
 
       <div>
         <Outlet />
       </div>
+
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import Footer from '../footer/Footer';
 import MainBanner from './MainBanner';
 import CategoriesBanner from './CategoriesBanner';
 import FeaturedProducts from '../product/FeaturedProducts';
@@ -37,8 +36,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
