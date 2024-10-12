@@ -14,7 +14,7 @@ import {
 import { showNotification } from '@/store/features/notification/notificationSlice';
 import MyRating from '../common/Rating';
 import RatingTemp from './RatingTemp';
-import Pagination from './Pagination';
+import Pagination from '@/components/common/Pagination';
 import { dateFormatter } from '@/utils/formatting';
 
 const perPage = 5;
@@ -154,9 +154,8 @@ const Reviews = ({ product }) => {
             <Pagination
               pageNumber={page}
               setPageNumber={setPage}
-              totalItem={reviewsData?.totalCount ?? 0}
+              totalItem={reviewsData.totalCount}
               perPage={perPage}
-              showItem={3}
             />
           </div>
         )}

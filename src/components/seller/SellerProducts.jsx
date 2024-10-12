@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetProductsQuery } from '@/store/services/products';
-import Pagination from '../common/Pagination';
+import Pagination from '@/components/common/Pagination';
 import Search from '../common/Search';
 import { EditIcon, EyeIcon, TrashIcon } from '@/components/common/icons/Icons';
 
@@ -163,9 +163,8 @@ const SellerProducts = () => {
             <Pagination
               pageNumber={page}
               setPageNumber={setPage}
-              totalItem={data?.totalCount ?? 0}
+              totalItem={data.totalCount}
               perPage={perPage}
-              showItem={3}
             />
           </div>
         )}

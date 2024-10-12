@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useGetSellersQuery } from '@/store/services/users';
-import Pagination from '../common/Pagination';
+import Pagination from '@/components/common/Pagination';
 import Search from '../common/Search';
 import { EyeIcon } from '@/components/common/icons/Icons';
 
@@ -114,7 +114,6 @@ const AdminSellerRequest = () => {
               setPageNumber={setPage}
               totalItem={data.totalCount}
               perPage={perPage}
-              showItem={3}
             />
           </div>
         )}

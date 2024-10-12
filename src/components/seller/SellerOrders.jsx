@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useGetSellerOrdersQuery } from '@/store/services/orders';
-import Pagination from '../common/Pagination';
+import Pagination from '@/components/common/Pagination';
 import Search from '../common/Search';
 import { EyeIcon } from '@/components/common/icons/Icons';
 import { currencyFormatter } from '@/utils/formatting';
@@ -104,7 +104,6 @@ const SellerOrders = () => {
               setPageNumber={setPage}
               totalItem={data.totalCount}
               perPage={perPage}
-              showItem={3}
             />
           </div>
         )}

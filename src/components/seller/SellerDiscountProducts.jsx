@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Search from '../common/Search';
-import Pagination from '../common/Pagination';
+import Pagination from '@/components/common/Pagination';
 import { EyeIcon, EditIcon, TrashIcon } from '@/components/common/icons/Icons';
 
 const SellerDiscountProducts = () => {
@@ -140,7 +140,6 @@ const SellerDiscountProducts = () => {
             setPageNumber={setCurrentPage}
             totalItem={50}
             perPage={perPage}
-            showItem={3}
           />
         </div>
       </div>

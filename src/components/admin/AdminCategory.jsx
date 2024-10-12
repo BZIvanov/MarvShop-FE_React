@@ -5,7 +5,7 @@ import {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
 } from '@/store/services/categories';
-import Pagination from '../common/Pagination';
+import Pagination from '@/components/common/Pagination';
 import Search from '../common/Search';
 import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 import {
@@ -167,15 +167,16 @@ const AdminCategory = () => {
               </table>
             </div>
 
-            <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
-              <Pagination
-                pageNumber={page}
-                setPageNumber={setPage}
-                totalItem={data?.totalCount ?? 0}
-                perPage={perPage}
-                showItem={3}
-              />
-            </div>
+            {data?.totalCount > perPage && (
+              <div className='w-full flex justify-end mt-4 bottom-4 right-4'>
+                <Pagination
+                  pageNumber={page}
+                  setPageNumber={setPage}
+                  totalItem={data.totalCount}
+                  perPage={perPage}
+                />
+              </div>
+            )}
           </div>
         </div>
 

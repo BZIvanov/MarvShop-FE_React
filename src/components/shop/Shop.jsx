@@ -6,7 +6,7 @@ import { selectFilters } from '@/store/features/productsFilters/productsFiltersS
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import RecommendedProducts from '../product/RecommendedProducts';
 import ProductsList from '../product/ProductsList';
-import Pagination from '../product/Pagination';
+import Pagination from '@/components/common/Pagination';
 import CategoryFilter from './CategoryFilter';
 import PriceFilter from './PriceFilter';
 import RatingFilter from './RatingFilter';
@@ -139,9 +139,8 @@ const Shop = () => {
                     <Pagination
                       pageNumber={page}
                       setPageNumber={setPage}
-                      totalItem={productsData.totalCount}
+                      totalItem={totalCount}
                       perPage={perPage}
-                      showItem={3}
                     />
                   </div>
                 )}
