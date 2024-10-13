@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 
 import { useGetCurrentUserQuery } from '@/store/services/users';
-import AppToaster from './toaster/AppToaster.jsx';
-import Notification from './components/common/feedback/Notification.jsx';
+import { Toaster } from '@/components/ui/toaster';
+import Notification from '@/components/common/feedback/Notification.jsx';
 
 const App = () => {
   // populate current user info in redux on page reload
@@ -12,7 +12,9 @@ const App = () => {
     <>
       <Outlet />
 
-      <AppToaster />
+      {/* Toaster provider */}
+      <Toaster />
+
       <Notification />
     </>
   );

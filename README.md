@@ -13,7 +13,6 @@ In the terminal run `npm run dev` to start the server in development mode.
 - `postcss` - installed with tailwindcss
 - `autoprefixer` - installed with tailwindcss
 - `react-apexcharts` - Charts library
-- `react-hot-toast` - Toaster library
 - `react-icons` - Icons library
 - `react-window` - Data rendering library
 - `react-multi-carousel` - Carousel images library

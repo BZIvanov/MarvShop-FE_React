@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { toast } from 'react-hot-toast';
+import { useToast } from '@/hooks/use-toast';
 
 import { useSelector, useDispatch } from '@/store/store';
 import {
@@ -10,15 +10,20 @@ import {
 const Notification = () => {
   const dispatch = useDispatch();
 
+  const { toast } = useToast();
+
   const { type, message } = useSelector(selectNotification);
 
   useEffect(() => {
     if (type && message) {
-      toast[type](message);
+      toast({
+        variant: type || 'default',
+        description: message,
+      });
     }
 
     dispatch(hideNotification());
-  }, [dispatch, type, message]);
+  }, [dispatch, toast, type, message]);
 
   return null;
 };
