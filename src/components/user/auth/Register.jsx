@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
 
 import {
   Form,
@@ -16,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { useRegisterMutation } from '@/store/services/users';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
 
 const formSchema = z.object({
   username: z.string().min(3, { message: 'Must be 3 or more characters long' }),
@@ -133,21 +133,9 @@ const Register = () => {
                       )}
                     />
 
-                    <Button
-                      disabled={isLoading}
-                      type='submit'
-                      size='lg'
-                      className='w-full'
-                    >
-                      {isLoading ? (
-                        <>
-                          <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                          Loading
-                        </>
-                      ) : (
-                        'Register'
-                      )}
-                    </Button>
+                    <SubmitButton isLoading={isLoading} className='w-full'>
+                      Register
+                    </SubmitButton>
                   </form>
                 </Form>
 

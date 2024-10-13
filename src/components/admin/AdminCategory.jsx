@@ -7,7 +7,7 @@ import {
 } from '@/store/services/categories';
 import Pagination from '@/components/common/Pagination';
 import Search from '../common/Search';
-import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
 import {
   CloseCircleIcon,
   EditIcon,
@@ -181,13 +181,19 @@ const AdminCategory = () => {
         </div>
 
         <div
-          className={`w-[320px] lg:w-5/12 translate-x-100 lg:relative lg:right-0 fixed ${
-            showSmallScreenCategoryForm ? 'right-0' : '-right-[340px]'
-          } z-[9999] top-0 transition-all duration-500`}
+          className={`fixed w-[320px] lg:w-5/12 translate-x-100 lg:relative lg:right-0 ${
+            showSmallScreenCategoryForm
+              ? `right-0 z-[1999]`
+              : '-right-[340px] z-0'
+          } top-0 transition-all duration-500`}
         >
           <div className='w-full pl-5'>
-            <div className='bg-[#6a5fdf] h-screen lg:h-auto px-3 py-2 lg:rounded-md text-[#d0d2d6]'>
-              <div className='flex justify-between items-center mb-4'>
+            <div
+              className={`bg-[#6a5fdf] h-screen lg:h-auto px-3 py-2 lg:rounded-md text-[#d0d2d6] ${
+                showSmallScreenCategoryForm ? 'pt-[50px]' : ''
+              }`}
+            >
+              <div className='flex justify-between items-center my-2'>
                 <h1 className='text-[#d0d2d6] font-semibold text-xl mb-4 w-full text-center '>
                   New Category
                 </h1>
@@ -236,13 +242,11 @@ const AdminCategory = () => {
                     id='category-image'
                     className='hidden'
                   />
-                  <div>
-                    <button
-                      disabled={isLoading}
-                      className='bg-red-800 w-full hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'
-                    >
-                      {isLoading ? <ButtonLoadingIndicator /> : 'Create'}
-                    </button>
+
+                  <div className='my-2'>
+                    <SubmitButton isLoading={isLoading} className='w-full'>
+                      Create
+                    </SubmitButton>
                   </div>
                 </div>
               </form>

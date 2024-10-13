@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { FadeLoader } from 'react-spinners';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { selectSeller } from '@/store/features/seller/sellerSlice';
 import { useUpdateAvatarMutation } from '@/store/services/users';
 import { useUpdateShopInfoMutation } from '@/store/services/sellers';
-import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 import { ImagesFIcon, RegEditIcon } from '@/components/common/icons/Icons';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
+import { ReloadIcon } from '@radix-ui/react-icons';
 
 const SellerProfile = () => {
   const user = useSelector(selectUser);
@@ -69,9 +69,7 @@ const SellerProfile = () => {
                   <img src={user.avatar.imageUrl} alt='User avatar' />
                   {isUpdateAvatarLoading && (
                     <div className='bg-slate-600 absolute left-0 top-0 w-full h-full opacity-70 flex justify-center items-center z-20'>
-                      <span>
-                        <FadeLoader />
-                      </span>
+                      <ReloadIcon className='h-20 w-20 animate-spin' />
                     </div>
                   )}
                 </label>
@@ -84,9 +82,7 @@ const SellerProfile = () => {
                   <span>Select Image</span>
                   {isUpdateAvatarLoading && (
                     <div className='bg-slate-600 absolute left-0 top-0 w-full h-full opacity-70 flex justify-center items-center z-20'>
-                      <span>
-                        <FadeLoader />
-                      </span>
+                      <ReloadIcon className='h-20 w-20 animate-spin' />
                     </div>
                   )}
                 </label>
@@ -214,16 +210,9 @@ const SellerProfile = () => {
                     />
                   </div>
 
-                  <button
-                    disabled={isUpdateShopInfoLoading}
-                    className='bg-red-500 w-[200px] hover:shadow-red-300/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'
-                  >
-                    {isUpdateShopInfoLoading ? (
-                      <ButtonLoadingIndicator />
-                    ) : (
-                      'Save Changes'
-                    )}
-                  </button>
+                  <SubmitButton isLoading={isUpdateShopInfoLoading}>
+                    Save Changes
+                  </SubmitButton>
                 </form>
               )}
             </div>

@@ -5,8 +5,8 @@ import { useDispatch } from '@/store/store';
 import { useCreateProductMutation } from '@/store/services/products';
 import { useGetCategoriesQuery } from '@/store/services/categories';
 import { showNotification } from '@/store/features/notification/notificationSlice';
-import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 import { CloseCircleIcon, ImagesIcon } from '@/components/common/icons/Icons';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
 
 const SellerAddProduct = () => {
   const dispatch = useDispatch();
@@ -345,13 +345,8 @@ const SellerAddProduct = () => {
               />
             </div>
 
-            <div className='flex'>
-              <button
-                disabled={isLoading}
-                className='bg-red-500 w-[280px] hover:shadow-red-500/40 hover:shadow-lg text-white rounded-md px-7 py-2 my-3'
-              >
-                {isLoading ? <ButtonLoadingIndicator /> : 'Create'}
-              </button>
+            <div className='flex my-2'>
+              <SubmitButton isLoading={isLoading}>Create</SubmitButton>
             </div>
           </form>
         </div>

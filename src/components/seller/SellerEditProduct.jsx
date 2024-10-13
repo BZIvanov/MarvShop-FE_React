@@ -9,8 +9,8 @@ import {
 import { useGetCategoriesQuery } from '@/store/services/categories';
 import { showNotification } from '@/store/features/notification/notificationSlice';
 import { useIsAnyApiRequestPending } from '@/hooks/useIsAnyApiRequestPending';
-import ButtonLoadingIndicator from '../common/feedback/ButtonLoadingIndicator';
 import { ImagesIcon, CloseCircleIcon } from '@/components/common/icons/Icons';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
 
 const SellerEditProduct = () => {
   const dispatch = useDispatch();
@@ -385,13 +385,8 @@ const SellerEditProduct = () => {
               />
             </div>
 
-            <div className='flex'>
-              <button
-                disabled={isLoading}
-                className='bg-red-500 w-[280px] hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2'
-              >
-                {isLoading ? <ButtonLoadingIndicator /> : 'Edit'}
-              </button>
+            <div className='flex my-2'>
+              <SubmitButton isLoading={isLoading}>Edit</SubmitButton>
             </div>
           </form>
         </div>

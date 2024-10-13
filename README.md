@@ -15,7 +15,6 @@ In the terminal run `npm run dev` to start the server in development mode.
 - `react-apexcharts` - Charts library
 - `react-hot-toast` - Toaster library
 - `react-icons` - Icons library
-- `react-spinners` - Loading indicators library
 - `react-window` - Data rendering library
 - `react-multi-carousel` - Carousel images library
 - `swiper` - Swiping carousel library

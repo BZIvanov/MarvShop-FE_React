@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
 import { useLoginMutation } from '@/store/services/users';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -27,7 +27,7 @@ const Login = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      password: '',
+      password: '1Q2w3E$R',
     },
   });
 
@@ -88,21 +88,9 @@ const Login = () => {
                     )}
                   />
 
-                  <Button
-                    disabled={isLoading}
-                    type='submit'
-                    size='lg'
-                    className='w-full'
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                        Loading
-                      </>
-                    ) : (
-                      'Login'
-                    )}
-                  </Button>
+                  <SubmitButton isLoading={isLoading} className='w-full'>
+                    Login
+                  </SubmitButton>
                 </form>
               </Form>
 
