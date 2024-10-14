@@ -1,5 +1,42 @@
 # Documentation
 
+## Authentication
+
+### User roles
+
+There are 3 supported user roles: `admin`, `seller` and `buyer`.
+
+### Forms
+
+Register or Login form are used for authentication.
+
+The password field has eye icon allowing to show the password.
+
+The Register and Login form are only accessible if there is no logged in user. If there is logged in user and the auth forms url is opened, the user will be redirected to home page.
+
+#### Register form
+
+To register a new account you can use the Register form. `username`, `email` and `password` must be provided.
+
+If invalid email is provided, you will receive error message and indication that the field is not correctly populated.
+
+There is password validation requiring at least one uppercase, one lowercase, number and special char and password length of 8-30 chars.
+There is also backend validation for incorrect password and notification message is displayed in case the validation happened on the backend.
+
+By default users are registered as buyers. If the checkbox 'register as seller' is checked the user will register as seller. Users cannot register as admins, admin role is set on the backend.
+
+If you already have an account, you can click the login link to switch to the Login form.
+
+### Login form
+
+If you have already registered account use the Login form. Email and password must be provided.
+
+If you don't already have an account, you can click the register link to register new account.
+
+If you forgot your password, you can click the Forgot password button. In the opened dialog, you must provide your email to receive the reset password link. You will get a notification if your email was sent successfully.
+
+In case of invalid credentials, error notification will be displayed.
+
 ## Components
 
 ### 3-rd party components

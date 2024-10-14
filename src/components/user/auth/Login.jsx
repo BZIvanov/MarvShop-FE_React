@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { Eye, EyeOff } from 'lucide-react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -19,10 +21,22 @@ import SubmitButton from '@/components/common/buttons/SubmitButton';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
-  password: z.string().min(8, { message: 'Must be 8 or more characters long' }),
+  password: z
+    .string()
+    .min(8, { message: 'Must be 8 or more characters long' })
+    .max(30, { message: 'Must be 30 or fewer characters long' })
+    .regex(/[a-z]/, { message: 'Must contain at least one lowercase letter' })
+    .regex(/[A-Z]/, { message: 'Must contain at least one uppercase letter' })
+    .regex(/\d/, { message: 'Must contain at least one digit' })
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, {
+      message:
+        'Must contain at least one special character (!@#$%^&*(),.?":{}|<>)',
+    }),
 });
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,11 +91,27 @@ const Login = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            type='password'
-                            placeholder='Your password'
-                            {...field}
-                          />
+                          <div className='relative'>
+                            <Input
+                              type={showPassword ? 'text' : 'password'}
+                              placeholder='Your password'
+                              {...field}
+                              className='pr-10'
+                            />
+                            <button
+                              type='button'
+                              onClick={() =>
+                                setShowPassword((prevState) => !prevState)
+                              }
+                              className='absolute inset-y-0 right-0 flex items-center px-2'
+                            >
+                              {showPassword ? (
+                                <EyeOff className='h-5 w-5' />
+                              ) : (
+                                <Eye className='h-5 w-5' />
+                              )}
+                            </button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
