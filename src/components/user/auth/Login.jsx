@@ -1,44 +1,19 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Eye, EyeOff } from 'lucide-react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import ForgotPasswordDialog from './ForgotPasswordDialog';
 import { useLoginMutation } from '@/store/services/users';
+import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
 import SubmitButton from '@/components/common/buttons/SubmitButton';
-
-const formSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(8, { message: 'Must be 8 or more characters long' })
-    .max(30, { message: 'Must be 30 or fewer characters long' })
-    .regex(/[a-z]/, { message: 'Must contain at least one lowercase letter' })
-    .regex(/[A-Z]/, { message: 'Must contain at least one uppercase letter' })
-    .regex(/\d/, { message: 'Must contain at least one digit' })
-    .regex(/[!@#$%^&*(),.?":{}|<>]/, {
-      message:
-        'Must contain at least one special character (!@#$%^&*(),.?":{}|<>)',
-    }),
-});
+import TextField from '@/components/form/TextField';
+import PasswordField from '@/components/form/PasswordField';
+import { resolver } from './login-form-schema';
+import ForgotPasswordDialog from './ForgotPasswordDialog';
+import AuthFormBanner from './AuthFormBanner';
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver,
     defaultValues: {
       email: '',
       password: '1Q2w3E$R',
@@ -66,56 +41,19 @@ const Login = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className='space-y-4'
                 >
-                  <FormField
+                  <TextField
                     control={form.control}
                     name='email'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            type='email'
-                            placeholder='Your email'
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    type='email'
+                    label='Email'
+                    placeholder='Your email'
                   />
 
-                  <FormField
+                  <PasswordField
                     control={form.control}
                     name='password'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <div className='relative'>
-                            <Input
-                              type={showPassword ? 'text' : 'password'}
-                              placeholder='Your password'
-                              {...field}
-                              className='pr-10'
-                            />
-                            <button
-                              type='button'
-                              onClick={() =>
-                                setShowPassword((prevState) => !prevState)
-                              }
-                              className='absolute inset-y-0 right-0 flex items-center px-2'
-                            >
-                              {showPassword ? (
-                                <EyeOff className='h-5 w-5' />
-                              ) : (
-                                <Eye className='h-5 w-5' />
-                              )}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label='Password'
+                    placeholder='Your password'
                   />
 
                   <SubmitButton isLoading={isLoading} className='w-full'>
@@ -134,13 +72,7 @@ const Login = () => {
               <ForgotPasswordDialog />
             </div>
 
-            <div className='w-full h-full py-4 pr-4 hidden md:block'>
-              <img
-                className='w-full h-full'
-                src='/images/auth.png'
-                alt='Auth image'
-              />
-            </div>
+            <AuthFormBanner />
           </div>
         </div>
       </div>

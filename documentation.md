@@ -1,18 +1,24 @@
 # Documentation
 
+## Lazy loading
+
+Components in the dashboard part of the application are lazy loaded. Loading component is displayed for the lazy loaded components.
+
 ## Authentication
 
 ### User roles
 
 There are 3 supported user roles: `admin`, `seller` and `buyer`.
 
-### Forms
+### Authentication forms
 
 Register or Login form are used for authentication.
 
 The password field has eye icon allowing to show the password.
 
 The Register and Login form are only accessible if there is no logged in user. If there is logged in user and the auth forms url is opened, the user will be redirected to home page.
+
+For both forms for screen size larger than medium a banner with image is displayed.
 
 #### Register form
 

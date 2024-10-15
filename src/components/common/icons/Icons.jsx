@@ -29,7 +29,6 @@ import {
 import {
   FaCartShopping,
   FaFacebookF,
-  FaGoogle,
   FaTwitter,
   FaRegFaceGrinHearts,
   FaHeart,
@@ -99,7 +98,6 @@ export const FaceGrinHeartsIcon = (props) => <FaRegFaceGrinHearts {...props} />;
 export const FillGridIcon = (props) => <BsFillGridFill {...props} />;
 export const FillStarIcon = (props) => <AiFillStar {...props} />;
 export const GithubIcon = (props) => <FaGithub {...props} />;
-export const GoogleIcon = (props) => <FaGoogle {...props} />;
 export const HeartIcon = (props) => <FaHeart {...props} />;
 export const RegHeartIcon = (props) => <FaRegHeart {...props} />;
 export const ImageIcon = (props) => <FaImage {...props} />;

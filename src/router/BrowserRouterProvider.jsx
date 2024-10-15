@@ -50,6 +50,7 @@ import Cart from '../components/cart/Cart';
 import Shipping from '../components/cart/Shipping';
 import ProductDetails from '../components/product/ProductDetails';
 import Payment from '../components/cart/Payment';
+import LoadingFallback from './LoadingFallback';
 
 const router = createBrowserRouter([
   {
@@ -308,7 +309,7 @@ const router = createBrowserRouter([
 
 const BrowserRouterProvider = () => {
   return (
-    <Suspense fallback={<div>Lazy Routes loading</div>}>
+    <Suspense fallback={<LoadingFallback />}>
       <RouterProvider router={router} />
     </Suspense>
   );

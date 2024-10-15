@@ -1,49 +1,19 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Eye, EyeOff } from 'lucide-react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
 import { useRegisterMutation } from '@/store/services/users';
+import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import TextField from '@/components/form/TextField';
+import PasswordField from '@/components/form/PasswordField';
+import CheckboxField from '@/components/form/CheckboxField';
 import SubmitButton from '@/components/common/buttons/SubmitButton';
-
-const formSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'Must be 3 or more characters long' })
-    .max(30, { message: 'Must be 30 or fewer characters long' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(8, { message: 'Must be 8 or more characters long' })
-    .max(30, { message: 'Must be 30 or fewer characters long' })
-    .regex(/[a-z]/, { message: 'Must contain at least one lowercase letter' })
-    .regex(/[A-Z]/, { message: 'Must contain at least one uppercase letter' })
-    .regex(/\d/, { message: 'Must contain at least one digit' })
-    .regex(/[!@#$%^&*(),.?":{}|<>]/, {
-      message:
-        'Must contain at least one special character (!@#$%^&*(),.?":{}|<>)',
-    }),
-  isSeller: z.boolean().default(false).optional(),
-});
+import { resolver } from './register-form-schema';
+import AuthFormBanner from './AuthFormBanner';
 
 const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver,
     defaultValues: {
       username: '',
       email: '',
@@ -56,6 +26,7 @@ const Register = () => {
 
   const onSubmit = (values) => {
     const { username, email, password, isSeller } = values;
+
     register({
       username,
       email,
@@ -74,120 +45,54 @@ const Register = () => {
                 Register your account
               </h2>
 
-              <div>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className='space-y-4'
-                  >
-                    <FormField
-                      control={form.control}
-                      name='username'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Username</FormLabel>
-                          <FormControl>
-                            <Input
-                              type='text'
-                              placeholder='Your username'
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className='space-y-4'
+                >
+                  <TextField
+                    control={form.control}
+                    name='username'
+                    label='Username'
+                    placeholder='Your username'
+                  />
 
-                    <FormField
-                      control={form.control}
-                      name='email'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input
-                              type='email'
-                              placeholder='Your email'
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <TextField
+                    control={form.control}
+                    name='email'
+                    type='email'
+                    label='Email'
+                    placeholder='Your email'
+                  />
 
-                    <FormField
-                      control={form.control}
-                      name='password'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <div className='relative'>
-                              <Input
-                                type={showPassword ? 'text' : 'password'}
-                                placeholder='Your password'
-                                {...field}
-                                className='pr-10'
-                              />
-                              <button
-                                type='button'
-                                onClick={() =>
-                                  setShowPassword((prevState) => !prevState)
-                                }
-                                className='absolute inset-y-0 right-0 flex items-center px-2'
-                              >
-                                {showPassword ? (
-                                  <EyeOff className='h-5 w-5' />
-                                ) : (
-                                  <Eye className='h-5 w-5' />
-                                )}
-                              </button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <PasswordField
+                    control={form.control}
+                    name='password'
+                    label='Password'
+                    placeholder='Your password'
+                  />
 
-                    <FormField
-                      control={form.control}
-                      name='isSeller'
-                      render={({ field }) => (
-                        <FormItem className='flex flex-row items-start space-x-3 space-y-0'>
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <FormLabel>Register as seller?</FormLabel>
-                        </FormItem>
-                      )}
-                    />
+                  <CheckboxField
+                    control={form.control}
+                    name='isSeller'
+                    label='Register as seller?'
+                  />
 
-                    <SubmitButton isLoading={isLoading} className='w-full'>
-                      Register
-                    </SubmitButton>
-                  </form>
-                </Form>
+                  <SubmitButton isLoading={isLoading} className='w-full'>
+                    Register
+                  </SubmitButton>
+                </form>
+              </Form>
 
-                <div className='flex items-center justify-end my-2'>
-                  <p>Already have an account?</p>
-                  <Button variant='link' asChild={true}>
-                    <Link to='/auth/login'>Login</Link>
-                  </Button>
-                </div>
+              <div className='flex items-center justify-end my-2'>
+                <p>Already have an account?</p>
+                <Button variant='link' asChild={true}>
+                  <Link to='/auth/login'>Login</Link>
+                </Button>
               </div>
             </div>
 
-            <div className='w-full h-full py-4 pr-4 hidden md:block'>
-              <img
-                className='w-full h-full'
-                src='/images/auth.png'
-                alt='Auth image'
-              />
-            </div>
+            <AuthFormBanner />
           </div>
         </div>
       </div>
