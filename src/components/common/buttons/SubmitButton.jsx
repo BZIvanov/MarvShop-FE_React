@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const SubmitButton = ({ isLoading = false, className, children }) => {
+const SubmitButton = ({ isLoading = false, size, className, children }) => {
   return (
     <Button
       type='submit'
       disabled={isLoading}
-      size='lg'
+      size={size || 'lg'}
       className={cn('flex items-center', className)}
     >
       {isLoading ? (
@@ -26,6 +26,7 @@ const SubmitButton = ({ isLoading = false, className, children }) => {
 
 SubmitButton.propTypes = {
   isLoading: PropTypes.bool,
+  size: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node,
 };
