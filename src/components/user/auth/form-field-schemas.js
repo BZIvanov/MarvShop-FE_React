@@ -5,9 +5,9 @@ export const usernameSchema = z
   .min(3, { message: 'Must be 3 or more characters long' })
   .max(30, { message: 'Must be 30 or fewer characters long' });
 
-export const emailSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-});
+export const emailSchema = z
+  .string()
+  .email({ message: 'Invalid email address' });
 
 export const passwordSchema = z
   .string()
