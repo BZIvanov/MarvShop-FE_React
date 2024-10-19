@@ -43,6 +43,10 @@ If you forgot your password, you can click the Forgot password button. In the op
 
 In case of invalid credentials, error notification will be displayed.
 
+### Password reset form
+
+The user can use the provided link to reset its password. The form has 2 fields for the new password and the confirm new password, if the provided passwords are matching the form will be submitted and the user will be redirected to the login form to login with the new password.
+
 ## Components
 
 ### 3-rd party components

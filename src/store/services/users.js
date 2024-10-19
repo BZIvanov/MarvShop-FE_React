@@ -53,6 +53,15 @@ export const usersApi = api.injectEndpoints({
           };
         },
       }),
+      resetPassword: build.mutation({
+        query: (data) => {
+          return {
+            url: '/users/reset-password',
+            method: 'POST',
+            body: data,
+          };
+        },
+      }),
       updateAvatar: build.mutation({
         query: (data) => {
           return {
@@ -93,6 +102,7 @@ export const {
   useLogoutMutation,
   useGetCurrentUserQuery,
   useForgotPasswordMutation,
+  useResetPasswordMutation,
   useUpdateAvatarMutation,
   useGetSellersQuery,
   useGetSellerQuery,

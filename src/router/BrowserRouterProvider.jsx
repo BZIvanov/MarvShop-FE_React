@@ -44,6 +44,7 @@ import {
   BuyerChat,
 } from './lazy-routes';
 import ShopLayout from '@/components/layouts/ShopLayout';
+import PasswordReset from '@/components/user/auth/PasswordReset';
 import Home from '../components/home/Home';
 import Shop from '../components/shop/Shop';
 import Cart from '../components/cart/Cart';
@@ -296,6 +297,10 @@ const router = createBrowserRouter([
           {
             path: 'login',
             element: <Login />,
+          },
+          {
+            path: 'reset-password/:token',
+            element: <PasswordReset />,
           },
         ],
       },
