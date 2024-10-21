@@ -14,7 +14,7 @@ const SellerProducts = () => {
   const [searchText, setSearchText] = useState('');
 
   const user = useSelector(selectUser);
-  const sellerId = user?.id;
+  const sellerId = user?._id;
 
   const { data } = useGetProductsQuery(
     {

@@ -75,7 +75,7 @@ const ChatMessages = ({ socket, chatId }) => {
     <div className='py-4'>
       <div className='bg-[#475569] h-[calc(100vh-290px)] rounded-md p-3 overflow-y-auto'>
         {messages.map((message) => {
-          const isCurrentUser = user.id === message.sender._id;
+          const isCurrentUser = user._id === message.sender._id;
 
           return (
             <div

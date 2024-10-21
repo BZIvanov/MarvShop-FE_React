@@ -39,7 +39,7 @@ const UsersChatList = ({
           const { _id, participants } = chat;
 
           const receiver = participants.find(
-            (participant) => participant.user._id !== user.id
+            (participant) => participant.user._id !== user._id
           );
 
           return (

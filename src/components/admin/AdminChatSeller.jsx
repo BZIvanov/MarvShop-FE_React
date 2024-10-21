@@ -42,7 +42,7 @@ const AdminChatSeller = () => {
 
     if (user) {
       newSocket = io(backendUrl, {
-        query: { userId: user.id },
+        query: { userId: user._id },
       });
       setSocket(newSocket);
 

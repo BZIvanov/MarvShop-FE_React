@@ -107,8 +107,8 @@ const SellerDashboard = () => {
 
   const { data: ordersStatsData } = useGetSellerOrdersStatsQuery();
   const { data: productsData } = useGetProductsQuery(
-    { sellerId: user?.id },
-    { skip: !user?.id }
+    { sellerId: user?._id },
+    { skip: !user?._id }
   );
   const { data: ordersData } = useGetSellerOrdersQuery({ page: 1, perPage: 3 });
   const { data: chatsData } = useGetChatsQuery({ perPageNumber: 3 });
@@ -195,7 +195,7 @@ const SellerDashboard = () => {
               <ul className='relative border-1 border-slate-600 ml-4'>
                 {chatsData?.chats.map((chat) => {
                   const receiver = chat.participants.find(
-                    (participant) => participant.user._id !== user.id
+                    (participant) => participant.user._id !== user._id
                   );
 
                   return (

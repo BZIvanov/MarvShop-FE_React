@@ -193,7 +193,7 @@ const AdminDashboard = () => {
               <ul className='relative border-1 border-slate-600 ml-4'>
                 {chatsData?.chats.map((chat) => {
                   const receiver = chat.participants.find(
-                    (participant) => participant.user._id !== user.id
+                    (participant) => participant.user._id !== user._id
                   );
 
                   return (

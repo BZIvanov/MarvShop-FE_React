@@ -25,7 +25,7 @@ const SellerToAdmin = () => {
   const receiver = useMemo(() => {
     if (selectedChat) {
       return selectedChat.participants.find(
-        (participant) => participant.user._id !== user?.id
+        (participant) => participant.user._id !== user?._id
       ).user;
     }
     return null;
@@ -36,7 +36,7 @@ const SellerToAdmin = () => {
 
     if (user) {
       newSocket = io(backendUrl, {
-        query: { userId: user.id },
+        query: { userId: user._id },
       });
       setSocket(newSocket);
 

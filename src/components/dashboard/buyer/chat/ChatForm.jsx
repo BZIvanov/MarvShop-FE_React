@@ -20,7 +20,7 @@ const ChatForm = ({ socket, chatId }) => {
     if (socket && chatId) {
       socket.emit('sendMessage', {
         chatId,
-        senderId: user.id,
+        senderId: user._id,
         content: message,
       });
 
