@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as React from 'react';
 import {
   ChevronLeftIcon,
@@ -6,7 +7,7 @@ import {
 } from '@radix-ui/react-icons';
 
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from './button-variants';
 
 const Pagination = ({ className, ...props }) => (
   <nav
@@ -17,6 +18,7 @@ const Pagination = ({ className, ...props }) => (
   />
 );
 Pagination.displayName = 'Pagination';
+Pagination.propTypes = { className: PropTypes.string };
 
 const PaginationContent = React.forwardRef(({ className, ...props }, ref) => (
   <ul
@@ -26,11 +28,13 @@ const PaginationContent = React.forwardRef(({ className, ...props }, ref) => (
   />
 ));
 PaginationContent.displayName = 'PaginationContent';
+PaginationContent.propTypes = { className: PropTypes.string };
 
 const PaginationItem = React.forwardRef(({ className, ...props }, ref) => (
   <li ref={ref} className={cn('', className)} {...props} />
 ));
 PaginationItem.displayName = 'PaginationItem';
+PaginationItem.propTypes = { className: PropTypes.string };
 
 const PaginationLink = ({ className, isActive, size = 'icon', ...props }) => (
   <a
@@ -46,6 +50,11 @@ const PaginationLink = ({ className, isActive, size = 'icon', ...props }) => (
   />
 );
 PaginationLink.displayName = 'PaginationLink';
+PaginationLink.propTypes = {
+  className: PropTypes.string,
+  isActive: PropTypes.bool,
+  size: PropTypes.string,
+};
 
 const PaginationPrevious = ({ className, ...props }) => (
   <PaginationLink
@@ -59,6 +68,7 @@ const PaginationPrevious = ({ className, ...props }) => (
   </PaginationLink>
 );
 PaginationPrevious.displayName = 'PaginationPrevious';
+PaginationPrevious.propTypes = { className: PropTypes.string };
 
 const PaginationNext = ({ className, ...props }) => (
   <PaginationLink
@@ -72,6 +82,7 @@ const PaginationNext = ({ className, ...props }) => (
   </PaginationLink>
 );
 PaginationNext.displayName = 'PaginationNext';
+PaginationNext.propTypes = { className: PropTypes.string };
 
 const PaginationEllipsis = ({ className, ...props }) => (
   <span
@@ -84,6 +95,7 @@ const PaginationEllipsis = ({ className, ...props }) => (
   </span>
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';
+PaginationEllipsis.propTypes = { className: PropTypes.string };
 
 export {
   Pagination,

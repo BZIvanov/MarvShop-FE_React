@@ -6,7 +6,7 @@ export const Register = lazy(() => import('../components/user/auth/Register'));
 export const Login = lazy(() => import('../components/user/auth/Login'));
 
 export const AdminDashboard = lazy(() =>
-  import('../components/admin/AdminDashboard')
+  import('../components/dashboard/admin/dashboard/AdminDashboard')
 );
 export const AdminOrders = lazy(() =>
   import('../components/admin/AdminOrders')

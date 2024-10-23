@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as React from 'react';
 import { ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Slot } from '@radix-ui/react-slot';
@@ -20,6 +21,7 @@ const BreadcrumbList = React.forwardRef(({ className, ...props }, ref) => (
   />
 ));
 BreadcrumbList.displayName = 'BreadcrumbList';
+BreadcrumbList.propTypes = { className: PropTypes.string };
 
 const BreadcrumbItem = React.forwardRef(({ className, ...props }, ref) => (
   <li
@@ -29,6 +31,7 @@ const BreadcrumbItem = React.forwardRef(({ className, ...props }, ref) => (
   />
 ));
 BreadcrumbItem.displayName = 'BreadcrumbItem';
+BreadcrumbItem.propTypes = { className: PropTypes.string };
 
 const BreadcrumbLink = React.forwardRef(
   ({ asChild, className, ...props }, ref) => {
@@ -44,6 +47,10 @@ const BreadcrumbLink = React.forwardRef(
   }
 );
 BreadcrumbLink.displayName = 'BreadcrumbLink';
+BreadcrumbLink.propTypes = {
+  className: PropTypes.string,
+  asChild: PropTypes.bool,
+};
 
 const BreadcrumbPage = React.forwardRef(({ className, ...props }, ref) => (
   <span
@@ -56,6 +63,7 @@ const BreadcrumbPage = React.forwardRef(({ className, ...props }, ref) => (
   />
 ));
 BreadcrumbPage.displayName = 'BreadcrumbPage';
+BreadcrumbPage.propTypes = { className: PropTypes.string };
 
 const BreadcrumbSeparator = ({ children, className, ...props }) => (
   <li
@@ -68,6 +76,10 @@ const BreadcrumbSeparator = ({ children, className, ...props }) => (
   </li>
 );
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
+BreadcrumbSeparator.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+};
 
 const BreadcrumbEllipsis = ({ className, ...props }) => (
   <span
@@ -81,6 +93,7 @@ const BreadcrumbEllipsis = ({ className, ...props }) => (
   </span>
 );
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis';
+BreadcrumbEllipsis.propTypes = { className: PropTypes.string };
 
 export {
   Breadcrumb,

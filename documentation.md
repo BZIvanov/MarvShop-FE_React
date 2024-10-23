@@ -47,6 +47,18 @@ In case of invalid credentials, error notification will be displayed.
 
 The user can use the provided link to reset its password. The form has 2 fields for the new password and the confirm new password, if the provided passwords are matching the form will be submitted and the user will be redirected to the login form to login with the new password.
 
+## Routing
+
+### Protected routes
+
+Dashboard pages are protected routes and cannot be accessed by not logged in users.
+
+Some of the seller dashboard routes are protected based on the seller status, depending if the status is active and payment is paid.
+
+## Navigation
+
+There are 2 layouts: Shop and Dashboard layouts. Both layouts share a common Header. Each layout has its own Sidebar, which can be displayed for medium or smaller screens. The Shop sidebar is displayed above the Header and the Dashboard sidebar is displayed below the Header.
+
 ## Components
 
 ### 3-rd party components
