@@ -9,7 +9,7 @@ export const AdminDashboard = lazy(() =>
   import('../components/dashboard/admin/dashboard/AdminDashboard')
 );
 export const AdminOrders = lazy(() =>
-  import('../components/admin/AdminOrders')
+  import('../components/dashboard/admin/orders/AdminOrders')
 );
 export const AdminOrderDetails = lazy(() =>
   import('../components/admin/AdminOrderDetails')
