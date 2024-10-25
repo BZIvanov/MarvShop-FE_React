@@ -15,7 +15,7 @@ export const AdminOrderDetails = lazy(() =>
   import('../components/admin/AdminOrderDetails')
 );
 export const AdminCategory = lazy(() =>
-  import('../components/admin/AdminCategory')
+  import('../components/dashboard/admin/category/AdminCategory')
 );
 export const AdminSellers = lazy(() =>
   import('../components/admin/AdminSellers')

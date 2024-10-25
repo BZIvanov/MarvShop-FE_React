@@ -23,6 +23,7 @@ const AdminSellerRequest = () => {
       <h1 className='text-[20px] font-bold mb-3'>Sellers Requests</h1>
       <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
         <Search
+          perPage={perPage}
           setPerPage={setPerPage}
           searchText={searchText}
           setSearchText={setSearchText}

@@ -6,7 +6,7 @@ import {
   useCreateCategoryMutation,
 } from '@/store/services/categories';
 import Pagination from '@/components/common/Pagination';
-import Search from '../common/Search';
+import Search from '@/components/common/Search';
 import SubmitButton from '@/components/common/buttons/SubmitButton';
 import {
   CloseCircleIcon,
@@ -98,6 +98,7 @@ const AdminCategory = () => {
         <div className='w-full lg:w-7/12'>
           <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
             <Search
+              perPage={perPage}
               setPerPage={setPerPage}
               searchText={searchText}
               setSearchText={setSearchText}

@@ -38,6 +38,7 @@ const AdminOrders = () => {
     <div className='px-2 lg:px-7 pt-5'>
       <div className='w-full p-6 bg-gradient-to-r from-[#6a5fdf] to-[#8475f5] rounded-lg shadow-lg'>
         <Search
+          perPage={perPage}
           setPerPage={setPerPage}
           searchText={searchText}
           setSearchText={setSearchText}
@@ -132,7 +133,7 @@ const AdminOrders = () => {
         </div>
 
         {data?.totalCount > perPage && (
-          <div className='w-full flex justify-end mt-4'>
+          <div className='mt-4'>
             <Pagination
               pageNumber={page}
               setPageNumber={setPage}

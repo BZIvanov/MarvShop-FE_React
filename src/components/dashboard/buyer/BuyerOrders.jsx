@@ -26,6 +26,7 @@ const BuyerOrders = () => {
       <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
         {/* redesign the page selection to be next to the pagination? */}
         <Search
+          perPage={perPage}
           setPerPage={setPerPage}
           searchText={searchText}
           setSearchText={setSearchText}
