@@ -38,7 +38,7 @@ const CategoriesTable = ({ categories = [] }) => {
               <TableCell className='px-4 py-2 text-stone-300'>
                 <img
                   className='w-[45px] h-[45px]'
-                  src={category.imageUrl}
+                  src={category?.image?.imageUrl}
                   alt='Category name'
                 />
               </TableCell>
