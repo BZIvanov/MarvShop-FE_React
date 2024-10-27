@@ -39,7 +39,9 @@ const CategoryForm = () => {
   const onSubmit = async (values) => {
     const formData = new FormData();
     formData.append('categoryName', values.categoryName);
-    formData.append('categoryImage', values.categoryImage[0]);
+    if (values.categoryImage[0] instanceof File) {
+      formData.append('categoryImage', values.categoryImage[0]);
+    }
 
     const result = await createCategory(formData);
 
@@ -75,39 +77,37 @@ const CategoryForm = () => {
         <FormField
           control={form.control}
           name='categoryImage'
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormLabel className='my-2 flex justify-center items-center flex-col h-[238px] cursor-pointer border border-dashed hover:border-red-500 w-full border-[#d0d2d6]'>
-                  {imagePreview ? (
-                    <img
-                      className='w-full h-full'
-                      src={imagePreview}
-                      alt='Selected category preview'
-                    />
-                  ) : (
-                    <>
-                      <Image />
-                      <span>Select Image</span>
-                    </>
-                  )}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type='file'
-                    accept='image/*'
-                    className='hidden'
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      field.onChange(file ? [file] : []);
-                      setImagePreview(file ? URL.createObjectURL(file) : null);
-                    }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className='my-2 flex justify-center items-center flex-col h-[238px] cursor-pointer border border-dashed hover:border-red-500 w-full border-[#d0d2d6]'>
+                {imagePreview ? (
+                  <img
+                    className='w-full h-full object-cover'
+                    src={imagePreview}
+                    alt='Selected category preview'
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
+                ) : (
+                  <>
+                    <Image />
+                    <span>Select Image</span>
+                  </>
+                )}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type='file'
+                  accept='image/*'
+                  className='hidden'
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    field.onChange(file ? [file] : []);
+                    setImagePreview(file ? URL.createObjectURL(file) : null);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
         <SubmitButton isLoading={isLoading} className='w-full my-2'>

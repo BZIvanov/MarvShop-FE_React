@@ -21,6 +21,17 @@ export const categoriesApi = api.injectEndpoints({
           ];
         },
       }),
+      getCategory: build.query({
+        query: (id) => {
+          return {
+            url: `/categories/${id}`,
+            method: 'GET',
+          };
+        },
+        providesTags: (_result, _error, payload) => {
+          return [{ type: 'Category', id: payload }];
+        },
+      }),
       createCategory: build.mutation({
         query: (data) => {
           return {
@@ -34,9 +45,41 @@ export const categoriesApi = api.injectEndpoints({
           return [{ type: 'Categories', id: 'PARTIAL-LIST' }];
         },
       }),
+      updateCategory: build.mutation({
+        query: (data) => {
+          const { id, formData } = data;
+
+          return {
+            url: `/categories/${id}`,
+            method: 'PATCH',
+            body: formData,
+            credentials: 'include',
+          };
+        },
+        invalidatesTags: (_result, _error, payload) => {
+          return [{ type: 'Categories', id: payload.id }];
+        },
+      }),
+      deleteCategory: build.mutation({
+        query: (id) => {
+          return {
+            url: `/categories/${id}`,
+            method: 'DELETE',
+            credentials: 'include',
+          };
+        },
+        invalidatesTags: (_result, _error, payload) => {
+          return [{ type: 'Categories', id: payload }];
+        },
+      }),
     };
   },
 });
 
-export const { useGetCategoriesQuery, useCreateCategoryMutation } =
-  categoriesApi;
+export const {
+  useGetCategoriesQuery,
+  useGetCategoryQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+} = categoriesApi;

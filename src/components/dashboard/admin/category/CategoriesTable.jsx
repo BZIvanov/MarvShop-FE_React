@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Pencil, Trash } from 'lucide-react';
 
+import { useDeleteCategoryMutation } from '@/store/services/categories';
 import {
   Table,
   TableBody,
@@ -10,8 +11,28 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 
 const CategoriesTable = ({ categories = [] }) => {
+  const navigate = useNavigate();
+
+  const [deleteCategory] = useDeleteCategoryMutation();
+
+  const handleDeleteCategory = (categoryId) => {
+    deleteCategory(categoryId);
+  };
+
   return (
     <div className='relative overflow-x-auto shadow-md sm:rounded-lg mt-2'>
       <Table className='w-full text-sm'>
@@ -35,24 +56,56 @@ const CategoriesTable = ({ categories = [] }) => {
               key={category._id}
               className='border-b border-gray-700 hover:bg-gray-700 transition-all'
             >
-              <TableCell className='px-4 py-2 text-stone-300'>
+              <TableCell className='px-4 py-0 text-stone-300'>
                 <img
                   className='w-[45px] h-[45px]'
-                  src={category?.image?.imageUrl}
+                  src={category.image.imageUrl}
                   alt='Category name'
                 />
               </TableCell>
-              <TableCell className='px-4 py-2 text-stone-300'>
+              <TableCell className='px-4 py-0 text-stone-300'>
                 {category.name}
               </TableCell>
-              <TableCell className='px-4 py-2 text-stone-300'>
+              <TableCell className='px-4 py-0 text-stone-300'>
                 <div className='flex justify-center items-center gap-4'>
-                  <Link className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50'>
-                    <Pencil className='h-4 w-4' />
-                  </Link>
-                  <Link className='p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50'>
-                    <Trash className='h-4 w-4' />
-                  </Link>
+                  <Button
+                    onClick={() => navigate(`/admin/category/${category._id}`)}
+                    variant='ghost'
+                    size='icon'
+                    className='bg-yellow-500'
+                  >
+                    <Pencil />
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild={true}>
+                      <Button
+                        variant='ghost'
+                        size='icon'
+                        className='bg-red-500'
+                      >
+                        <Trash />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete this category?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete the category.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteCategory(category._id)}
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </TableCell>
             </TableRow>

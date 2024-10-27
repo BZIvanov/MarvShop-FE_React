@@ -122,6 +122,10 @@ const router = createBrowserRouter([
             element: <AdminCategory />,
           },
           {
+            path: 'category/:categoryId',
+            element: <AdminCategory />,
+          },
+          {
             path: 'sellers',
             element: <AdminSellers />,
           },
