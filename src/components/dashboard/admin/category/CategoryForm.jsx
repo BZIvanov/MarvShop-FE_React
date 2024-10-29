@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Image } from 'lucide-react';
 
-import { useCreateCategoryMutation } from '@/store/services/categories';
+import { useDispatch } from '@/store/store';
+import {
+  useGetCategoryQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+} from '@/store/services/categories';
+import { showNotification } from '@/store/features/notification/notificationSlice';
 import {
   Form,
   FormControl,
@@ -16,21 +23,47 @@ import SubmitButton from '@/components/common/buttons/SubmitButton';
 import { resolver } from './category-form-schema';
 
 const CategoryForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { categoryId } = useParams();
+
   const [imagePreview, setImagePreview] = useState(null);
 
+  const { data: categoryData, refetch } = useGetCategoryQuery(categoryId, {
+    skip: !categoryId,
+  });
+
   const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const [updateCategory] = useUpdateCategoryMutation();
 
   const form = useForm({
     resolver,
     defaultValues: {
       categoryName: '',
-      categoryImage: [],
+      categoryImage: '',
     },
   });
 
   useEffect(() => {
+    if (categoryId) {
+      refetch();
+    }
+  }, [categoryId, refetch]);
+
+  useEffect(() => {
+    if (categoryData?.category) {
+      form.reset({
+        categoryName: categoryData.category.name,
+        categoryImage: categoryData.category.image.imageUrl,
+      });
+
+      setImagePreview(categoryData.category.image.imageUrl);
+    }
+  }, [categoryData, form]);
+
+  useEffect(() => {
     return () => {
-      if (imagePreview) {
+      if (imagePreview && typeof imagePreview !== 'string') {
         URL.revokeObjectURL(imagePreview);
       }
     };
@@ -39,16 +72,37 @@ const CategoryForm = () => {
   const onSubmit = async (values) => {
     const formData = new FormData();
     formData.append('categoryName', values.categoryName);
-    if (values.categoryImage[0] instanceof File) {
-      formData.append('categoryImage', values.categoryImage[0]);
+    if (values.categoryImage instanceof File) {
+      formData.append('categoryImage', values.categoryImage);
     }
 
-    const result = await createCategory(formData);
+    let result;
+    if (categoryId) {
+      result = updateCategory({ id: categoryId, formData });
+    } else {
+      result = await createCategory(formData);
+    }
 
     if (!('error' in result)) {
-      URL.revokeObjectURL(imagePreview);
+      if (imagePreview && typeof imagePreview !== 'string') {
+        URL.revokeObjectURL(imagePreview);
+      }
       setImagePreview(null);
-      form.reset();
+      form.reset({
+        categoryName: '',
+        categoryImage: '',
+      });
+
+      dispatch(
+        showNotification({
+          type: 'success',
+          message: `Category ${
+            categoryId ? 'updated' : 'created'
+          } successfully`,
+        })
+      );
+
+      navigate('/admin/category');
     }
   };
 
@@ -100,8 +154,12 @@ const CategoryForm = () => {
                   className='hidden'
                   onChange={(e) => {
                     const file = e.target.files[0];
-                    field.onChange(file ? [file] : []);
-                    setImagePreview(file ? URL.createObjectURL(file) : null);
+                    field.onChange(file || '');
+                    setImagePreview(
+                      file
+                        ? URL.createObjectURL(file)
+                        : categoryData?.image || null
+                    );
                   }}
                 />
               </FormControl>
@@ -111,7 +169,7 @@ const CategoryForm = () => {
         />
 
         <SubmitButton isLoading={isLoading} className='w-full my-2'>
-          Create
+          {categoryId ? 'Update' : 'Create'}
         </SubmitButton>
       </form>
     </Form>

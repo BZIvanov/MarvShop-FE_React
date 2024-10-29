@@ -51,65 +51,77 @@ const CategoriesTable = ({ categories = [] }) => {
         </TableHeader>
 
         <TableBody className='bg-gray-800'>
-          {categories.map((category) => (
-            <TableRow
-              key={category._id}
-              className='border-b border-gray-700 hover:bg-gray-700 transition-all'
-            >
-              <TableCell className='px-4 py-0 text-stone-300'>
-                <img
-                  className='w-[45px] h-[45px]'
-                  src={category.image.imageUrl}
-                  alt='Category name'
-                />
-              </TableCell>
-              <TableCell className='px-4 py-0 text-stone-300'>
-                {category.name}
-              </TableCell>
-              <TableCell className='px-4 py-0 text-stone-300'>
-                <div className='flex justify-center items-center gap-4'>
-                  <Button
-                    onClick={() => navigate(`/admin/category/${category._id}`)}
-                    variant='ghost'
-                    size='icon'
-                    className='bg-yellow-500'
-                  >
-                    <Pencil />
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild={true}>
-                      <Button
-                        variant='ghost'
-                        size='icon'
-                        className='bg-red-500'
-                      >
-                        <Trash />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you sure you want to delete this category?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete the category.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDeleteCategory(category._id)}
-                        >
-                          Delete
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
+          {categories.length === 0 ? (
+            <TableRow className='text-center text-white p-3'>
+              <TableCell colSpan={3} className='px-4 py-3 text-stone-300'>
+                No Data
               </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            <>
+              {categories.map((category) => (
+                <TableRow
+                  key={category._id}
+                  className='border-b border-gray-700 hover:bg-gray-700 transition-all'
+                >
+                  <TableCell className='px-4 py-0 text-stone-300'>
+                    <img
+                      className='w-[45px] h-[45px]'
+                      src={category.image.imageUrl}
+                      alt='Category name'
+                    />
+                  </TableCell>
+                  <TableCell className='px-4 py-0 text-stone-300'>
+                    {category.name}
+                  </TableCell>
+                  <TableCell className='px-4 py-0 text-stone-300'>
+                    <div className='flex justify-center items-center gap-4'>
+                      <Button
+                        onClick={() =>
+                          navigate(`/admin/category/${category._id}`)
+                        }
+                        variant='ghost'
+                        size='icon'
+                        className='bg-yellow-500'
+                      >
+                        <Pencil />
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild={true}>
+                          <Button
+                            variant='ghost'
+                            size='icon'
+                            className='bg-red-500'
+                          >
+                            <Trash />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are you sure you want to delete this category?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete the category.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDeleteCategory(category._id)}
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </>
+          )}
         </TableBody>
       </Table>
     </div>
