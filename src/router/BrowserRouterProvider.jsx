@@ -19,11 +19,9 @@ import {
   AdminOrders,
   AdminOrderDetails,
   AdminCategory,
-  AdminSellers,
+  AdminShops,
   AdminSellerDetails,
   AdminPaymentRequest,
-  AdminDeactiveSellers,
-  AdminSellerRequest,
   AdminChatSeller,
   SellerDashboard,
   SellerAddProduct,
@@ -126,24 +124,16 @@ const router = createBrowserRouter([
             element: <AdminCategory />,
           },
           {
-            path: 'sellers',
-            element: <AdminSellers />,
+            path: 'shops',
+            element: <AdminShops />,
           },
           {
-            path: 'sellers/:sellerId',
+            path: 'shops/:shopId',
             element: <AdminSellerDetails />,
           },
           {
             path: 'payment-request',
             element: <AdminPaymentRequest />,
-          },
-          {
-            path: 'deactive-sellers',
-            element: <AdminDeactiveSellers />,
-          },
-          {
-            path: 'sellers-request',
-            element: <AdminSellerRequest />,
           },
           {
             path: 'chat',

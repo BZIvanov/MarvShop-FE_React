@@ -15,9 +15,7 @@ import {
   BasketDiscountIcon,
   ViewListIcon,
   Chatbubbles2Icon,
-  CodePullRequestIcon,
   UsersIcon,
-  UserTimesIcon,
   CategoryIcon,
 } from '@/components/common/icons/Icons';
 
@@ -38,24 +36,14 @@ const adminLinks = [
     path: '/admin/category',
   },
   {
-    title: 'Sellers',
+    title: 'Shops',
     icon: <UsersIcon />,
-    path: '/admin/sellers',
+    path: '/admin/shops',
   },
   {
     title: 'Payment Request',
     icon: <PaymentIcon />,
     path: '/admin/payment-request',
-  },
-  {
-    title: 'Deactive Sellers',
-    icon: <UserTimesIcon />,
-    path: '/admin/deactive-sellers',
-  },
-  {
-    title: 'Sellers Requests',
-    icon: <CodePullRequestIcon />,
-    path: '/admin/sellers-request',
   },
   {
     title: 'Chat with Sellers',

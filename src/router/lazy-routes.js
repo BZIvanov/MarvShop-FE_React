@@ -17,20 +17,14 @@ export const AdminOrderDetails = lazy(() =>
 export const AdminCategory = lazy(() =>
   import('../components/dashboard/admin/category/AdminCategory')
 );
-export const AdminSellers = lazy(() =>
-  import('../components/admin/AdminSellers')
+export const AdminShops = lazy(() =>
+  import('../components/dashboard/admin/shops/AdminShops')
 );
 export const AdminSellerDetails = lazy(() =>
   import('../components/admin/AdminSellerDetails')
 );
 export const AdminPaymentRequest = lazy(() =>
   import('../components/admin/AdminPaymentRequest')
-);
-export const AdminDeactiveSellers = lazy(() =>
-  import('../components/admin/AdminDeactiveSellers')
-);
-export const AdminSellerRequest = lazy(() =>
-  import('../components/admin/AdminSellerRequest')
 );
 export const AdminChatSeller = lazy(() =>
   import('../components/admin/AdminChatSeller')
