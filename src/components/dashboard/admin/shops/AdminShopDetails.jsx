@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 
 import { useGetSellerQuery } from '@/store/services/users';
 
-const AdminSellerDetails = () => {
-  const { sellerId } = useParams();
+const AdminShopDetails = () => {
+  const { shopId } = useParams();
 
   const [status, setStatus] = useState('');
 
-  const { data, isSuccess } = useGetSellerQuery(sellerId, {
-    skip: !sellerId,
+  // TODO: refactor to get the shop details
+  const { data, isSuccess } = useGetSellerQuery(shopId, {
+    skip: !shopId,
   });
 
   const seller = useMemo(() => {
@@ -32,7 +33,7 @@ const AdminSellerDetails = () => {
 
   return (
     <div className='px-2 lg:px-7 pt-5'>
-      <h1 className='text-[20px] font-bold mb-3'>Seller Details</h1>
+      <h1 className='text-[20px] font-bold mb-3'>Shop Details</h1>
       <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
         <div className='w-full flex flex-wrap text-[#d0d2d6]'>
           <div className='w-3/12 flex justify-center items-center py-3'>
@@ -108,30 +109,28 @@ const AdminSellerDetails = () => {
           </div>
         </div>
 
-        <div>
-          <form onSubmit={handleSubmit}>
-            <div className='flex gap-4 py-3'>
-              <select
-                name='status'
-                value={status}
-                onChange={(event) => setStatus(event.target.value)}
-                required={true}
-                className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-              >
-                <option value=''>Select Status</option>
-                <option value='pending'>Pending</option>
-                <option value='active'>Active</option>
-                <option value='deactive'>Deactive</option>
-              </select>
-              <button className='bg-red-500 w-[170px] hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2'>
-                Update
-              </button>
-            </div>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className='flex gap-4 py-3'>
+            <select
+              name='status'
+              value={status}
+              onChange={(event) => setStatus(event.target.value)}
+              required={true}
+              className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+            >
+              <option value=''>Select Status</option>
+              <option value='pending'>Pending</option>
+              <option value='active'>Active</option>
+              <option value='deactive'>Deactive</option>
+            </select>
+            <button className='bg-red-500 w-[170px] hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2'>
+              Update
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default AdminSellerDetails;
+export default AdminShopDetails;

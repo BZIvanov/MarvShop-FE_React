@@ -20,7 +20,7 @@ import {
   AdminOrderDetails,
   AdminCategory,
   AdminShops,
-  AdminSellerDetails,
+  AdminShopDetails,
   AdminPaymentRequest,
   AdminChatSeller,
   SellerDashboard,
@@ -129,7 +129,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'shops/:shopId',
-            element: <AdminSellerDetails />,
+            element: <AdminShopDetails />,
           },
           {
             path: 'payment-request',

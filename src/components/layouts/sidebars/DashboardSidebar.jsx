@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { AiOutlineDashboard, AiOutlineShoppingCart } from 'react-icons/ai';
+import {
+  LayoutDashboard,
+  NotebookTabs,
+  ShoppingCart,
+  Store,
+} from 'lucide-react';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
@@ -15,29 +20,27 @@ import {
   BasketDiscountIcon,
   ViewListIcon,
   Chatbubbles2Icon,
-  UsersIcon,
-  CategoryIcon,
 } from '@/components/common/icons/Icons';
 
 const adminLinks = [
   {
     title: 'Dashboard',
-    icon: <AiOutlineDashboard />,
+    icon: <LayoutDashboard className='w-4 h-4' />,
     path: '/admin/dashboard',
   },
   {
     title: 'Orders',
-    icon: <AiOutlineShoppingCart />,
+    icon: <ShoppingCart className='w-4 h-4' />,
     path: '/admin/orders',
   },
   {
-    title: 'Category',
-    icon: <CategoryIcon />,
+    title: 'Categories',
+    icon: <NotebookTabs className='w-4 h-4' />,
     path: '/admin/category',
   },
   {
     title: 'Shops',
-    icon: <UsersIcon />,
+    icon: <Store className='w-4 h-4' />,
     path: '/admin/shops',
   },
   {
@@ -55,7 +58,7 @@ const adminLinks = [
 const sellerLinks = [
   {
     title: 'Dashboard',
-    icon: <AiOutlineDashboard />,
+    icon: <LayoutDashboard className='w-4 h-4' />,
     path: '/seller/dashboard',
   },
   {
@@ -103,7 +106,7 @@ const sellerLinks = [
 const buyerLinks = [
   {
     title: 'Dashboard',
-    icon: <AiOutlineDashboard />,
+    icon: <LayoutDashboard className='w-4 h-4' />,
     path: '/buyer/dashboard',
   },
   {
