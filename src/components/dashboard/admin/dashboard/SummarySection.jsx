@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Banknote, ShoppingBasket, Users, FileCheck } from 'lucide-react';
+import { Banknote, ShoppingBasket, Store, FileCheck } from 'lucide-react';
 
 import SummaryCard from '@/components/dashboard/common/cards/SummaryCard';
 import { currencyFormatter } from '@/utils/formatting';
@@ -7,7 +7,7 @@ import { currencyFormatter } from '@/utils/formatting';
 const SummarySection = ({
   totalSales,
   productsCount,
-  sellersCount,
+  shopsCount,
   ordersCount,
 }) => {
   return (
@@ -29,9 +29,9 @@ const SummarySection = ({
       />
 
       <SummaryCard
-        value={sellersCount}
-        title='Sellers'
-        icon={<Users className='text-[#fae8e8] shadow-lg' />}
+        value={shopsCount}
+        title='Shops'
+        icon={<Store className='text-[#fae8e8] shadow-lg' />}
         cardClassName='bg-[#e9feea]'
         iconClassName='bg-[#038000]'
       />
@@ -50,7 +50,7 @@ const SummarySection = ({
 SummarySection.propTypes = {
   totalSales: PropTypes.number,
   productsCount: PropTypes.number,
-  sellersCount: PropTypes.number,
+  shopsCount: PropTypes.number,
   ordersCount: PropTypes.number,
 };
 

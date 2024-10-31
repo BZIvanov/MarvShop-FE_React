@@ -11,7 +11,7 @@ import ErrorBoundary from './ErrorBoundary';
 import NotFound from './NotFound';
 import NonUserRoute from './auth/NonUserRoute';
 import ProtectedRoute from './auth/ProtectedRoute';
-import SellerStatus from './auth/SellerStatus';
+import ShopStatus from './auth/ShopStatus';
 import {
   Register,
   Login,
@@ -21,7 +21,6 @@ import {
   AdminCategory,
   AdminShops,
   AdminShopDetails,
-  AdminPaymentRequest,
   AdminChatSeller,
   SellerDashboard,
   SellerAddProduct,
@@ -132,10 +131,6 @@ const router = createBrowserRouter([
             element: <AdminShopDetails />,
           },
           {
-            path: 'payment-request',
-            element: <AdminPaymentRequest />,
-          },
-          {
             path: 'chat',
             element: <AdminChatSeller />,
           },
@@ -169,23 +164,23 @@ const router = createBrowserRouter([
             path: 'add-product',
             // redirect the seller to chat support in case his seller account is not active
             element: (
-              <SellerStatus
+              <ShopStatus
                 statusRedirectTo='/seller/chat-support'
                 statuses={['active']}
               >
                 <SellerAddProduct />
-              </SellerStatus>
+              </ShopStatus>
             ),
           },
           {
             path: 'edit-product/:slug',
             element: (
-              <SellerStatus
+              <ShopStatus
                 statusRedirectTo='/seller/chat-support'
                 statuses={['active']}
               >
                 <SellerEditProduct />
-              </SellerStatus>
+              </ShopStatus>
             ),
           },
           {

@@ -13,8 +13,32 @@ export const shopsApi = api.injectEndpoints({
           };
         },
       }),
+      // get shop by id for admins
+      getShop: build.query({
+        query: (id) => {
+          return {
+            url: `/shops/${id}`,
+            method: 'GET',
+            credentials: 'include',
+          };
+        },
+        providesTags: (_result, _error, payload) => {
+          return [{ type: 'Shops', id: payload }];
+        },
+      }),
+      // get shop for the currently logged in seller
+      getSellerShop: build.query({
+        query: () => {
+          return {
+            url: '/shops/seller',
+            method: 'GET',
+            credentials: 'include',
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useGetShopsQuery } = shopsApi;
+export const { useGetShopsQuery, useGetShopQuery, useGetSellerShopQuery } =
+  shopsApi;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { useGetCurrentSellerQuery } from '@/store/services/sellers';
+import { useGetSellerShopQuery } from '@/store/services/shops';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import Header from './headers/Header';
@@ -12,9 +12,8 @@ const DashboardLayout = () => {
 
   const user = useSelector(selectUser);
 
-  // load customer info for the dashboard, needed for the seller status check
-  // skip the query for admin user
-  useGetCurrentSellerQuery(undefined, { skip: user?.role !== 'seller' });
+  // load seller's shop info needed for the routes shop status check
+  useGetSellerShopQuery(undefined, { skip: user?.role !== 'seller' });
 
   return (
     <div className='bg-[#cdcae9] w-full min-h-screen'>

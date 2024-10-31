@@ -1,6 +1,6 @@
 import { useGetOrdersStatsQuery } from '@/store/services/orders';
 import { useGetProductsQuery } from '@/store/services/products';
-import { useGetSellersQuery } from '@/store/services/users';
+import { useGetShopsQuery } from '@/store/services/shops';
 import { useGetOrdersQuery } from '@/store/services/orders';
 import { useGetChatsQuery } from '@/store/services/chat';
 import SummarySection from './SummarySection';
@@ -11,7 +11,7 @@ import OrdersSection from './OrdersSection';
 const AdminDashboard = () => {
   const { data: ordersStatsData } = useGetOrdersStatsQuery();
   const { data: productsData } = useGetProductsQuery({ page: 1, perPage: 1 });
-  const { data: sellersData } = useGetSellersQuery({ page: 1, perPage: 1 });
+  const { data: shopsData } = useGetShopsQuery({ page: 1, perPage: 1 });
   const { data: ordersData } = useGetOrdersQuery({ page: 1, perPage: 3 });
   const { data: chatsData } = useGetChatsQuery({ perPageNumber: 3 });
 
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
       <SummarySection
         totalSales={ordersStatsData?.totalPrice}
         productsCount={productsData?.totalCount}
-        sellersCount={sellersData?.totalCount}
+        shopsCount={shopsData?.totalCount}
         ordersCount={ordersData?.totalCount}
       />
 

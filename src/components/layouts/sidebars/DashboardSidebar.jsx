@@ -44,11 +44,6 @@ const adminLinks = [
     path: '/admin/shops',
   },
   {
-    title: 'Payment Request',
-    icon: <PaymentIcon />,
-    path: '/admin/payment-request',
-  },
-  {
     title: 'Chat with Sellers',
     icon: <Chatbubbles2Icon />,
     path: '/admin/chat',

@@ -23,9 +23,6 @@ export const AdminShops = lazy(() =>
 export const AdminShopDetails = lazy(() =>
   import('../components/dashboard/admin/shops/AdminShopDetails')
 );
-export const AdminPaymentRequest = lazy(() =>
-  import('../components/dashboard/admin/payment/AdminPaymentRequest')
-);
 export const AdminChatSeller = lazy(() =>
   import('../components/dashboard/admin/chat/AdminChatSeller')
 );

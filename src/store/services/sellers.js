@@ -1,20 +1,9 @@
 import { api } from './api';
 
+// TODO: completely remove this service and use shop service
 export const sellersApi = api.injectEndpoints({
   endpoints: (build) => {
     return {
-      getCurrentSeller: build.query({
-        query: () => {
-          return {
-            url: '/sellers/current-seller',
-            method: 'GET',
-            credentials: 'include',
-          };
-        },
-        providesTags: () => {
-          return [{ type: 'Seller' }];
-        },
-      }),
       updateShopInfo: build.mutation({
         query: (data) => {
           return {
@@ -32,5 +21,4 @@ export const sellersApi = api.injectEndpoints({
   },
 });
 
-export const { useGetCurrentSellerQuery, useUpdateShopInfoMutation } =
-  sellersApi;
+export const { useUpdateShopInfoMutation } = sellersApi;
