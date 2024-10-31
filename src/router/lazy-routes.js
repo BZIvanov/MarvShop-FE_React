@@ -28,7 +28,7 @@ export const AdminChatSeller = lazy(() =>
 );
 
 export const SellerDashboard = lazy(() =>
-  import('../components/seller/SellerDashboard')
+  import('../components/dashboard/seller/dashboard/SellerDashboard')
 );
 export const SellerAddProduct = lazy(() =>
   import('../components/seller/SellerAddProduct')
