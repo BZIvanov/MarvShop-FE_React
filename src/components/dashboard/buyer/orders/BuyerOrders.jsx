@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useGetOrdersQuery } from '@/store/services/orders';
 import Pagination from '@/components/common/Pagination';
-import Search from '../../common/Search';
+import Search from '@/components/common/Search';
 import { currencyFormatter } from '@/utils/formatting';
 
 const BuyerOrders = () => {

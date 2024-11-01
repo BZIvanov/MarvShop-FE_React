@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import {
+  CalendarHeart,
   LayoutDashboard,
+  ListPlus,
   NotebookTabs,
   ShoppingCart,
   Store,
@@ -10,14 +12,10 @@ import {
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import {
-  AddIcon,
-  PaymentIcon,
-  ListHeartIcon,
   ProfileIcon,
   ChatQuoteIcon,
   ChatbubblesIcon,
   CartCheckIcon,
-  BasketDiscountIcon,
   ViewListIcon,
   Chatbubbles2Icon,
 } from '@/components/common/icons/Icons';
@@ -58,7 +56,7 @@ const sellerLinks = [
   },
   {
     title: 'Add Product',
-    icon: <AddIcon />,
+    icon: <ListPlus className='w-4 h-4' />,
     path: '/seller/add-product',
   },
   {
@@ -67,19 +65,9 @@ const sellerLinks = [
     path: '/seller/products',
   },
   {
-    title: 'Discount Products',
-    icon: <BasketDiscountIcon />,
-    path: '/seller/discount-products',
-  },
-  {
     title: 'Orders',
     icon: <CartCheckIcon />,
     path: '/seller/orders',
-  },
-  {
-    title: 'Payments',
-    icon: <PaymentIcon />,
-    path: '/seller/payments',
   },
   {
     title: 'Chat with Buyers',
@@ -116,7 +104,7 @@ const buyerLinks = [
   },
   {
     title: 'Wishlist',
-    icon: <ListHeartIcon />,
+    icon: <CalendarHeart className='w-4 h-4' />,
     path: '/buyer/wishlist',
   },
   {

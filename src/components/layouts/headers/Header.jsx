@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
+  ChevronDown,
   Heart,
   ShoppingCart,
   User as UserIcon,
@@ -24,7 +25,7 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { ArrowDropdownIcon, ListIcon } from '@/components/common/icons/Icons';
+import { ListIcon } from '@/components/common/icons/Icons';
 
 const Header = ({ setShowSidebar }) => {
   const dispatch = useDispatch();
@@ -136,7 +137,7 @@ const Header = ({ setShowSidebar }) => {
                     src='/images/flag.png'
                     alt='Language selection'
                   />
-                  <ArrowDropdownIcon />
+                  <ChevronDown className='w-4 h-4' />
                   <ul className='absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10'>
                     <li>English</li>
                     <li>Bulgarian</li>

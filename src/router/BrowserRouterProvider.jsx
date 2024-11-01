@@ -26,10 +26,8 @@ import {
   SellerAddProduct,
   SellerEditProduct,
   SellerProducts,
-  SellerDiscountProducts,
   SellerOrders,
   SellerOrderDetails,
-  SellerPayments,
   SellerToAdmin,
   SellerToCustomer,
   SellerProfile,
@@ -188,20 +186,12 @@ const router = createBrowserRouter([
             element: <SellerProducts />,
           },
           {
-            path: 'discount-products',
-            element: <SellerDiscountProducts />,
-          },
-          {
             path: 'orders',
             element: <SellerOrders />,
           },
           {
             path: 'orders/:orderId',
             element: <SellerOrderDetails />,
-          },
-          {
-            path: 'payments',
-            element: <SellerPayments />,
           },
           {
             path: 'chat-support',

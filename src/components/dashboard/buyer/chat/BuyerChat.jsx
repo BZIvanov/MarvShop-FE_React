@@ -5,10 +5,10 @@ import io from 'socket.io-client';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetChatQuery, useCreateChatMutation } from '@/store/services/chat';
-import UsersChatList from './chat/UsersChatList';
-import ChatHeader from './chat/ChatHeader';
-import ChatMessages from './chat/ChatMessages';
-import ChatForm from './chat/ChatForm';
+import UsersChatList from './UsersChatList';
+import ChatHeader from './ChatHeader';
+import ChatMessages from './ChatMessages';
+import ChatForm from './ChatForm';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 

@@ -7,7 +7,7 @@ import {
   useRemoveFromWishlistMutation,
 } from '@/store/services/wishlist';
 import { showNotification } from '@/store/features/notification/notificationSlice';
-import Rating from '../../common/Rating';
+import Rating from '@/components/common/Rating';
 import {
   RegHeartIcon,
   EyeIcon,
@@ -15,7 +15,7 @@ import {
 } from '@/components/common/icons/Icons';
 import { currencyFormatter, percentFormatter } from '@/utils/formatting';
 
-const Wishlist = () => {
+const BuyerWishlist = () => {
   const dispatch = useDispatch();
 
   const { data } = useGetWishlistProductsQuery();
@@ -104,4 +104,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default BuyerWishlist;

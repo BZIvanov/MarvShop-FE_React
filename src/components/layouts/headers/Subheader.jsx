@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 
 import { useDispatch, useSelector } from '@/store/store';
 import { useGetCategoriesQuery } from '@/store/services/categories';
@@ -7,11 +8,7 @@ import {
   changeFilter,
   selectTextFilter,
 } from '@/store/features/productsFilters/productsFiltersSlice';
-import {
-  PhoneIcon,
-  ArrowDownIcon,
-  ListIcon,
-} from '@/components/common/icons/Icons';
+import { PhoneIcon, ListIcon } from '@/components/common/icons/Icons';
 
 const Subheader = () => {
   const dispatch = useDispatch();
@@ -38,7 +35,7 @@ const Subheader = () => {
                 <span>All Categories</span>
               </div>
               <span className='pt-1'>
-                <ArrowDownIcon />
+                <ChevronDown />
               </span>
             </div>
             <div

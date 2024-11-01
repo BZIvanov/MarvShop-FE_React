@@ -39,17 +39,11 @@ export const SellerEditProduct = lazy(() =>
 export const SellerProducts = lazy(() =>
   import('../components/dashboard/seller/products/SellerProducts')
 );
-export const SellerDiscountProducts = lazy(() =>
-  import('../components/seller/SellerDiscountProducts')
-);
 export const SellerOrders = lazy(() =>
   import('../components/dashboard/seller/orders/SellerOrders')
 );
 export const SellerOrderDetails = lazy(() =>
   import('../components/dashboard/seller/orders/SellerOrderDetails')
-);
-export const SellerPayments = lazy(() =>
-  import('../components/seller/SellerPayments')
 );
 export const SellerToAdmin = lazy(() =>
   import('../components/seller/SellerToAdmin')
@@ -62,20 +56,20 @@ export const SellerProfile = lazy(() =>
 );
 
 export const BuyerDashboard = lazy(() =>
-  import('../components/dashboard/buyer/BuyerDashboard')
+  import('../components/dashboard/buyer/dashboard/BuyerDashboard')
 );
 export const BuyerOrders = lazy(() =>
-  import('../components/dashboard/buyer/BuyerOrders')
+  import('../components/dashboard/buyer/orders/BuyerOrders')
 );
 export const BuyerOrderDetails = lazy(() =>
-  import('../components/dashboard/buyer/BuyerOrderDetails')
+  import('../components/dashboard/buyer/orders/BuyerOrderDetails')
 );
 export const BuyerProfile = lazy(() =>
-  import('../components/dashboard/buyer/BuyerProfile')
+  import('../components/dashboard/buyer/profile/BuyerProfile')
 );
 export const BuyerWishlist = lazy(() =>
-  import('../components/dashboard/buyer/BuyerWishlist')
+  import('../components/dashboard/buyer/wishlist/BuyerWishlist')
 );
 export const BuyerChat = lazy(() =>
-  import('../components/dashboard/buyer/BuyerChat')
+  import('../components/dashboard/buyer/chat/BuyerChat')
 );
