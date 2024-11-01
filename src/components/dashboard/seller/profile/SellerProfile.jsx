@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
-import { selectSeller } from '@/store/features/seller/sellerSlice';
+import { selectShop } from '@/store/features/shop/shopSlice';
 import { useUpdateAvatarMutation } from '@/store/services/users';
 import { useUpdateShopInfoMutation } from '@/store/services/sellers';
 import { ImagesFIcon, RegEditIcon } from '@/components/common/icons/Icons';
@@ -11,7 +11,7 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 
 const SellerProfile = () => {
   const user = useSelector(selectUser);
-  const seller = useSelector(selectSeller);
+  const shop = useSelector(selectShop);
 
   const [shopFormValues, setShopFormValues] = useState({
     shopName: '',
@@ -61,7 +61,7 @@ const SellerProfile = () => {
         <div className='w-full md:w-6/12'>
           <div className='w-full p-4 bg-[#6a5fdf] rounded-md text-[#d0d2d6]'>
             <div className='flex justify-center items-center py-3'>
-              {user?.avatar ? (
+              {user?.avatar?.imageUrl ? (
                 <label
                   htmlFor='avatar'
                   className='h-[150px] w-[200px] relative p-3 cursor-pointer overflow-hidden'
@@ -115,14 +115,14 @@ const SellerProfile = () => {
                 </div>
                 <div className='flex gap-2'>
                   <span>Status: </span>
-                  <span>{seller?.status}</span>
+                  <span>{shop?.paymentStatus}</span>
                 </div>
                 <div className='flex gap-2'>
                   <span>Payment Account: </span>
                   <p>
-                    {seller?.payment === 'active' ? (
+                    {shop?.paymentStatus === 'active' ? (
                       <span className='bg-green-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>
-                        {seller?.payment}
+                        {shop.paymentStatus}
                       </span>
                     ) : (
                       <span className='bg-red-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded'>
@@ -134,26 +134,26 @@ const SellerProfile = () => {
               </div>
             </div>
             <div className='px-0 md:px-5 py-2'>
-              {seller?.shopInfo?.shopName ? (
+              {shop?.shopInfo?.shopName ? (
                 <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800 rounded-md relative'>
                   <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'>
                     <RegEditIcon />
                   </span>
                   <div className='flex gap-2'>
                     <span>Shop Name: </span>
-                    <span>{seller.shopInfo.shopName}</span>
+                    <span>{shop.shopInfo.shopName}</span>
                   </div>
                   <div className='flex gap-2'>
                     <span>Country: </span>
-                    <span>{seller.shopInfo.country}</span>
+                    <span>{shop.shopInfo.country}</span>
                   </div>
                   <div className='flex gap-2'>
                     <span>City: </span>
-                    <span>{seller.shopInfo.city}</span>
+                    <span>{shop.shopInfo.city}</span>
                   </div>
                   <div className='flex gap-2'>
                     <span>Street: </span>
-                    <span>{seller.shopInfo.street}</span>
+                    <span>{shop.shopInfo.street}</span>
                   </div>
                 </div>
               ) : (
