@@ -1,82 +1,83 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { currencyFormatter } from '@/utils/formatting';
 
 const OrdersSection = ({ orders = [] }) => {
   return (
-    <div className='w-full p-4 bg-[#6a5fdf] rounded-md mt-6'>
-      <div className='flex justify-between items-center'>
-        <h2 className='font-semibold text-lg text-[#d0d2d6] pb-3 '>
+    <div className='w-full p-6 bg-gradient-to-r from-[#36316e] to-[#150b64] rounded-lg mt-6 shadow-lg'>
+      <div className='flex justify-between items-center mb-6'>
+        <h2 className='font-bold text-xl text-[#e0e2e6] tracking-wide'>
           Recent Orders
         </h2>
         <Link
           to='/seller/orders'
-          className='font-semibold text-sm text-[#d0d2d6]'
+          className='font-semibold text-sm text-[#e0e2e6] hover:text-white hover:underline transition-all duration-200'
         >
           View All
         </Link>
       </div>
 
-      <div className='relative overflow-x-auto'>
-        <table className='w-full text-sm text-left text-[#d0d2d6]'>
-          <thead className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
-            <tr>
-              <th scope='col' className='py-3 px-4'>
+      <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+        <Table className='min-w-full text-left text-sm'>
+          <TableHeader>
+            <TableRow className='bg-gray-700'>
+              <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                 Order ID
-              </th>
-              <th scope='col' className='py-3 px-4'>
+              </TableHead>
+              <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                 Price
-              </th>
-              <th scope='col' className='py-3 px-4'>
+              </TableHead>
+              <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                 Delivery Status
-              </th>
-              <th scope='col' className='py-3 px-4'>
+              </TableHead>
+              <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                 Payment Status
-              </th>
-              <th scope='col' className='py-3 px-4'>
+              </TableHead>
+              <TableHead className='px-4 py-3 text-right text-stone-200 uppercase'>
                 Action
-              </th>
-            </tr>
-          </thead>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
 
-          <tbody>
+          <TableBody className='bg-gray-800'>
             {orders.map((order) => (
-              <tr key={order._id}>
-                <td
-                  scope='row'
-                  className='py-3 px-4 font-medium whitespace-nowrap'
-                >
+              <TableRow
+                key={order._id}
+                className='border-b border-gray-700 hover:bg-gray-700 transition-all'
+              >
+                <TableCell className='px-4 py-2 text-stone-300'>
                   {order._id}
-                </td>
-                <td
-                  scope='row'
-                  className='py-3 px-4 font-medium whitespace-nowrap'
-                >
+                </TableCell>
+                <TableCell className='px-4 py-2 font-medium text-stone-300'>
                   {currencyFormatter(order.totalPrice)}
-                </td>
-                <td
-                  scope='row'
-                  className='py-3 px-4 font-medium whitespace-nowrap'
-                >
+                </TableCell>
+                <TableCell className='px-4 py-2 text-stone-300'>
                   {order.deliveryStatus}
-                </td>
-                <td
-                  scope='row'
-                  className='py-3 px-4 font-medium whitespace-nowrap'
-                >
+                </TableCell>
+                <TableCell className='px-4 py-2 text-stone-300'>
                   {order.paymentStatus}
-                </td>
-                <td
-                  scope='row'
-                  className='py-3 px-4 font-medium whitespace-nowrap'
-                >
-                  <Link to={`/seller/orders/${order._id}`}>View</Link>
-                </td>
-              </tr>
+                </TableCell>
+                <TableCell className='px-4 py-2 text-right text-stone-300'>
+                  <Link
+                    to={`/seller/orders/${order._id}`}
+                    className='text-blue-500 hover:text-blue-400 hover:underline transition-all duration-200'
+                  >
+                    View
+                  </Link>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

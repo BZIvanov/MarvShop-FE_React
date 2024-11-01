@@ -154,12 +154,8 @@ const CategoryForm = () => {
                   className='hidden'
                   onChange={(e) => {
                     const file = e.target.files[0];
-                    field.onChange(file || '');
-                    setImagePreview(
-                      file
-                        ? URL.createObjectURL(file)
-                        : categoryData?.image || null
-                    );
+                    field.onChange(file);
+                    setImagePreview(URL.createObjectURL(file));
                   }}
                 />
               </FormControl>

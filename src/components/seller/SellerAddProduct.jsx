@@ -1,66 +1,49 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { useDispatch } from '@/store/store';
 import { useCreateProductMutation } from '@/store/services/products';
 import { useGetCategoriesQuery } from '@/store/services/categories';
 import { showNotification } from '@/store/features/notification/notificationSlice';
+import { Form } from '@/components/ui/form';
 import { CloseCircleIcon, ImagesIcon } from '@/components/common/icons/Icons';
+import TextField from '@/components/form/TextField';
+import TextareaField from '@/components/form/TextareaField';
+import SelectField from '@/components/form/SelectField';
 import SubmitButton from '@/components/common/buttons/SubmitButton';
+import { Button } from '@/components/ui/button';
+import { resolver } from './product-form-schema';
 
 const SellerAddProduct = () => {
   const dispatch = useDispatch();
 
-  const { data, isSuccess } = useGetCategoriesQuery();
-
-  const categories = useMemo(() => data?.categories || [], [data]);
-
-  const [formValues, setFormValues] = useState({
-    name: '',
-    brand: '',
-    stock: '',
-    price: '',
-    discount: '',
-    description: '',
+  const form = useForm({
+    resolver,
+    defaultValues: {
+      name: '',
+      brand: '',
+      category: '',
+      price: '',
+      stock: '',
+      discount: '',
+      description: '',
+    },
   });
 
-  const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
-  const [searchCategoryValue, setSearchCategoryValue] = useState('');
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const { data } = useGetCategoriesQuery();
+  const categories = useMemo(
+    () =>
+      data?.categories?.map((category) => ({
+        value: category._id,
+        label: category.name,
+      })) || [],
+    [data]
+  );
 
   const [images, setImages] = useState([]);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
-
-  useEffect(() => {
-    // set filtered categories initially to the returned from the back-end
-    if (isSuccess) {
-      setFilteredCategories(data?.categories);
-    }
-  }, [isSuccess, data?.categories]);
-
-  const handleInputChange = (event) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  const categorySearch = (event) => {
-    const value = event.target.value;
-    setSearchCategoryValue(value);
-
-    if (value) {
-      const filtered = categories.filter(
-        (category) =>
-          category.name.toLowerCase().indexOf(value.toLowerCase()) > -1
-      );
-      setFilteredCategories(filtered);
-    } else {
-      setFilteredCategories(categories);
-    }
-  };
 
   const handleNewImageChange = (event) => {
     const files = event.target.files;
@@ -108,19 +91,17 @@ const SellerAddProduct = () => {
     setImages(imagesToKeep);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // TODO: check for valid form
+  const onSubmit = async (values) => {
+    console.log(values);
 
     const formData = new FormData();
-    formData.append('name', formValues.name);
-    formData.append('brand', formValues.brand);
-    formData.append('category', selectedCategory._id);
-    formData.append('stock', formValues.stock);
-    formData.append('price', formValues.price);
-    formData.append('discount', formValues.discount);
-    formData.append('description', formValues.description);
+    formData.append('name', values.name);
+    formData.append('brand', values.brand);
+    formData.append('category', values.category);
+    formData.append('stock', values.stock);
+    formData.append('price', values.price);
+    formData.append('discount', values.discount);
+    formData.append('description', values.description);
     for (let i = 0; i < images.length; i++) {
       formData.append('images', images[i].file);
     }
@@ -128,15 +109,6 @@ const SellerAddProduct = () => {
     const result = await createProduct(formData);
 
     if (!('error' in result)) {
-      setFormValues({
-        name: '',
-        brand: '',
-        stock: '',
-        price: '',
-        discount: '',
-        description: '',
-      });
-      setSelectedCategory(null);
       setImages([]);
 
       dispatch(
@@ -155,200 +127,139 @@ const SellerAddProduct = () => {
           <h1 className='text-[#d0d2d6] text-xl font-semibold'>
             Create Product
           </h1>
-          <Link
-            to='/seller/products'
-            className='bg-blue-500 hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-sm px-7 py-2 my-2'
-          >
-            All Products
-          </Link>
+          <Button variant='destructive' asChild={true}>
+            <Link to='/seller/products'>All Products</Link>
+          </Button>
         </div>
         <div>
-          <form onSubmit={handleSubmit}>
-            <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
-              <div className='flex flex-col w-full gap-1'>
-                <label htmlFor='name'>Product Name</label>
-                <input
-                  className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  onChange={handleInputChange}
-                  value={formValues.name}
-                  type='text'
-                  name='name'
-                  id='name'
-                  placeholder='Product Name'
-                />
-              </div>
-
-              <div className='flex flex-col w-full gap-1'>
-                <label htmlFor='brand'>Product Brand</label>
-                <input
-                  className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  onChange={handleInputChange}
-                  value={formValues.brand}
-                  type='text'
-                  name='brand'
-                  id='brand'
-                  placeholder='Brand Name'
-                />
-              </div>
-            </div>
-
-            <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
-              <div className='flex flex-col w-full gap-1 relative'>
-                <label htmlFor='category'>Category</label>
-                <input
-                  readOnly={true}
-                  onClick={() =>
-                    setIsCategoryExpanded((prevState) => !prevState)
-                  }
-                  className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  value={selectedCategory?.name || ''}
-                  type='text'
-                  id='category'
-                  placeholder='Select category'
-                />
-                <div
-                  className={`absolute top-[101%] bg-[#475569] w-full transition-all ${
-                    isCategoryExpanded ? 'scale-100' : 'scale-0'
-                  }`}
-                >
-                  <div className='w-full px-4 py-2 fixed'>
-                    <input
-                      value={searchCategoryValue}
-                      onChange={categorySearch}
-                      className='px-3 py-1 w-full focus:border-indigo-500 outline-none bg-transparent border border-slate-700 rounded-md text-[#d0d2d6] overflow-hidden'
-                      type='text'
-                      placeholder='search'
-                    />
-                  </div>
-                  <div className='pt-14'></div>
-                  <div className='flex justify-start items-start flex-col overflow-x-scrool'>
-                    {filteredCategories.map((category) => (
-                      <span
-                        key={category._id}
-                        className={`px-4 py-2 hover:bg-indigo-500 hover:text-white hover:shadow-lg w-full cursor-pointer ${
-                          selectedCategory?.name === category.name &&
-                          'bg-indigo-500'
-                        }`}
-                        onClick={() => {
-                          setIsCategoryExpanded(false);
-                          setSelectedCategory(category);
-                          setSearchCategoryValue('');
-                          setFilteredCategories(categories);
-                        }}
-                      >
-                        {category.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className='flex flex-col w-full gap-1'>
-                <label htmlFor='stock'>Product Stock</label>
-                <input
-                  className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  onChange={handleInputChange}
-                  value={formValues.stock}
-                  type='text'
-                  name='stock'
-                  id='stock'
-                  placeholder='Stock'
-                />
-              </div>
-            </div>
-
-            <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
-              <div className='flex flex-col w-full gap-1'>
-                <label htmlFor='price'>Price</label>
-                <input
-                  className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  onChange={handleInputChange}
-                  value={formValues.price}
-                  type='number'
-                  name='price'
-                  id='price'
-                  placeholder='Price'
-                />
-              </div>
-
-              <div className='flex flex-col w-full gap-1'>
-                <label htmlFor='discount'>Discount</label>
-                <input
-                  className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                  onChange={handleInputChange}
-                  value={formValues.discount}
-                  type='number'
-                  name='discount'
-                  id='discount'
-                  placeholder='Discount by %'
-                />
-              </div>
-            </div>
-
-            <div className='flex flex-col w-full gap-1 mb-5'>
-              <label htmlFor='description' className='text-[#d0d2d6]'>
-                Description
-              </label>
-              <textarea
-                className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-                onChange={handleInputChange}
-                value={formValues.description}
-                name='description'
-                id='description'
-                placeholder='Description'
-                cols='10'
-                rows='4'
-              />
-            </div>
-
-            <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4'>
-              {images.map((image, idx) => (
-                <div key={idx} className='h-[180px] relative'>
-                  <label htmlFor={idx} className='cursor-grab'>
-                    <img
-                      className='w-full h-full rounded-sm'
-                      src={image.imageUrl}
-                      alt='Product preview'
-                    />
-                  </label>
-                  <input
-                    onChange={(event) =>
-                      replaceImage(event.target.files[0], idx)
-                    }
-                    type='file'
-                    id={idx}
-                    className='hidden'
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
+                <div className='flex flex-col w-full gap-1'>
+                  <TextField
+                    control={form.control}
+                    name='name'
+                    type='text'
+                    label='Product Name'
+                    placeholder='Product Name'
                   />
-                  <span
-                    onClick={() => removeImage(idx)}
-                    className='p-2 z-10 cursor-pointer bg-slate-700 hover:shadow-lg hover:shadow-slate-400/50 text-white absolute top-1 right-1 rounded-full'
-                  >
-                    <CloseCircleIcon />
-                  </span>
                 </div>
-              ))}
 
-              <label
-                className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full text-[#d0d2d6]'
-                htmlFor='image'
-              >
-                <ImagesIcon />
-                <span>Select Image</span>
-              </label>
-              <input
-                name='image'
-                onChange={handleNewImageChange}
-                multiple={true}
-                type='file'
-                id='image'
-                className='hidden'
-              />
-            </div>
+                <div className='flex flex-col w-full gap-1'>
+                  <TextField
+                    control={form.control}
+                    name='brand'
+                    type='text'
+                    label='Product Brand'
+                    placeholder='Brand Name'
+                  />
+                </div>
+              </div>
 
-            <div className='flex my-2'>
-              <SubmitButton isLoading={isLoading}>Create</SubmitButton>
-            </div>
-          </form>
+              <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
+                <div className='flex flex-col w-full gap-1'>
+                  <SelectField
+                    control={form.control}
+                    name='category'
+                    label='Category'
+                    options={categories}
+                    isClearable={true}
+                    isSearchable={true}
+                    placeholder='Select product category'
+                  />
+                </div>
+
+                <div className='flex flex-col w-full gap-1'>
+                  <TextField
+                    control={form.control}
+                    name='stock'
+                    type='number'
+                    label='Product Stock'
+                    placeholder='Stock'
+                  />
+                </div>
+              </div>
+
+              <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
+                <div className='flex flex-col w-full gap-1'>
+                  <TextField
+                    control={form.control}
+                    name='price'
+                    type='number'
+                    label='Price'
+                    placeholder='Price'
+                  />
+                </div>
+
+                <div className='flex flex-col w-full gap-1'>
+                  <TextField
+                    control={form.control}
+                    name='discount'
+                    type='number'
+                    label='Discount'
+                    placeholder='Discount'
+                  />
+                </div>
+              </div>
+
+              <div className='flex flex-col w-full gap-1 mb-5 text-[#d0d2d6]'>
+                <TextareaField
+                  control={form.control}
+                  name='description'
+                  label='Description'
+                  placeholder='Description'
+                />
+              </div>
+
+              <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6] mb-4'>
+                {images.map((image, idx) => (
+                  <div key={idx} className='h-[180px] relative'>
+                    <label htmlFor={idx} className='cursor-grab'>
+                      <img
+                        className='w-full h-full rounded-sm'
+                        src={image.imageUrl}
+                        alt='Product preview'
+                      />
+                    </label>
+                    <input
+                      onChange={(event) =>
+                        replaceImage(event.target.files[0], idx)
+                      }
+                      type='file'
+                      id={idx}
+                      className='hidden'
+                    />
+                    <span
+                      onClick={() => removeImage(idx)}
+                      className='p-2 cursor-pointer bg-slate-700 hover:shadow-lg hover:shadow-slate-400/50 text-white absolute top-1 right-1 rounded-full'
+                    >
+                      <CloseCircleIcon />
+                    </span>
+                  </div>
+                ))}
+
+                <label
+                  className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full text-[#d0d2d6]'
+                  htmlFor='image'
+                >
+                  <ImagesIcon />
+                  <span>Select Image</span>
+                </label>
+                <input
+                  name='image'
+                  onChange={handleNewImageChange}
+                  multiple={true}
+                  type='file'
+                  id='image'
+                  className='hidden'
+                />
+              </div>
+
+              <div className='flex my-2'>
+                <SubmitButton isLoading={isLoading}>Create</SubmitButton>
+              </div>
+            </form>
+          </Form>
         </div>
       </div>
     </div>
