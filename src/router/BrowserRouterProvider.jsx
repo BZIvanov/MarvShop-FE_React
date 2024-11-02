@@ -28,8 +28,8 @@ import {
   SellerProducts,
   SellerOrders,
   SellerOrderDetails,
-  SellerToAdmin,
-  SellerToCustomer,
+  SellerAdminChat,
+  SellerCustomerChat,
   SellerProfile,
   BuyerDashboard,
   BuyerOrders,
@@ -195,15 +195,15 @@ const router = createBrowserRouter([
           },
           {
             path: 'chat-support',
-            element: <SellerToAdmin />,
+            element: <SellerAdminChat />,
           },
           {
             path: 'chat',
-            element: <SellerToCustomer />,
+            element: <SellerCustomerChat />,
           },
           {
             path: 'chat/:receiverId',
-            element: <SellerToCustomer />,
+            element: <SellerCustomerChat />,
           },
           {
             path: 'profile',

@@ -5,14 +5,14 @@ import io from 'socket.io-client';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetChatQuery, useCreateChatMutation } from '@/store/services/chat';
-import ChatMessages from '../dashboard/buyer/chat/ChatMessages';
-import UsersChatList from '../dashboard/buyer/chat/UsersChatList';
-import ChatHeader from '../dashboard/buyer/chat/ChatHeader';
-import ChatForm from './chat/ChatForm';
+import ChatMessages from '@/components/dashboard/common/chat/ChatMessages';
+import UsersChatList from '@/components/dashboard/common/chat/UsersChatList';
+import ChatHeader from '@/components/dashboard/common/chat/ChatHeader';
+import ChatForm from '@/components/dashboard/common/chat/ChatForm';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SellerToCustomer = () => {
+const SellerCustomerChat = () => {
   const [showSidebarUsersList, setShowSidebarUsersList] = useState(false);
 
   const user = useSelector(selectUser);
@@ -108,4 +108,4 @@ const SellerToCustomer = () => {
   );
 };
 
-export default SellerToCustomer;
+export default SellerCustomerChat;

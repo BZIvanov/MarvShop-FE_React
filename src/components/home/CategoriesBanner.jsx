@@ -71,7 +71,7 @@ const CategoriesBanner = () => {
             className='h-[185px] border block cursor-pointer'
           >
             <div className='w-full h-full relative p-3'>
-              <img src={category.imageUrl} alt='Category banner' />
+              <img src={category.image.imageUrl} alt='Category banner' />
               <div className='absolute bottom-6 w-full mx-auto font-bold left-0 flex justify-center items-center'>
                 <span className='py-[2px] px-6 bg-[#3330305d] text-white'>
                   {category.name}

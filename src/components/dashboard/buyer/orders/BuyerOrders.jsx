@@ -2,6 +2,24 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useGetOrdersQuery } from '@/store/services/orders';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { EyeIcon } from '@/components/common/icons/Icons';
 import Pagination from '@/components/common/Pagination';
 import Search from '@/components/common/Search';
 import { currencyFormatter } from '@/utils/formatting';
@@ -33,91 +51,89 @@ const BuyerOrders = () => {
         />
 
         <div className='mt-3'>
-          <select
-            name='deliveryStatus'
+          <Select
             value={selectedDeliveryStatus}
-            onChange={(event) => setSelectedDeliveryStatus(event.target.value)}
-            className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
+            onValueChange={(newValue) => {
+              setSelectedDeliveryStatus(newValue);
+            }}
           >
-            <option value=''>All</option>
-            <option value='pending'>Pending</option>
-            <option value='completed'>Completed</option>
-            <option value='canceled'>Canceled</option>
-          </select>
+            <SelectTrigger className='w-[140px]'>
+              <SelectValue placeholder='Order status' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Order Status</SelectLabel>
+                <SelectItem value='all'>All</SelectItem>
+                <SelectItem value='pending'>Pending</SelectItem>
+                <SelectItem value='completed'>Completed</SelectItem>
+                <SelectItem value='canceled'>Canceled</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className='relative overflow-x-auto mt-5'>
-          <table className='w-full text-sm text-left text-[#d0d2d6]'>
-            <thead className='text-sm text-[#d0d2d6] uppercase border-b border-slate-700'>
-              <tr>
-                <th scope='col' className='py-3 px-4'>
+        <div className='relative overflow-x-auto shadow-md sm:rounded-lg mt-2'>
+          <Table className='min-w-full text-left text-sm'>
+            <TableHeader>
+              <TableRow className='bg-gray-700'>
+                <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                   Order ID
-                </th>
-                <th scope='col' className='py-3 px-4'>
+                </TableHead>
+                <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                   Price
-                </th>
-                <th scope='col' className='py-3 px-4'>
+                </TableHead>
+                <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                   Delivery Status
-                </th>
-                <th scope='col' className='py-3 px-4'>
+                </TableHead>
+                <TableHead className='px-4 py-3 text-stone-200 uppercase'>
                   Payment Status
-                </th>
-                <th scope='col' className='py-3 px-4'>
-                  Actions
-                </th>
-              </tr>
-            </thead>
+                </TableHead>
+                <TableHead className='px-4 py-3 text-center text-stone-200 uppercase'>
+                  Action
+                </TableHead>
+              </TableRow>
+            </TableHeader>
 
-            <tbody>
+            <TableBody className='bg-gray-800'>
               {orders.map((order) => (
-                <tr key={order._id}>
-                  <td
-                    scope='row'
-                    className='py-1 px-4 font-medium whitespace-nowrap'
-                  >
+                <TableRow
+                  key={order._id}
+                  className='border-b border-gray-700 hover:bg-gray-700 transition-all'
+                >
+                  <TableCell className='px-4 py-2 text-stone-300'>
                     {order._id}
-                  </td>
-                  <td
-                    scope='row'
-                    className='py-1 px-4 font-medium whitespace-nowrap'
-                  >
+                  </TableCell>
+                  <TableCell className='px-4 py-2 text-stone-300'>
                     {currencyFormatter(order.totalPrice)}
-                  </td>
-                  <td
-                    scope='row'
-                    className='py-1 px-4 font-medium whitespace-nowrap'
-                  >
+                  </TableCell>
+                  <TableCell className='px-4 py-2 text-stone-300'>
                     {order.deliveryStatus}
-                  </td>
-                  <td
-                    scope='row'
-                    className='py-1 px-4 font-medium whitespace-nowrap'
-                  >
+                  </TableCell>
+                  <TableCell className='px-4 py-2 text-stone-300'>
                     {order.paymentStatus}
-                  </td>
-                  <td
-                    scope='row'
-                    className='py-1 px-4 font-medium whitespace-nowrap'
-                  >
-                    <div className='flex justify-start items-center gap-4'>
-                      <Link to={`/buyer/orders/${order._id}`}>
-                        <span className='bg-green-200 text-green-800 text-md font-semibold mr-2 px-3 py-[2px] rounded'>
-                          View
-                        </span>
+                  </TableCell>
+                  <TableCell className='px-4 py-0 text-stone-300'>
+                    <div className='flex justify-center items-center gap-4'>
+                      <Link
+                        to={`/buyer/orders/${order._id}`}
+                        className='p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-green-500/50'
+                      >
+                        <EyeIcon />
                       </Link>
-                      {order.paymentStatus === 'Pending' && (
-                        <Link to={`/payment/${order._id}`}>
-                          <span className='bg-green-200 text-green-800 text-md font-semibold mr-2 px-3 py-[2px] rounded'>
-                            Pay Now
-                          </span>
+                      {order.paymentStatus === 'pending' && (
+                        <Link
+                          to={`/payment/${order._id}`}
+                          className='bg-green-200 text-green-800 text-md font-semibold mr-2 px-3 py-[2px] rounded'
+                        >
+                          Pay Now
                         </Link>
                       )}
                     </div>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
         {data?.totalCount > perPage && (

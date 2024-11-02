@@ -31,10 +31,10 @@ export const SellerDashboard = lazy(() =>
   import('../components/dashboard/seller/dashboard/SellerDashboard')
 );
 export const SellerAddProduct = lazy(() =>
-  import('../components/seller/SellerAddProduct')
+  import('../components/dashboard/seller/products/SellerAddProduct')
 );
 export const SellerEditProduct = lazy(() =>
-  import('../components/seller/SellerEditProduct')
+  import('../components/dashboard/seller/products/SellerEditProduct')
 );
 export const SellerProducts = lazy(() =>
   import('../components/dashboard/seller/products/SellerProducts')
@@ -45,11 +45,11 @@ export const SellerOrders = lazy(() =>
 export const SellerOrderDetails = lazy(() =>
   import('../components/dashboard/seller/orders/SellerOrderDetails')
 );
-export const SellerToAdmin = lazy(() =>
-  import('../components/seller/SellerToAdmin')
+export const SellerAdminChat = lazy(() =>
+  import('../components/dashboard/seller/chat/SellerAdminChat')
 );
-export const SellerToCustomer = lazy(() =>
-  import('../components/seller/SellerToCustomer')
+export const SellerCustomerChat = lazy(() =>
+  import('../components/dashboard/seller/chat/SellerCustomerChat')
 );
 export const SellerProfile = lazy(() =>
   import('../components/dashboard/seller/profile/SellerProfile')

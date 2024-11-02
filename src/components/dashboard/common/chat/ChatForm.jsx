@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
+import { SendIcon } from '@/components/common/icons/Icons';
 
 const ChatForm = ({ socket, chatId }) => {
   const [message, setMessage] = useState('');
@@ -39,9 +40,9 @@ const ChatForm = ({ socket, chatId }) => {
       />
       <button
         disabled={!chatId}
-        className='shadow-lg bg-[#06b6d4] hover:shadow-cyan-500/50 text-semibold w-[75px] h-[35px] rounded-md text-white flex justify-center items-center'
+        className='w-[40px] p-2 justify-center items-center rounded-full text-2xl cursor-pointer'
       >
-        Send
+        <SendIcon />
       </button>
     </form>
   );

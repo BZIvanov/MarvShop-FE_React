@@ -6,11 +6,10 @@ import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetChatQuery, useCreateChatMutation } from '@/store/services/chat';
 
-// TODO: move the common components in separate folder
-import ChatForm from '../../../seller/chat/ChatForm';
-import ChatMessages from '../../buyer/chat/ChatMessages';
-import ChatHeader from '../../buyer/chat/ChatHeader';
-import UsersChatList from '../../buyer/chat/UsersChatList';
+import ChatForm from '@/components/dashboard/common/chat/ChatForm';
+import ChatMessages from '@/components/dashboard/common/chat/ChatMessages';
+import ChatHeader from '@/components/dashboard/common/chat/ChatHeader';
+import UsersChatList from '@/components/dashboard/common/chat/UsersChatList';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 

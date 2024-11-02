@@ -4,13 +4,13 @@ import io from 'socket.io-client';
 import { useSelector } from '@/store/store';
 import { selectUser } from '@/store/features/user/userSlice';
 import { useGetChatsQuery } from '@/store/services/chat';
-import ChatHeader from '../dashboard/buyer/chat/ChatHeader';
-import ChatMessages from '../dashboard/buyer/chat/ChatMessages';
-import ChatForm from './chat/ChatForm';
+import ChatHeader from '@/components/dashboard/common/chat/ChatHeader';
+import ChatMessages from '@/components/dashboard/common/chat/ChatMessages';
+import ChatForm from '@/components/dashboard/common/chat/ChatForm';
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SellerToAdmin = () => {
+const SellerAdminChat = () => {
   const user = useSelector(selectUser);
 
   const [socket, setSocket] = useState(null);
@@ -94,4 +94,4 @@ const SellerToAdmin = () => {
   );
 };
 
-export default SellerToAdmin;
+export default SellerAdminChat;

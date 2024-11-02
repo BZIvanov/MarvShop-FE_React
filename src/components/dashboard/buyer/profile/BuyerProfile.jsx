@@ -1,49 +1,60 @@
+import { useForm } from 'react-hook-form';
+
+import { Form } from '@/components/ui/form';
+import PasswordField from '@/components/form/PasswordField';
+import SubmitButton from '@/components/common/buttons/SubmitButton';
+import { resolver } from './change-password-schema';
+
 const BuyerProfile = () => {
+  const form = useForm({
+    resolver,
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+  });
+
+  const onSubmit = (values) => {
+    console.log(values);
+
+    form.reset();
+  };
+
   return (
     <div className='m-7 p-4 bg-[#6a5fdf] rounded-md text-[#d0d2d6]'>
       <h2 className='text-[#000000] font-semibold text-lg mb-3'>
         Change Password
       </h2>
 
-      <form>
-        <div className='flex flex-col gap-1 mb-2'>
-          <label htmlFor='old-password'>Old Password</label>
-          <input
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <PasswordField
+            control={form.control}
             name='oldPassword'
-            type='password'
-            id='old-password'
-            className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-            placeholder='Old Password'
+            label='Old Password'
+            placeholder='Old password'
           />
-        </div>
 
-        <div className='flex flex-col gap-1 mb-2'>
-          <label htmlFor='new-password'>New Password</label>
-          <input
+          <PasswordField
+            control={form.control}
             name='newPassword'
-            type='password'
-            id='new-password'
-            className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-            placeholder='New Password'
+            label='New Password'
+            placeholder='New password'
           />
-        </div>
 
-        <div className='flex flex-col gap-1 mb-2'>
-          <label htmlFor='confirm-password'>Confirm Password</label>
-          <input
-            name='confirmPassword'
-            type='password'
-            id='confirm-password'
-            className='px-4 py-2 focus:border-indigo-200 outline-none bg-[#6a5fdf] border border-slate-700 rounded-md text-[#d0d2d6]'
-            placeholder='Confirm Password'
+          <PasswordField
+            control={form.control}
+            name='confirmNewPassword'
+            label='Confirm New Password'
+            placeholder='Confirm new password'
           />
-        </div>
-        <div>
-          <button className='px-8 py-2 bg-[#059473] shadow-lg hover:shadow-green-500/30 text-white rounded-md'>
-            Update Password
-          </button>
-        </div>
-      </form>
+
+          <div className='mt-2'>
+            <SubmitButton isLoading={false}>Update Password</SubmitButton>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
