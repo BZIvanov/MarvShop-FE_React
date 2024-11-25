@@ -1,6 +1,6 @@
 import { api } from './api';
 
-export const productsApi = api.injectEndpoints({
+export const reviewsApi = api.injectEndpoints({
   endpoints: (build) => {
     return {
       getProductReviews: build.query({
@@ -60,4 +60,4 @@ export const {
   useGetProductReviewsQuery,
   useReviewProductMutation,
   useGetProductReviewsSummaryQuery,
-} = productsApi;
+} = reviewsApi;

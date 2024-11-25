@@ -78,7 +78,7 @@ const CategoryForm = () => {
 
     let result;
     if (categoryId) {
-      result = updateCategory({ id: categoryId, formData });
+      result = await updateCategory({ id: categoryId, formData });
     } else {
       result = await createCategory(formData);
     }

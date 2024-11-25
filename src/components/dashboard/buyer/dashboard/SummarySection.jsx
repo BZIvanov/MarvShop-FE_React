@@ -8,7 +8,7 @@ const SummarySection = ({ totalOrders, pendingOrders, canceledOrders }) => {
     <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7'>
       <SummaryCard
         value={totalOrders}
-        title='Total Sales'
+        title='All Orders'
         icon={<ShoppingBasket className='text-[#fae8e8] shadow-lg' />}
         cardClassName='bg-[#fae8e8]'
         iconClassName='bg-[#fa0305]'
@@ -16,7 +16,7 @@ const SummarySection = ({ totalOrders, pendingOrders, canceledOrders }) => {
 
       <SummaryCard
         value={pendingOrders}
-        title='Products'
+        title='Pending Orders'
         icon={<ShoppingBasket className='text-[#fae8e8] shadow-lg' />}
         cardClassName='bg-[#fde2ff]'
         iconClassName='bg-[#760077]'
@@ -24,7 +24,7 @@ const SummarySection = ({ totalOrders, pendingOrders, canceledOrders }) => {
 
       <SummaryCard
         value={canceledOrders}
-        title='Shops'
+        title='Canceled Orders'
         icon={<ShoppingBasket className='text-[#fae8e8] shadow-lg' />}
         cardClassName='bg-[#e9feea]'
         iconClassName='bg-[#038000]'

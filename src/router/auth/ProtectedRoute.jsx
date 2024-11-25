@@ -27,7 +27,7 @@ const ProtectedRoute = ({
     return <Navigate to={authRedirectTo} replace={true} />;
   }
 
-  if (user && roles && !roles.includes(user.role)) {
+  if (roles && !roles.includes(user.role)) {
     return <Navigate to={roleRedirectTo} replace={true} />;
   }
 

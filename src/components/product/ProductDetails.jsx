@@ -114,7 +114,7 @@ const ProductDetails = () => {
         <Breadcrumbs
           links={[
             { linkTo: '/', label: 'Home' },
-            { linkTo: '/category', label: product.category.name }, // TODO: create category page or redirect to Shop with category filtered
+            { linkTo: '/category', label: product?.category?.name }, // TODO: create category page or redirect to Shop with category filtered
           ]}
           label={product.name}
         />

@@ -15,10 +15,6 @@ const NonUserRoute = ({ children }) => {
       return <Navigate to={customNavigateTo} replace={true} />;
     }
 
-    if (user.role === 'admin') {
-      return <Navigate to='/' replace={true} />;
-    }
-
     return <Navigate to='/' replace={true} />;
   }
 
